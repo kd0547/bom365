@@ -1,0 +1,331 @@
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<title>회원가입</title>
+<!-- 아이디 중복 검사를 위한 추가 -->
+
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+
+<th:block th:replace="fragments/config :: head" ></th:block>
+
+<th:block layout:fragment="css">
+        <style>
+            .Error {
+       
+                color: red;
+            }
+        </style>
+    </th:block>
+
+<!--  -->
+<th:block th:replace="fragments/config :: configFragment" ></th:block>
+<script th:src="@{~/js/validate-Fun.js}"></script>
+<script th:inline="javascript">
+	function sendDuplicateCode() {
+		//POST방식 데이터 전송에 필요한 CSRF 토큰 값 조회
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+        
+        var url="/member/duplicate"
+        $.ajax({
+        	url 	: url,
+        	type 	: "POST",
+        	data : {
+        		id : $("#id").val()
+        	},
+        	/* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
+        	beforeSend : function(xhr) {
+        		xhr.setRequestHeader(header,token)
+        	},
+        	success : function(result,status,xhr) {
+        		if(result.status == 200) {
+        			idResultMessage(result.message);
+					duplicate(result.duplicate);
+        		}
+				
+        	},
+        	error: function() {
+                console.log(arguments);
+            }
+        	
+        });
+        
+	}
+	function duplicate(data) {
+		var duplicateCheck = form.querySelector('input[name=duplicate]');
+		duplicateCheck.value = data;
+
+	}
+</script>
+</head>
+
+<body>
+	<div id="page">
+
+		<!-- Page Header-->
+		<th:block th:replace="fragments/header :: headerFragment"></th:block>
+		<div class="breadcrumbs">
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						<p class="bread">
+							<span><a th:href=@{/}>HOME</a></span> / <span>회원가입</span>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<h1 id="menuTitle">회원가입</h1>
+
+		<!-- sign up -->
+
+		<div class="signup-form-container">
+			<!--signupDone.jsp  -->
+			<form role="form" id="signup" method="post" action="/member/signup" th:oject="${memberFormDto}"
+				class="woocommerce-form woocommerce-form-register register ">
+				<div
+					class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide more">
+					<label 	th:for="supporterName" class="reg_signup">이름&nbsp;</label> 
+					
+					<input 	type="text" 
+							th:field="*{memberFormDto.supporterName}"
+							id="name"
+							class="woocommerce-Input woocommerce-Input--text input-text"
+							name="supporterName">
+				</div>
+		 
+				<div
+					class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide"
+					style="padding-left: 6px;">
+					<label class="reg_signup">아이디&nbsp;</label>
+					<input 	id="id"
+							th:field="*{memberFormDto.supporterId}"
+							type="text"
+							class="woocommerce-Input woocommerce-Input--text input-text"
+							name="supporterId">
+					
+				</div>
+				<div id="text-box">
+				
+				</div>
+				<div
+					class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide more">
+					<label class="reg_signup">비밀번호&nbsp;</label> 
+					<input th:field="*{memberFormDto.supporterPassword}"
+							id="supporter_password"
+							type="password"
+							class="woocommerce-Input woocommerce-Input--text input-text"
+							name="supporter_password" 
+							placeholder="비밀번호는 안전하게">
+				</div>
+
+				<div
+					class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide"
+					style="padding-left: 6px;">
+					<label class="reg_signup">비밀번호확인&nbsp;</label> <input
+						id="supporter_password_check" type="password"
+						class="woocommerce-Input woocommerce-Input--text input-text">
+
+				</div>
+				<div id="pwd-box"></div>
+
+				<div
+					class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide more">
+					<label class="reg_signup">핸드폰번호&nbsp;</label> 
+					<input 	th:field="*{memberFormDto.phoneNumber}"
+							id="phone" 
+							type="text"
+							class="woocommerce-Input woocommerce-Input--text input-text"
+							name="phoneNumber" 
+							placeholder=" '-' 제외하고 입력해 주세요">
+				</div>
+				
+				<div
+					class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide more">
+					<label class="reg_signup">우편주소&nbsp;</label> 
+					<input 	th:field="*{memberFormDto.postCode}"
+							type="text"
+							class="woocommerce-Input woocommerce-Input--text input-text unique post"
+							id="sample4_postcode" name="postCode" readonly> <input
+							type="button" class="searchingPostcode"
+							onclick="sample4_execDaumPostcode()" value="우편번호 찾기">
+					
+				</div>
+				 
+				<div
+					class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide more bottom">
+					<label class="reg_signup">상세주소&nbsp;</label> 
+					<input 	th:field="*{memberFormDto.detailedAddress}"
+							id="reg_detail"
+							type="text"
+							class="woocommerce-Input woocommerce-Input--text input-text"
+							name="detailedAddress">
+				</div>
+				 
+				<div class="woocommerce-form-row form-row mb-0 register">
+					<button id="sendbutton" type="submit"
+						class="btn btn-primary btn-register" name="register">가입하기</button>
+				</div>
+				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+				<input type="hidden" th:field="*{memberFormDto.duplicate}" value="">
+			</form>
+			<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+			<script th:src="@{~/js/postCodeJs.js}"></script>
+			
+			
+			<script>
+			$("#sendbutton").click((e)=> {
+				$('#signup').submit();
+			});
+			$("#id").on('input',()=>{
+				sendDuplicateCode() 
+			})
+			/*
+			$("#id").on('input',()=>{
+				
+				var id_send = $("#id").val();
+				if(idOverlap(id_send)){
+					$.ajax({
+								type:"POST",
+								//USER DAO랑 가까운 JAVA OR JSP 파일로 데이터 전송
+								url:"idCheck.me",
+								data : "id=" + id_send,
+								
+								success : function(data,textStatus,xhr){
+												
+									//true - 유저 있음, false - 유저 없음
+									if(data == "true") {
+										idResultMessage("*이미 사용중인 아이디 입니다.");
+									} else {
+										idResultMessage("*사용 가능한 아이디 입니다.");
+									}
+								},
+								
+								error : function (request,status,err) {
+									console.log("code:"+request.status);
+								},
+							})
+				}
+				})
+			$(window).ready(()=>{
+					var result_text = document.getElementById("text-box");
+					var result_pwd = document.getElementById("pwd-box");
+					if(!result_text.childElementCount) {
+						result_text.style.height = "21px";
+					}
+					if(!result_pwd.childElementCount) {
+						result_pwd.style.height = "21px";
+					}
+				})
+			$("#supporter_password").on('input',(e)=>{
+					let validatePW = e.target.value;
+					
+					if(!passwordCheckReg(validatePW)) {
+						PWResultMessage("*영문, 숫자 8~20 자리 입력");
+						return false;
+					}
+					if(passwordCheckReg(validatePW)) {
+						PWResultMessage("*사용 가능한 비밀번호 입니다");
+						return false;
+					}
+					
+					
+				})
+				
+				$("#supporter_password_check").on('input',(e)=>{
+					let validatePW = e.target.value;
+					let pwdCheck = $("#supporter_password").val();
+					
+					if(!passwordCheckReg(validatePW)) {
+						PWResultMessage("*영문, 숫자 8~20 자리 입력");
+						return false;
+					}		
+					if(!pwd_check(validatePW,pwdCheck)) {
+						PWResultMessage("*비밀번호가 일치하지 않습니다");
+						return false;
+					}
+					if(pwd_check(validatePW,pwdCheck)) {
+						PWResultMessage("*사용 가능한 비밀번호 입니다");
+						return false;
+					}				
+				})
+			
+				/*
+					전송
+				*/
+				/*
+				$("#sendbutton").click((e)=>{
+					e.preventDefault();
+					
+					var formValues = $('#signup').serializeArray();
+					var check = false;
+					formValues.forEach((e)=>{
+						console.log(e);
+						if(!checkNullCheck(e.value) 
+							|| e.value === "") {
+							check = true;
+						}
+		 			})
+		 			
+		 			if(check){
+						console.log(e);
+						alert("비어있는 값이 있습니다.");
+						return false;
+		 			}
+					
+		 			if(!koreanCheckReg(formValues[0].value)) {
+		 				alert("이름에 숫자 또는 영어는 사용할 수 없습니다");
+		 				return false;
+		 			}
+					if(!koreanCheckReg(formValues[0].value)) {
+		 				alert("이름에 숫자 또는 영어는 사용할 수 없습니다");
+		 				return false;
+		 			}
+					
+					let pwdCheck = $("#supporter_password_check").val();
+					console.log(passwordCheckReg(formValues[2].value));
+					console.log(passwordCheckReg(pwdCheck));
+					
+		 			if(!pwd_check(formValues[2].value,pwdCheck)
+		 			|| !passwordCheckReg(formValues[2].value)
+		 			|| !passwordCheckReg(pwdCheck)) {
+		 				alert("비밀번호를 확인해 주세요");
+		 				return false;
+		 			}
+		 			
+		 			if(!phoneCheckReg(formValues[3].value)) {
+		 				alert("핸드폰 번호를 확인해 주세요");
+		 				return false;
+		 			}
+		 			
+		 			
+		 			if(!postCheckReg(formValues[4].value)) {
+		 				alert("우편 번호를 확인해 주세요");
+		 				return false;
+		 			}
+		 			
+		 			$('#signup').submit();
+				})
+				*/
+			</script>
+		</div>
+
+
+
+		<!-- Page Footer-->
+		<th:block th:replace="fragments/footer :: footerFragment"></th:block>
+	</div>
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="ion-ios-arrow-up"></i></a>
+	</div>
+
+	<th:block th:replace="fragments/config :: jscript"></th:block>
+
+</body>
+</html>

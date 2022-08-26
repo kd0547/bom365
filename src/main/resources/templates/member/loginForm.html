@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html 	xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<title>로그인</title>
+
+<th:block th:replace="fragments/config :: head" ></th:block>
+<th:block th:replace="fragments/config :: configFragment" ></th:block>
+
+<th:block layout:frament="IDPWCss">
+	<style>
+		
+	</style>
+</th:block>
+	
+</head>
+<body>
+
+	<div id="page">
+
+		<!-- Page Header-->
+		<th:block th:replace="fragments/header :: headerFragment"></th:block>
+
+		<div class="breadcrumbs">
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						<p class="bread">
+							<span><a href="index.jsp">Home</a></span> / <span>로그인</span>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<h1 id="menuTitle">로그인</h1>
+		<div class="col-md-12 total-wrap" id="login">
+			<div class="col-sm-4 text-center total">
+				<form action="/member/login" method="post" name="loginForm">
+					<table id="tableStyle">
+						<tr>
+							<td id="tableCol">아이디</td>
+							<td><input type="text" class="form-control" name="supporter_id"></td>
+						</tr>
+						<tr>
+							<td>비밀번호</td>
+							<td><input type="password" class="form-control" name="supporter_password"></td>
+						</tr>
+					</table>
+					<table>
+					<!-- 임시로 만든 item  -->
+						<tr>
+							<td><a th:href="@{member/findId}"style=" font-size:13px;margin-right:10px;margin-left: 160px;">아이디 찾기</a></td>
+							<td><a th:href="@{member/findPassword}"style=" font-size:13px">비밀번호 찾기</a></td>
+						</tr>
+					</table>
+					<table id="tableStyle" style="margin-top: 20px;">
+						<tr style="position:relative; top:-18px">
+							<td><input type="submit" class="btn btn-primary" value="&nbsp;로그인&nbsp;"></td>
+							<td><a href="signup.jsp" class="btn btn-primary login">회원가입</a></td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		</div>
+		<script th:inline="javascript">
+    		/*<![CDATA[*/
+    		var message = [[${loginErrorMsg}]];
+    		if(message != null) {
+    			alert(message);
+    		}
+    		/*]]>*/
+		</script>
+
+		<!-- Page Footer-->
+		<th:block th:replace="fragments/footer :: footerFragment"></th:block>
+
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="ion-ios-arrow-up"></i></a>
+	</div>
+
+	<th:block th:replace="fragments/config :: jscript"></th:block>
+	
+
+</body>
+</html>

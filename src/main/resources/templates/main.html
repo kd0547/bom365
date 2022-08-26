@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+<html 	xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+<head>
+<title>봄365</title>
+<th:block th:replace="fragments/config :: head" ></th:block>
+
+<!--  -->
+<th:block th:replace="fragments/config :: configFragment" ></th:block>
+
+</head>
+<body>
+
+	<div id="page">
+
+		<!-- Page Header-->
+		<th:block th:replace="fragments/header :: headerFragment"></th:block>
+		
+		
+		<aside id="colorlib-hero">
+			<div class="flexslider">
+				<ul class="slides">
+					<li style="background-image: url(img/멍멍1.jpg);">
+						<div class="overlay"></div>
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-sm-6 offset-sm-2 text-left slider-text">
+									<div class="slider-text-inner">
+										<div class="desc">
+											<h2 class="head-2">구조된 동물들에게</h2>
+											<h2 class="head-3">소중한 가족이</h2>
+											<h2 class="head-3">되어주세요</h2>
+											<p class="category">
+												<span>입양은 가장 실천적인 동물구호 활동입니다</span>
+											</p>
+											<p>
+												<a href="animalList.am" class="btn btn-primary main">입양하기</a>
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</li>
+					<li style="background-image: url(img/야옹2.jpg);">
+						<div class="overlay"></div>
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-sm-6 offset-sm-4 text-right slider-text">
+									<div class="slider-text-inner">
+										<div class="desc">
+											<h2 class="head-2">당신의 따뜻한 마음으로</h2>
+											<h2 class="head-3">더 많은 동물을</h2>
+											<h2 class="head-3">살릴 수 있습니다</h2>
+											<p class="category">
+												<span>동물과 인간이 더불어 사는 사회를 위해</span>
+											</p>
+											<p>
+												<a href="support.jsp" class="btn btn-primary main">후원하기</a>
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</li>
+					<li style="background-image: url(img/멍멍3.png);">
+						<div class="overlay"></div>
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-sm-6 offset-sm-2 text-left slider-text">
+									<div class="slider-text-inner">
+										<div class="desc">
+											<h2 class="head-3">도움의 손길을</h2>
+											<h2 class="head-3">내밀어 주세요</h2>
+											<p class="category">
+												<span>여러분의 도움이 보호소 운영에 큰 힘이 됩니다</span>
+											</p>
+											<p>
+												<a href="volunteerList.vt" class="btn btn-primary main">봉사신청</a>
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</li>
+					<li style="background-image: url(img/야옹4.jpg);">
+						<div class="overlay"></div>
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-sm-6 offset-sm-4 text-right slider-text">
+									<div class="slider-text-inner">
+										<div class="desc">
+											<h2 class="head-3">여러분의 이야기를</h2>
+											<h2 class="head-3">들려주세요</h2>
+											<p class="category">
+												<span>봉사후기, 입양후기 등 자유롭게 작성해요</span>
+											</p>
+											<p>
+												<a href="boardList.do" class="btn btn-primary main">자유게시판</a>
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</aside>
+
+		<!-- Page Footer-->
+		<th:block th:replace="fragments/footer :: footerFragment"></th:block>
+
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="ion-ios-arrow-up"></i></a>
+	</div>
+	<th:block th:replace="fragments/config :: jscript"></th:block>
+	
+</body>
+</html>

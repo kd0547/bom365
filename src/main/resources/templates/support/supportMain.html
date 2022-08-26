@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html 	xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<title>후원하기</title>
+<!-- <mytag:icon /> -->
+<th:block th:replace="fragments/config :: head" ></th:block>
+<th:block th:replace="fragments/config :: configFragment" ></th:block>
+</head>
+<body>
+	<div id="page">
+	
+		<!-- Page Header-->
+		<th:block th:replace="fragments/header :: headerFragment"></th:block>
+		<div class="breadcrumbs">
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						<p class="bread">
+							<span><a th:href="@{/}">HOME</a></span> / <span>후원하기</span>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<h1 id="menuTitle">후원하기</h1>
+		<hr>
+
+		<div class="twin container support">
+			<div class="row">
+				<div class="col-md-6" style="padding-left: 15em;">
+					<div class="twins-wrap">
+						<h2 class="sub-title">정기후원</h2>
+						<div>
+							<div></div>
+						</div>
+						<h5 class="subscript">
+							매달 약정된 금액을 후원하여<br>다양한 영역에서의<br>캠페인과 문화 영역에서의 활동 등<br>봄365의
+							전반적인 활동과 운영을<br>지지해 주실 수 있습니다.
+						</h5>
+						<!-- 
+						<c:choose>
+							<c:when test="${regular_end == '진행중'}">
+								<a style="color: white;" class="btn btn-primary del support">이미
+									후원 중 입니다!</a>
+							</c:when>
+							<c:otherwise>
+								<a href="#"
+									onclick="${supporter_id == null? 'loginCheck()':'goREG()'}"
+									class="btn btn-primary del support">후원하기</a>
+							</c:otherwise>
+						</c:choose>
+						 -->
+						 <a th:href="@{/regular/payment}"
+									
+									class="btn btn-primary del support">후원하기</a>
+									<!-- ${supporter_id == null? 'loginCheck()':'goREG()'} -->
+					</div>
+				</div>
+
+				<div class="col-md-6" style="padding-right: 15em;">
+					<div class="twins-wrap">
+						<h2 class="sub-title">일시후원</h2>
+						<div>
+							<div></div>
+						</div>
+						<h5 class="subscript">
+							반려동물의 생일이나 입양일 등<br>소중한 날을 기념하여<br>동물들에게 사랑을 전해주세요.<br>한
+							번의 따뜻한 사랑이<br>큰 기적을 이루게 됩니다.
+						</h5>
+						<a th:href="@{/temporary/main}"
+							class="btn btn-primary del support">후원하기</a>
+							<!-- ${supporter_id == null? 'loginCheck()':'goTEM()'} -->
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<hr>
+	 
+		<th:block th:replace="fragments/supportTitle:: supporterTitle"></th:block>
+
+		<!-- Page Footer-->
+		<th:block th:replace="fragments/footer :: footerFragment"></th:block>
+	</div>
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="ion-ios-arrow-up"></i></a>
+	</div>
+
+	<th:block th:replace="fragments/config :: jscript"></th:block>
+		  
+</body>
+
+
+
+</html>

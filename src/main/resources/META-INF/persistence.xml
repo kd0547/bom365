@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+                http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+    <persistence-unit name="JPAstudy" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+         
+        
+        
+    
+         <!-- 
+        exclude-unlisted-classes를 true로 하면 <class>xx</class>로 명시한 클래스만 엔티티로 로딩한다. false이면 CLASSPATH에서 자동 탐색한다.
+        <jta-data-source>Member</jta-data-source>
+       	<class>com.study.JPA.member.Member</class>
+         -->
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
+        
+        <properties>
+        <!-- 필수 속성 -->
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="javax.persistence.jdbc.user" value="JPA"/>
+            <property name="javax.persistence.jdbc.password" value="1234"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/jpa_db" />
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
+            
+        <!-- DDL 자동 생성 -->
+             <property name="hibernate.hbm2ddl.auto" value="update"/> 
+        <!-- 옵션 -->
+        	<property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.format_sql" value="true" />
+            <property name="hibernate.use_sql_comments" value="true" />
+            <property name="hibernate.id.new_generator_mappings" value="true" />
+        </properties>
+
+    </persistence-unit>
+</persistence>

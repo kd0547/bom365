@@ -1,0 +1,145 @@
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<title>일시후원신청</title>
+
+<th:block th:replace="fragments/config :: head" ></th:block>
+<th:block th:replace="fragments/config :: configFragment" ></th:block>
+
+<!-- contact css  -->
+<link rel="stylesheet" th:href="@{~/css/style.css}">
+<link rel="stylesheet" th:href="@{~/css/signup_mypage.css}">
+<link rel="stylesheet" th:href="@{~/css/supportRequest.css}">
+
+
+<!-- iamport.payment.js -->
+<script type="text/javascript"
+	src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+
+</head>
+
+<body id="page">
+
+	<!-- Page Header-->
+	<th:block th:replace="fragments/header :: headerFragment"></th:block>
+
+	<div class="breadcrumbs">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<p class="bread">
+						<span><a href="support.jsp">후원신청</a></span> / <span>일시후원</span>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<h1 id="menuTitle">일시후원신청</h1>
+	<hr>
+
+	<div class="volReqFirstDiv">
+		<div style="display: inline-block;">
+			<table>
+				<tr>
+					<td style="display: flex;"><h4 style="width:100px">금액&nbsp;&nbsp;</h4> <select
+						name="temporary_amount" class="form-control input tem"
+						id="kakaopay-amount" data-msg="금액을 선택해 주세요"
+						data-error-class="u-has-error" data-success-class="u-has-success">
+						<option value="">🐶🐱🐶🐱</option>
+						<option value="10,000">10,000</option>
+						<option value="30,000">30,000</option>
+						<option value="50,000">50,000</option>
+						<option value="100,000">100,000</option>
+						<option value="150,000">150,000</option>
+						<option value="200,000">200,000</option>
+						<option value="250,000">250,000</option>
+						<option value="300,000">300,000</option>
+					</select></td>
+				</tr>
+				<tr>
+				<td style="display:relative;top:30px">
+						<input type="submit" onclick="requestPay();"
+									class="btn btn-primary del support" value="&nbsp;신청하기&nbsp;">
+				</td>
+				<!-- 
+					<td><c:choose>
+							<c:when test="${supporter_id == null }">
+								<input type="submit" onclick="loginCheck()"
+									class="btn btn-primary del support" value="&nbsp;신청하기&nbsp;">
+							</c:when>
+							<c:otherwise>
+								<input type="submit" onclick="requestPay();"
+									class="btn btn-primary del support" value="&nbsp;신청하기&nbsp;">
+							</c:otherwise>
+						</c:choose></td>
+				</tr>
+				 -->
+			</table>
+		</div>
+		<h6 style="margin-bottom: 5em; color: #59595978;">카카오페이 결제 페이지로 넘어갑니다.</h6>
+	</div>
+
+	<hr style="margin-top: 0;">
+	<th:block th:replace="fragments/supportTitle:: supporterTitle"></th:block>
+	<!-- Page Footer-->
+	<th:block th:replace="fragments/footer :: footerFragment"></th:block>
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="ion-ios-arrow-up"></i></a>
+	</div>
+
+
+	<script>
+		//KAKAO API
+		var IMP = window.IMP; // 생략 가능
+		IMP.init("imp44896858"); // 가맹점 식별코드
+		function requestPay() {
+			// IMP.request_pay(param, callback) 결제창 호출
+			IMP.request_pay({
+				pg : "html5_inicis",
+				pay_method : "card",
+				temporary_number : "5000_" + new Date().getTime(),
+				//관리자페이지(주문명)에 노출될 정보들(밑으론 key값 변경불가능)
+				name : "봄365 후원",
+				amount : document.getElementById("kakaopay-amount").value,
+				supporter_id : "${supporter_id}",
+				buyer_name : "${supporter_name}",
+			}, function(rsp) {
+				if (rsp.success) {
+					location.href = "supportDone.jsp";
+				} else {
+					alert("결제에 실패했습니다.");
+					location.href = "supportTEMInsert.jsp";
+				}
+			});
+		}
+		//데이터 Controller로 전송
+		$('#kakaopay-amount').change(
+				function() {
+					$.ajax({
+						url : "supportTEMInsert.sp",
+						type : 'get',
+						data : {
+							temporary_amount : $(
+									'#kakaopay-amount option:selected').val()
+						},
+						success : function(data) {
+						},
+						error : function() {
+							console.log("supportTEMInsert ajax진입안됨");
+						}
+					});
+					console.log(amount_input);
+				});
+	</script>
+
+
+	<script th:src="@{~/js/loginCheck.js}"></script>
+	<th:block th:replace="fragments/config :: jscript"></th:block>
+</body>
+
+
+</html>
