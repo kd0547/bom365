@@ -8,13 +8,12 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/animal")
-public class AnimalController {
+@RequestMapping(value="/volunteer")
+public class VolunteerController {
 	
-	@GetMapping(value="/list")
-	public String animalList() {
+	@GetMapping(value="/main")
+	public String volunteerMain() {
 		
-		return "animal/animalList";
+		return "volunteer/volunteerDate";
 	}
-
 }

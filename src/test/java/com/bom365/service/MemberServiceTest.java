@@ -39,6 +39,7 @@ class MemberServiceTest {
         
         return Member.createMember(memberFormDto,passwordEncoder);
 }
+	/*
 	@Test
 	@DisplayName("회원가입 테스트")
 	void testSaveMember() {
@@ -49,5 +50,11 @@ class MemberServiceTest {
 	     
 	     assertEquals(member.getSupporterId(), savedMember.getSupporterId());
 	}
-
+	*/
+	@Test
+	void testFindMember() {
+		String id = "test";
+		
+		memberService.loadUserByUsername(id);
+	}
 }

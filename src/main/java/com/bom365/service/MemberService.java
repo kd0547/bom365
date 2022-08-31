@@ -1,12 +1,14 @@
 package com.bom365.service;
 
-import javax.transaction.Transactional;
+
+
 
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bom365.entity.Member;
 import com.bom365.repository.MemberRepository;
@@ -41,10 +43,12 @@ public class MemberService implements UserDetailsService{
 		
 		Member member = memberRepository.findBySupporterId(supporter_id);
 		
+		
+		
 		if(member == null) {
 			throw new UsernameNotFoundException(supporter_id);
 		}
-		System.out.println(member.toString());
+		
 		
 		return User.builder()
 				.username(member.getSupporterId())

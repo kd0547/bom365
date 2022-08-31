@@ -1,13 +1,14 @@
 package com.bom365.entity;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.*;
 
-import com.bom365.dto.BoardDto;
+import org.hibernate.annotations.Formula;
 
 import lombok.*;
+
+import com.bom365.dto.BoardFormDto;
+
 
 
 @Entity
@@ -16,6 +17,7 @@ import lombok.*;
 @Setter
 @ToString
 public class Board extends BaseEntity{
+	
 	@Id
 	@Column(name="boardId")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,18 +30,18 @@ public class Board extends BaseEntity{
 	private String title;
 	
 	
+	
 	@Column(nullable = false)
 	private String content;
 	
-	@Column(nullable = true)
-	@OneToMany
-	@JoinColumn(name="boardId")
-	private List<Comment> comments = new ArrayList<Comment>();
+	//https://www.popit.kr/jpa-%EC%97%94%ED%84%B0%ED%8B%B0-%EC%B9%B4%EC%9A%B4%ED%8A%B8-%EC%84%B1%EB%8A%A5-%EA%B0%9C%EC%84%A0%ED%95%98%EA%B8%B0/
+	@Formula("(select count(*) from comment c where c.board_id = board_id)")
+	private int commentCount;
 	
 	
-	public void updateBoard(BoardDto boardDto) {
+	
+	public void updateBoard(BoardFormDto boardDto) {
 		this.title = boardDto.getTitle();
-		this.content = boardDto.getContent();
 	}
 	
 	

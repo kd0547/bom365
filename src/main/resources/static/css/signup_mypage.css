@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+
+
+
+
 ul{
 	   list-style:none;	   
 }
@@ -42,7 +46,7 @@ ul{
 
 /*비밀번호확인~상세주소 정렬*/
 .woocommerce-form-row.woocommerce-form-row--wide.form-row.form-row-wide.more{
-	margin: 0 0 40px 0;
+	margin: 0;
 }
 
 /*input태그*/
@@ -115,6 +119,24 @@ input.searchingPostcode:hover {
 	cursor: grabbing;
 }
 
+
+.box-size-hold {
+    margin: 0; padding: 0;
+    position: relative;
+    height: 76px;
+}
+
+.ErrorText {
+    padding: 0; margin: 0;
+    position: relative;
+    float: right;
+}
+input[type="password"] {
+    height: 44px !important;
+    }
+/*
+더이상 사용하지 않음
+
 input.validateDuplicate {
 	position:fixed;
 	padding:0px; margin:0px;
@@ -135,3 +157,4 @@ input.validateDuplicate:hover {
 	background: #978d67;
 	cursor: grabbing;
 }
+*/

@@ -34,7 +34,11 @@ public class MemberFormDto {
 	    @NotBlank(message = "상세 주소는 필수 입력 값입니다.")
 	    private String detailedAddress;
 	    
-	    //@NotBlank(message = "아이디 확인은 필수 입니다.")
-	    private Duplicate duplicate;
+	    @NotBlank(message = "아이디 확인은 필수 입니다.")
+	    private String duplicate;
 	    
+	    
+	    public boolean isDuplicateCheck() {
+			return this.duplicate.equals("duplicate");
+		}
 }

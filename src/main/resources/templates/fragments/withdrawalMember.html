@@ -1,3 +1,4 @@
+<html xmlns:th="http://www.thymeleaf.org">
 <script type="text/javascript">
 	function del() {
 		var ans = confirm("회원님의 정보는 복구되지않습니다. \n정말 탈퇴하시겠습니까?");
@@ -12,7 +13,7 @@
 		}
 	}
 </script>
-<div class="col-md-12 total-wrap withdrawal" id="login">
+<div class="col-md-12 total-wrap withdrawal" id="login" th:fragment="withdrawal">
 	<div class="container-htag">
 		<h1>${supporter_name}님!</h1>
 		<h5>
@@ -49,3 +50,4 @@
 		-->
 	</form>
 </div>
+</html>

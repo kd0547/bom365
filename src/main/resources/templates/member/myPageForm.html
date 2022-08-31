@@ -1,17 +1,44 @@
-
-<!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
 <title>마이페이지</title>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
 <th:block th:replace="fragments/config :: head" ></th:block>
 <th:block th:replace="fragments/config :: configFragment" ></th:block>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link
+	href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Jua&display=swap"
+	rel="stylesheet">
+
+
+<!-- contect boardList.css -->
+<link rel="stylesheet" th:href="@{~/css/boardList.css}">
+
+<!-- contect signup.css -->
+<link rel="stylesheet" th:href="@{~/css/signup_mypage.css}">
 
 <!-- contact deleteAccount.css -->
 <link rel="stylesheet" th:href="@{~/css/deleteAccount.css}">
 <link rel="stylesheet" th:href="@{~/css/supportRequest.css}">
 <link rel="stylesheet" th:href="@{~/css/support.css}">
+<th:block layout:fragment="css">
+		<style>
+			/* 회원가입 태그 정렬  
+   				 추가 - 2022-08-26 
+			*/
+
+			.Error {
+
+				color: red;
+			}
+			
+		</style>
+	</th:block>
+	
 </head>
 
 <body>
@@ -30,29 +57,21 @@
 					</div>
 					<div class="col">
 						<ul class="nav nav-pills mb-3">
-							<li class="nav-item">
-							<a class="nav-link active show"
+
+							<li class="nav-item"><a class="nav-link active show"
 								id="pills-description-tab" data-toggle="pill"
 								href="#pills-description" role="tab"
 								aria-controls="pills-description" aria-expanded="true"
-								aria-selected="true">
-								정보수정
-							</a>
-							</li>
-							<li class="nav-item">
-							<a class="nav-link"
+								aria-selected="true">정보수정</a></li>
+							<li class="nav-item"><a class="nav-link"
 								id="pills-manufacturer-tab" data-toggle="pill"
 								href="#pills-manufacturer" role="tab"
 								aria-controls="pills-manufacturer" aria-expanded="true"
-								aria-selected="false">
-								내역조회</a></li>
-							<li class="nav-item">
-							<a class="nav-link"
+								aria-selected="false">내역조회</a></li>
+							<li class="nav-item"><a class="nav-link"
 								id="pills-review-tab" data-toggle="pill" href="#pills-review"
 								role="tab" aria-controls="pills-review" aria-expanded="true"
-								aria-selected="false">
-								회원탈퇴</a>
-							</li>
+								aria-selected="false">회원탈퇴</a></li>
 						</ul>
 					</div>
 				</div>
@@ -73,20 +92,18 @@
 									id="pills-description" role="tabpanel"
 									aria-labelledby="pills-description-tab">
 									<th:block th:replace="fragments/updateMember :: updateMember"></th:block>
-									<!-- <mytag:updateSupporter /> -->
 								</div>
 
 								<div class="tab-pane border fade" id="pills-manufacturer"
 									role="tabpanel" aria-labelledby="pills-manufacturer-tab"
 									style="padding: 32px 0 4em 0;">
-									<th:block th:replace="fragments/updateMember :: updateMember"></th:block>
-									<!-- <mytag:myTable /> -->
+									<th:block th:replace="fragments/activityHistoryMember :: history"></th:block>
 								</div>
 
 								<div class="tab-pane border fade" id="pills-review"
 									role="tabpanel" aria-labelledby="pills-review-tab">
-									<th:block th:replace="fragments/updateMember :: updateMember"></th:block>
-									<!-- <mytag:withdrawal /> -->
+									
+									<th:block th:replace="fragments/withdrawalMember :: withdrawal"></th:block>
 
 								</div>
 							</div>
@@ -105,7 +122,8 @@
 		<a href="#" class="js-gotop"><i class="ion-ios-arrow-up"></i></a>
 	</div>
 
+	<script src="/js/loginCheck.js"></script>
+	
 	<th:block th:replace="fragments/config :: jscript"></th:block>
-
 </body>
 </html>

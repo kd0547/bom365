@@ -43,6 +43,8 @@ public class SecurityConfig {
 		// 클라이언트가 시도한 username,password 일치 여부 확인
 		// UserDetails의 password는 암호문이기에 클라이언트가 보낸 password를 암호화 하여 비교
 
+		
+		//인증없이 접근 시 처리할 핸들러 만들기
 		http
 			.formLogin()
 				.loginPage("/member/login")
@@ -51,7 +53,7 @@ public class SecurityConfig {
 					.passwordParameter("supporterPassword")
 					.failureUrl("/member/login/error")
 				.and()
-					.logout()
+				.logout()
 				.logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
 				.logoutSuccessUrl("/");
 
@@ -111,6 +113,7 @@ public class SecurityConfig {
 	public WebSecurityCustomizer webSecurityCustomizer() {
 		return (web) -> web.ignoring().antMatchers("/css/**", "/js/**", "/img/**");
 	}
+	
 	// 참고 사이트
 	// https://velog.io/@kyungwoon/Spring-Security-%EB%8F%99%EC%9E%91-%EC%9B%90%EB%A6%AC
 	// https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter
@@ -125,6 +128,7 @@ public class SecurityConfig {
 		return memberService;
 	}
 	*/
+	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();

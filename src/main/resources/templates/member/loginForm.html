@@ -7,12 +7,6 @@
 <th:block th:replace="fragments/config :: head" ></th:block>
 <th:block th:replace="fragments/config :: configFragment" ></th:block>
 
-<th:block layout:frament="IDPWCss">
-	<style>
-		
-	</style>
-</th:block>
-	
 </head>
 <body>
 
@@ -26,7 +20,7 @@
 				<div class="row">
 					<div class="col">
 						<p class="bread">
-							<span><a href="index.jsp">Home</a></span> / <span>로그인</span>
+							<span><a th:href="@{/}">Home</a></span> / <span>로그인</span>
 						</p>
 					</div>
 				</div>
@@ -40,11 +34,11 @@
 					<table id="tableStyle">
 						<tr>
 							<td id="tableCol">아이디</td>
-							<td><input type="text" class="form-control" name="supporter_id"></td>
+							<td><input type="text" class="form-control" name="supporterId"></td>
 						</tr>
 						<tr>
 							<td>비밀번호</td>
-							<td><input type="password" class="form-control" name="supporter_password"></td>
+							<td><input type="password" class="form-control" name="supporterPassword"></td>
 						</tr>
 					</table>
 					<table>
@@ -57,9 +51,10 @@
 					<table id="tableStyle" style="margin-top: 20px;">
 						<tr style="position:relative; top:-18px">
 							<td><input type="submit" class="btn btn-primary" value="&nbsp;로그인&nbsp;"></td>
-							<td><a href="signup.jsp" class="btn btn-primary login">회원가입</a></td>
+							<td><a th:href="@{/member/signup}" class="btn btn-primary login">회원가입</a></td>
 						</tr>
 					</table>
+					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 				</form>
 			</div>
 		</div>
