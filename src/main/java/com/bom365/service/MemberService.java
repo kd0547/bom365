@@ -36,6 +36,9 @@ public class MemberService implements UserDetailsService{
 		} 
 		
 	}
+	public Member findMember(String supporter_id) {
+		return memberRepository.findBySupporterId(supporter_id);
+	}
 	
 
 	@Override

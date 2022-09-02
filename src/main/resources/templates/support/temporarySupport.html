@@ -1,24 +1,33 @@
-
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org"
-		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http//www.thymeleaf.org/extras/spring-security">
+
 <head>
-<title>일시후원신청</title>
+	<title>일시후원신청</title>
 
-<th:block th:replace="fragments/config :: head" ></th:block>
-<th:block th:replace="fragments/config :: configFragment" ></th:block>
+	<meta name="_csrf" th:content="${_csrf.token}" />
+	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
 
-<!-- contact css  -->
-<link rel="stylesheet" th:href="@{~/css/style.css}">
-<link rel="stylesheet" th:href="@{~/css/signup_mypage.css}">
-<link rel="stylesheet" th:href="@{~/css/supportRequest.css}">
+	<th:block th:replace="fragments/config :: head"></th:block>
+	<th:block th:replace="fragments/config :: configFragment"></th:block>
+
+	<!-- contact css  -->
+	<link rel="stylesheet" th:href="@{~/css/style.css}">
+	<link rel="stylesheet" th:href="@{~/css/signup_mypage.css}">
+	<link rel="stylesheet" th:href="@{~/css/supportRequest.css}">
 
 
-<!-- iamport.payment.js -->
-<script type="text/javascript"
-	src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-
+	<!-- iamport.payment.js -->
+	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 </head>
+
+<script th:inline="javascript">
+	function loginForm(e) {
+		alert('로그인 후 이용 가능합니다')
+		e.preventDefault();
+		location.href = "/member/login"
+	}
+</script>
 
 <body id="page">
 
@@ -30,7 +39,7 @@
 			<div class="row">
 				<div class="col">
 					<p class="bread">
-						<span><a href="support.jsp">후원신청</a></span> / <span>일시후원</span>
+						<span><a th:href="@{/support/main}">후원신청</a></span> / <span>일시후원</span>
 					</p>
 				</div>
 			</div>
@@ -45,39 +54,31 @@
 		<div style="display: inline-block;">
 			<table>
 				<tr>
-					<td style="display: flex;"><h4 style="width:100px">금액&nbsp;&nbsp;</h4> <select
-						name="temporary_amount" class="form-control input tem"
-						id="kakaopay-amount" data-msg="금액을 선택해 주세요"
-						data-error-class="u-has-error" data-success-class="u-has-success">
-						<option value="">🐶🐱🐶🐱</option>
-						<option value="10,000">10,000</option>
-						<option value="30,000">30,000</option>
-						<option value="50,000">50,000</option>
-						<option value="100,000">100,000</option>
-						<option value="150,000">150,000</option>
-						<option value="200,000">200,000</option>
-						<option value="250,000">250,000</option>
-						<option value="300,000">300,000</option>
-					</select></td>
+					<td style="display: flex;">
+						<h4 style="width:100px">금액&nbsp;&nbsp;</h4> <select name="temporary_amount"
+							class="form-control input tem" id="kakaopay-amount" data-msg="금액을 선택해 주세요"
+							data-error-class="u-has-error" data-success-class="u-has-success">
+							<option value="">🐶🐱🐶🐱</option>
+							<option value="10000">10,000</option>
+							<option value="30000">30,000</option>
+							<option value="50000">50,000</option>
+							<option value="100000">100,000</option>
+							<option value="150000">150,000</option>
+							<option value="200000">200,000</option>
+							<option value="250000">250,000</option>
+							<option value="300000">300,000</option>
+						</select>
+					</td>
 				</tr>
 				<tr>
-				<td style="display:relative;top:30px">
-						<input type="submit" onclick="requestPay();"
-									class="btn btn-primary del support" value="&nbsp;신청하기&nbsp;">
-				</td>
-				<!-- 
-					<td><c:choose>
-							<c:when test="${supporter_id == null }">
-								<input type="submit" onclick="loginCheck()"
-									class="btn btn-primary del support" value="&nbsp;신청하기&nbsp;">
-							</c:when>
-							<c:otherwise>
-								<input type="submit" onclick="requestPay();"
-									class="btn btn-primary del support" value="&nbsp;신청하기&nbsp;">
-							</c:otherwise>
-						</c:choose></td>
-				</tr>
-				 -->
+					<!--loginForm(event) -->
+					<td style="display:relative;top:30px" sec:authorize="isAnonymous()">
+						<input type="submit" onclick='kakaopay()' class="btn btn-primary del support"
+							value="&nbsp;신청하기&nbsp;">
+					</td>
+					<td style="display:relative;top:30px" sec:authorize="isAuthenticated()">
+						<input type="submit" onclick=";" class="btn btn-primary del support" value="&nbsp;신청하기&nbsp;">
+					</td>
 			</table>
 		</div>
 		<h6 style="margin-bottom: 5em; color: #59595978;">카카오페이 결제 페이지로 넘어갑니다.</h6>
@@ -92,48 +93,78 @@
 	</div>
 
 
-	<script>
-		//KAKAO API
-		var IMP = window.IMP; // 생략 가능
-		IMP.init("imp44896858"); // 가맹점 식별코드
-		function requestPay() {
-			// IMP.request_pay(param, callback) 결제창 호출
-			IMP.request_pay({
-				pg : "html5_inicis",
-				pay_method : "card",
-				temporary_number : "5000_" + new Date().getTime(),
-				//관리자페이지(주문명)에 노출될 정보들(밑으론 key값 변경불가능)
-				name : "봄365 후원",
-				amount : document.getElementById("kakaopay-amount").value,
-				supporter_id : "${supporter_id}",
-				buyer_name : "${supporter_name}",
-			}, function(rsp) {
-				if (rsp.success) {
-					location.href = "supportDone.jsp";
-				} else {
-					alert("결제에 실패했습니다.");
-					location.href = "supportTEMInsert.jsp";
+	<script th:inline="javascript">
+
+		var kakaopay = function () {
+			//POST방식 데이터 전송에 필요한 CSRF 토큰 값 조회
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			var url = "/temporary/kakaopay"
+
+			$.ajax({
+				url: url,
+				type: 'post',
+				data: {
+					amount: document.getElementById("kakaopay-amount").value
+				},
+				/* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
+				beforeSend: function (xhr) {
+					xhr.setRequestHeader(header, token)
+				},
+				success: function () {
+
+
 				}
-			});
+
+			})
+
 		}
-		//데이터 Controller로 전송
-		$('#kakaopay-amount').change(
-				function() {
-					$.ajax({
-						url : "supportTEMInsert.sp",
-						type : 'get',
-						data : {
-							temporary_amount : $(
-									'#kakaopay-amount option:selected').val()
-						},
-						success : function(data) {
-						},
-						error : function() {
-							console.log("supportTEMInsert ajax진입안됨");
-						}
-					});
-					console.log(amount_input);
+
+
+
+		/*
+			//KAKAO API
+			var IMP = window.IMP; // 생략 가능
+			
+			IMP.init("imp44896858"); // 가맹점 식별코드
+			function requestPay() {
+				// IMP.request_pay(param, callback) 결제창 호출
+				IMP.request_pay({
+					pg : "html5_inicis",
+					pay_method : "card",
+					temporary_number : "5000_" + new Date().getTime(),
+					//관리자페이지(주문명)에 노출될 정보들(밑으론 key값 변경불가능)
+					name : "봄365 후원",
+					amount : document.getElementById("kakaopay-amount").value,
+					supporter_id : "${supporter_id}",
+					buyer_name : "${supporter_name}",
+				}, function(rsp) {
+					if (rsp.success) {
+						location.href = "supportDone.jsp";
+					} else {
+						alert("결제에 실패했습니다.");
+						location.href = "/temporary/payment";
+					}
 				});
+			}
+			//데이터 Controller로 전송
+			$('#kakaopay-amount').change(
+					function() {
+						$.ajax({
+							url : "supportTEMInsert.sp",
+							type : 'post',
+							data : {
+								temporary_amount : $('#kakaopay-amount option:selected').val()
+							},
+							success : function(data) {
+							},
+							error : function() {
+								console.log("supportTEMInsert ajax진입안됨");
+							}
+						});
+						console.log(amount_input);
+					});
+			*/
 	</script>
 
 

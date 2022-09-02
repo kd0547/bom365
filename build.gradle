@@ -28,7 +28,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+	implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.13'
+
 	compileOnly 'org.projectlombok:lombok'
+	
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'mysql:mysql-connector-java'
 	annotationProcessor 'org.projectlombok:lombok'

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bom365.dto.BoardFormDto;
+import com.bom365.dto.PageDto;
 import com.bom365.entity.Board;
 import com.bom365.repository.BoardRepository;
 
@@ -20,8 +21,9 @@ public class BoardService {
 	private final BoardRepository boardRepository;
 	
 	
-	public List<BoardFormDto> getBoardList() {
-		List<Board> boardList = boardRepository.findAll();
+	public List<BoardFormDto> getBoardList(PageDto pageDto) {
+		List<Board> boardList = boardRepository.findByIdBetween(pageDto.getStart(),pageDto.getEnd());
+		
 		List<BoardFormDto> boardDtoList = new ArrayList<>();
 		
 		for(Board board : boardList) {
@@ -35,10 +37,20 @@ public class BoardService {
 			
 			boardDtoList.add(boardDto);
 		}
-		
-		
-		
+
 		return boardDtoList;
+	}
+	
+	public Board saveBoard(Board board) {
+		return boardRepository.save(board);
+	}
+	
+	public void updateBoard() {
+		
+	}
+	
+	public void deleteBoard() {
+		
 	}
 	
 }

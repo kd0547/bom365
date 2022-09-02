@@ -1,1 +1,30 @@
 @charset "UTF-8";
+
+.container {
+	/*style="display: inline-block;"*/
+	width: 1092px;
+
+}
+
+.nav {
+	justify-content:space-between;
+	padding-bottom: 10px;
+}
+
+.searchBar {
+ 	padding-left: 10px;
+	
+}
+
+.sortBar {
+	text-align: center;
+}
+.sortBar_span {
+	display: inline-block;
+    text-align: center;
+    
+}
+
+.Pagination {
+	padding-top: 10px;
+}
