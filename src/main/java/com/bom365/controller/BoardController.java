@@ -1,11 +1,12 @@
 package com.bom365.controller;
 
 import java.security.Principal;
+
 import java.util.List;
 
 import javax.validation.Valid;
 
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.RequiredArgsConstructor;
 
+import com.bom365.custom.dto.PageDto;
 import com.bom365.dto.BoardFormDto;
-import com.bom365.dto.PageDto;
 import com.bom365.entity.Board;
 import com.bom365.entity.Member;
 import com.bom365.service.BoardService;
@@ -34,23 +35,30 @@ public class BoardController {
 	private final MemberService memberService;
 	private final BoardService boardService;
 	
-	
+	//https://congsong.tistory.com/26
 	@GetMapping("/list")
 	public String boardMain(Model model,PageDto pageDto,
 			@RequestParam(value="page",required=false) Long page,
 			@RequestParam(value="size",required=false) Long size) {
-	
+		
+		Long total = boardService.getBoardCount();
+		
+		if(page == null) {
+			page = 1L;
+			
+		}
+		
+		if(size == null) {
+			size = 10L;
+		}
+		pageDto = new PageDto(total,page,size);
 		
 		System.out.println(pageDto.toString());
 	
 		List<BoardFormDto> list = boardService.getBoardList(pageDto);
 		
-		
-		
 		model.addAttribute("boardFormDto", list);
-		model.addAttribute("pageDto", new PageDto());
-		
-		
+		model.addAttribute("pageDto", pageDto);
 		
 		return"board/boardList";
 	}

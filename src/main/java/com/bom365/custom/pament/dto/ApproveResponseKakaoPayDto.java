@@ -1,4 +1,4 @@
-package com.bom365.payment.dto;
+package com.bom365.custom.pament.dto;
 
 import java.time.LocalDateTime;
 

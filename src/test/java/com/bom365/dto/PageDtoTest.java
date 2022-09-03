@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bom365.custom.dto.PageDto;
 import com.bom365.entity.Board;
 import com.bom365.repository.BoardRepository;
 
@@ -53,10 +54,7 @@ class PageDtoTest {
 		//pageDto.setSize(test2);
 		for(Long i = 0L;i< 50L ;i++) {
 			
-			pageDto.changeStartUp();
-			pageDto.changePrePage();
-			pageDto.changeEndPage();
-			pageDto.changenextPage();
+		
 			
 			
 			
@@ -70,10 +68,7 @@ class PageDtoTest {
 		}
 		
 		for(Long i = 0L;i< 50L ;i++) {
-			pageDto.changeStartDown();
-			pageDto.changePrePage();
-			pageDto.changeEndPage();
-			pageDto.changenextPage();
+			
 			System.out.println(" changeStartUp() TEST ");
 			System.out.println(pageDto.toString());
 			System.out.println(" ");

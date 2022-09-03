@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.bom365.payment.dto.ReadyResponseKakaoPayDto;
+import com.bom365.custom.pament.dto.ReadyResponseKakaoPayDto;
 import com.bom365.service.KakaoPayService;
 
 

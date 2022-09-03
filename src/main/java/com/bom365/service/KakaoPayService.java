@@ -16,8 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import com.bom365.payment.dto.ReadyRequestKakaopayDto;
-import com.bom365.payment.dto.ReadyResponseKakaoPayDto;
+import com.bom365.custom.pament.dto.ReadyRequestKakaopayDto;
+import com.bom365.custom.pament.dto.ReadyResponseKakaoPayDto;
 
 
 @Service

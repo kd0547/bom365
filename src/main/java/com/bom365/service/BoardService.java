@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bom365.custom.dto.PageDto;
 import com.bom365.dto.BoardFormDto;
-import com.bom365.dto.PageDto;
 import com.bom365.entity.Board;
 import com.bom365.repository.BoardRepository;
 
@@ -43,6 +44,10 @@ public class BoardService {
 	
 	public Board saveBoard(Board board) {
 		return boardRepository.save(board);
+	}
+	
+	public Long getBoardCount() {
+		return boardRepository.countFindAllBy();
 	}
 	
 	public void updateBoard() {

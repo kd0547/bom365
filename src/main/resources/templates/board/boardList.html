@@ -106,18 +106,19 @@
 						<div class="block-27">
 							<ul>
 								<li>
-									<a th:href="@{/board/list?page={page}(page=${pageDto.prePage})}">
+									<a th:if="${pageDto.startPage != 1}" th:href="@{/board/list?page={page}(page=${pageDto.startPage})}">
 									<i class="ion-ios-arrow-back"></i></a>
 								</li>
 								<th:block th:with="start=${pageDto.startPage}, end=${pageDto.endPage}">
 									<li th:with="start=${pageDto.startPage}, end=${pageDto.endPage}"
 										th:each="pageindex : ${#numbers.sequence(start, end)}">
-										<a th:href="@{/board/list?page={page}(page=${pageindex})}"
+										<a th:href="@{/board/list(page=${pageindex},size=${pageDto.countPage})}"
 											th:text="${pageindex}"></a>
 									</li>
 
 									<li>
-										<a th:href="@{/board/list?page={page}(page=${pageDto.nextPage})}">
+										<a	th:if="${pageDto.startPage != lastPage}" 
+										th:href="@{/board/list?page={page}(page=${pageDto.endPage})}">
 											<i class="ion-ios-arrow-forward"></i></a>
 									</li>
 

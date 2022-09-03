@@ -1,4 +1,4 @@
-package com.bom365.dto;
+package com.bom365.custom.dto;
 
 import lombok.*;
 
@@ -33,7 +33,7 @@ import lombok.*;
 @Setter
 @ToString
 public class PageDto {
-	
+	/*
 	//default  total page 
 	private final Long defaultTotalPage = (long) 50L;
 	//default page per text 
@@ -42,43 +42,80 @@ public class PageDto {
 	private final Long defaultCountPage = (long) 5L;
 	private final Long defaultStartPage = (long) 1L;
 	
-	//custom
-	private Long totalPage = 0L;
-	//page per text 
-	private Long size = 0L;
-	
-	private Long countPage = 0L;
-	
-	private Long startPage = 1L;
 	private Long prePage = 1L;
+	private Long nextPage = this.endPage +1L;
 	
 	//현재 페이지 
 	private Long Page = 1L;
+	https://po9357.github.io/spring/2019-05-28-Board_Paging/
+	*/
+	//custom
+	private Long totalPage = 0L;
+	private Long lastPage;
+	//page per text 
+	private Long pageSize = 5L; 
 	
-	private Long endPage = (this.startPage+this.defaultCountPage)-1;
-	private Long nextPage = this.endPage +1L;
+	private Long countPage;
+	
+	
+	private Long startPage ;
+	private Long Page;
+	private Long endPage;
+	
 	
 	private Long start= 1L;
-	private Long end = this.defaultSize;
+	private Long end;
 	
-	public void ischekcPage() {
-		if(this.Page == this.nextPage) {
-			changeStartUp();
-			changePrePage();
-			changeEndPage();
-			changenextPage();
-			return;
-		} 
+	public PageDto() {
 		
-		if(this.Page == this.prePage) {
-			changeStartDown();
-			changePrePage();
-			changeEndPage();
-			changenextPage();
-			return;
+	}
+	
+	public PageDto(Long total, Long page, Long countPage) {
+		setPage(page);
+		setCountPage(countPage);
+		setTotalPage(total);
+		
+		calcLastPage(getTotalPage(),getCountPage());
+		calcStartEndPage(getPage(),pageSize);
+		calcStartEnd(getPage(), getCountPage());
+		
+	}
+	
+	public void calcLastPage(Long total, Long countPage) {
+		long set = (long) Math.ceil((double)(total /countPage));
+		
+		setLastPage(set);
+	}
+	
+	
+	public void calcStartEndPage(Long page, Long countPage) {
+		
+		long set = (page+countPage)/2;
+		System.out.println((page)+" "+countPage);
+		System.out.println((page /countPage));
+		
+		setEndPage(set * countPage);
+		
+		if(getLastPage() < getEndPage()) {
+			setEndPage(getLastPage());
+		}
+		setStartPage((getEndPage()-countPage)+1);
+		
+		if(getStartPage() < 1) {
+			setStart(1L);    
 		}
 		
 	}
+	
+	public void calcStartEnd(Long page, Long countPage) {
+		setEnd(page*countPage);
+		setStart((getEnd() - countPage)+1);
+	}
+	
+	
+	
+	/*
+
 	
 	public void changePrePage() {
 		
@@ -153,7 +190,7 @@ public class PageDto {
 		this.endPage = (this.startPage+this.countPage)-1;
 		return;
 	}
-	
+	*/
 	
 	
 	
