@@ -14,7 +14,8 @@ public class AnimalController {
 	@GetMapping(value="/list")
 	public String animalList() {
 		
-		return "animal/animalList";
+		return "error/404";
+		//return "animal/animalList";
 	}
 
 }

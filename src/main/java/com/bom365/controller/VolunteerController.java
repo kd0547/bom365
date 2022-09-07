@@ -14,6 +14,8 @@ public class VolunteerController {
 	@GetMapping(value="/main")
 	public String volunteerMain() {
 		
-		return "volunteer/volunteerDate";
+		
+		return "error/404";
+		//return "volunteer/volunteerDate";
 	}
 }

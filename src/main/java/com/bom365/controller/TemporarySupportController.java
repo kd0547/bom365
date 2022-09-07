@@ -27,7 +27,9 @@ public class TemporarySupportController {
 	@GetMapping(value="/payment")
 	public String temporaryMain() {
 		
-		return "support/temporarySupport";
+		
+		return "error/404";
+		//return "support/temporarySupport";
 	}
 	
 	

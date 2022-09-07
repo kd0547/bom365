@@ -11,7 +11,9 @@ public class RegularSupportController {
 	@GetMapping(value="/payment") 
 	public String reqularMain(){
 		
-		return "support/regularSupport";
+		
+		return "error/404";
+		//return "support/regularSupport";
 	}
 
 }
