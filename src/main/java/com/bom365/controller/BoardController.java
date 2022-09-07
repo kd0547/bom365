@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -40,22 +40,20 @@ public class BoardController {
 	public String boardMain(Model model,PageDto pageDto,
 			@RequestParam(value="page",required=false) Long page,
 			@RequestParam(value="size",required=false) Long size) {
+		// 코드 리팩토링하기 
+		// pageDto 로직을 클래스 내부에서 동작하게 구현하기 
+		
 		
 		Long total = boardService.getBoardCount();
+		pageDto = new PageDto(page,size,total);
+
 		
-		if(page == null) {
-			page = 1L;
-			
-		}
-		
-		if(size == null) {
-			size = 10L;
-		}
-		pageDto = new PageDto(total,page,size);
-		
-		System.out.println(pageDto.toString());
-	
 		List<BoardFormDto> list = boardService.getBoardList(pageDto);
+		
+		if(list.isEmpty()) {
+			list = null;
+		}
+		
 		
 		model.addAttribute("boardFormDto", list);
 		model.addAttribute("pageDto", pageDto);

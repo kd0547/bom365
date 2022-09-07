@@ -35,6 +35,9 @@ public class Member extends BaseEntity{
 	@Column(unique = true)
 	private String supporterId;
 	
+	@Column(nullable = false)
+	private String email;
+	
 	
 	@Column(nullable = false)
 	private String supporterPassword;
@@ -62,6 +65,8 @@ public class Member extends BaseEntity{
 		Member member = new Member();
 		member.setSupporterId(memberFormDto.getSupporterId());
 		member.setSupporterPassword(password);
+		
+		
 		member.setSupporterName(memberFormDto.getSupporterName());
 		member.setPhoneNumber(memberFormDto.getPhoneNumber());
 		member.setRole(Role.USER);

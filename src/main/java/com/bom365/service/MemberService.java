@@ -36,10 +36,21 @@ public class MemberService implements UserDetailsService{
 		} 
 		
 	}
+	
+	
 	public Member findMember(String supporter_id) {
 		return memberRepository.findBySupporterId(supporter_id);
 	}
 	
+	public Member findEmail(String email) {
+		Member findEmail = memberRepository.findByEmail(email);
+		
+		if(findEmail == null) {
+			throw new IllegalStateException("존재하지 않는 이메일입니다.");
+		}
+		
+		return findEmail;
+	}
 
 	@Override
 	public UserDetails loadUserByUsername(String supporter_id) throws UsernameNotFoundException {

@@ -33,165 +33,132 @@ import lombok.*;
 @Setter
 @ToString
 public class PageDto {
-	/*
-	//default  total page 
-	private final Long defaultTotalPage = (long) 50L;
-	//default page per text 
+	//https://po9357.github.io/spring/2019-05-28-Board_Paging/
+/*
+	
+	
 	private final Long defaultSize = (long) 10L;
-	//default page count 
+
 	private final Long defaultCountPage = (long) 5L;
 	private final Long defaultStartPage = (long) 1L;
+*/	
 	
-	private Long prePage = 1L;
-	private Long nextPage = this.endPage +1L;
 	
 	//현재 페이지 
-	private Long Page = 1L;
-	https://po9357.github.io/spring/2019-05-28-Board_Paging/
-	*/
-	//custom
-	private Long totalPage = 0L;
-	private Long lastPage;
-	//page per text 
-	private Long pageSize = 5L; 
-	
-	private Long countPage;
-	
-	
-	private Long startPage ;
 	private Long Page;
+	
+	//보여줄 페이지 갯수
+	private Long pageSize = 5L; 
+	// 페이지에 보여줄 글 갯수
+	private Long pagePerText;
+	private Long totalPage;
+	
+	private Long prePage;
+	private Long nextPage;
+	
+	private Long startPage =1L;
 	private Long endPage;
 	
+	//마지막 페이지 계산
+	private Long lastPage;
 	
-	private Long start= 1L;
+	private Long start;
 	private Long end;
+	
+	/*
+	 * 	1 - 1~10
+	 * 	2 - 11~20
+	 * 	3 - 21~30
+	 */
 	
 	public PageDto() {
 		
 	}
 	
-	public PageDto(Long total, Long page, Long countPage) {
-		setPage(page);
-		setCountPage(countPage);
-		setTotalPage(total);
+	// 코드 리팩토링 하기 
+	public PageDto(Long page,Long pagePerText,Long totalPage) {
 		
-		calcLastPage(getTotalPage(),getCountPage());
-		calcStartEndPage(getPage(),pageSize);
-		calcStartEnd(getPage(), getCountPage());
 		
-	}
-	
-	public void calcLastPage(Long total, Long countPage) {
-		long set = (long) Math.ceil((double)(total /countPage));
+		this.Page = (page == null) ? 1L : page;
+		this.pagePerText = (pagePerText == null) ? 5L : pagePerText;
+		this.totalPage = totalPage;
+		this.lastPage =(this.totalPage/this.pagePerText)+1;
+		this.endPage = this.Page + this.pageSize;
+		calcStartEndPage();
+		calcStartEnd();
 		
-		setLastPage(set);
-	}
-	
-	
-	public void calcStartEndPage(Long page, Long countPage) {
+		setNextPage(getEndPage()+getPageSize());
+		setPrePage((getStartPage()-getPageSize())<= 1L ? 1L :  getStartPage()-getPageSize());
+		//setEndPage((getStartPage()+getPageSize()) > getLastPage() ? getLastPage() :(getStartPage()+getPageSize()));
 		
-		long set = (page+countPage)/2;
-		System.out.println((page)+" "+countPage);
-		System.out.println((page /countPage));
-		
-		setEndPage(set * countPage);
-		
-		if(getLastPage() < getEndPage()) {
-			setEndPage(getLastPage());
-		}
-		setStartPage((getEndPage()-countPage)+1);
-		
-		if(getStartPage() < 1) {
-			setStart(1L);    
-		}
 		
 	}
-	
-	public void calcStartEnd(Long page, Long countPage) {
-		setEnd(page*countPage);
-		setStart((getEnd() - countPage)+1);
+	public void calcStartEndPage() {
+		Long var = (long) Math.ceil((double)getPage()/getPageSize()) * getPageSize();
+		if(var <= getLastPage())
+		setEndPage(var);
+		setStartPage(getEndPage()-getPageSize()+1);
+		
+		
 	}
-	
-	
 	
 	/*
-
-	
-	public void changePrePage() {
+	public void calcStartEndPage() {
 		
-		this.prePage = this.startPage - 1L; 
-		if(this.prePage <= 1L) {
-			
-			this.prePage += this.defaultStartPage;
-			return;
+		setStartPage((long) Math.ceil((double)getPage()/getPageSize())*getPageSize() -getPageSize() );
+		setEndPage(getStartPage()+getPageSize()-1);
+		if(getEndPage()>= getLastPage()) {
+			setEndPage(getLastPage());
 		}
 		
-		
-	}
-	public void setStartEnd() {
-		this.start = this.startPage + this.defaultSize;
-		
-		if(this.size == 0L) {
-			this.end = (this.start+ this.defaultSize)-1;
-			return;
-		}
-		this.end = (this.start + this.defaultSize)-1;
-		return;
-	}
-	
-	
-	public void changeStartUp() {
-		if(this.countPage ==  0L) {
-			
-			this.startPage += this.defaultCountPage; 
-			return;
-		}
-		
-		this.startPage += this.countPage;
-		return;
-	}
-	
-	
-	public void changeStartDown() {
-		
-		if(this.countPage == 0L) {
-			if((this.startPage - this.defaultCountPage) < this.defaultStartPage) {
-				
-				this.startPage = this.defaultStartPage;
-				
-				return;
-			}
-			this.startPage -= this.defaultCountPage; 
-			return;
-		}
-		if((this.startPage - this.defaultCountPage) < this.defaultStartPage) {
-			this.startPage = this.defaultStartPage;
-			
-			return;
-		}
-		
-		this.startPage -=this.countPage;
-		return;
-	}
-	
-	public void changenextPage() {
-		this.nextPage = this.endPage +1L;
-		
-	}
-	
-	
-	public void changeEndPage() {
-		
-		if(this.countPage == 0L) {
-			this.endPage = (this.startPage+this.defaultCountPage)-1;
-			return;
-		}
-		
-		this.endPage = (this.startPage+this.countPage)-1;
-		return;
 	}
 	*/
 	
+	/*
+	 * public void calcStartEndPage() {
+		
+		if(this.endPage <= this.lastPage) {
+			this.endPage = this.Page + this.pageSize;
+		}
+		this.startPage = this.Page;
+		
+		
+		if(this.startPage < 1L) {
+			this.startPage = 1L;
+		}
+	}
+	 */
+	
+	//DB 조회용 메서드 계산 
+	public void calcStartEnd() {
+		
+		setEnd(getPage()*getPagePerText());
+		setStart((getEnd()-getPagePerText())+1);
+	}
+	
+	
+	
+	public void calNextPage() {
+		
+		if(this.Page == this.nextPage) {
+			
+			this.endPage = this.Page + this.pageSize;
+			this.startPage = this.endPage - this.pageSize;
+		}
+
+	}
+	
+	public void calPrevPage() {
+		setStartPage(getStartPage()-getPageSize());
+		setEndPage(getStartPage()+getPageSize());
+		if(getStartPage() <= 1) {
+			setStartPage(1L);
+			return;
+		}
+		
+		
+		
+	}
 	
 	
 

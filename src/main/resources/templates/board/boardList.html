@@ -101,24 +101,25 @@
 					</table>
 				</div>
 
-				<div class="Pagination">
+				<div class="Pagination" th:if="${boardFormDto != null}">
 					<div class="col-md-12 text-center">
+				
 						<div class="block-27">
 							<ul>
 								<li>
-									<a th:if="${pageDto.startPage != 1}" th:href="@{/board/list?page={page}(page=${pageDto.startPage})}">
+									<a th:if="${pageDto.startPage != 1}" th:href="@{/board/list(page=${pageDto.prePage},size=${pageDto.pagePerText})}">
 									<i class="ion-ios-arrow-back"></i></a>
 								</li>
 								<th:block th:with="start=${pageDto.startPage}, end=${pageDto.endPage}">
 									<li th:with="start=${pageDto.startPage}, end=${pageDto.endPage}"
 										th:each="pageindex : ${#numbers.sequence(start, end)}">
-										<a th:href="@{/board/list(page=${pageindex},size=${pageDto.countPage})}"
+										<a th:href="@{/board/list(page=${pageindex},size=${pageDto.pageSize})}"
 											th:text="${pageindex}"></a>
 									</li>
 
 									<li>
-										<a	th:if="${pageDto.startPage != lastPage}" 
-										th:href="@{/board/list?page={page}(page=${pageDto.endPage})}">
+										<a	th:if="${pageDto.endPage != pageDto.lastPage}" 
+										th:href="@{/board/list(page=${pageDto.nextPage},size=${pageDto.pagePerText})}">
 											<i class="ion-ios-arrow-forward"></i></a>
 									</li>
 

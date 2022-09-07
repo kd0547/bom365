@@ -15,6 +15,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bom365.constant.Duplicate;
@@ -25,6 +26,7 @@ import com.bom365.dto.MemberFormDto;
 import com.bom365.dto.UpdateMemberFormDto;
 import com.bom365.entity.Member;
 import com.bom365.repository.MemberRepository;
+import com.bom365.service.EmailService;
 import com.bom365.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
@@ -36,9 +38,13 @@ public class MemberController {
 	
 	private final MemberService memberService;
 	private final MemberRepository memberRepository;
+	private final EmailService emailService;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	
+	
 	
 	@GetMapping(value="/login")
 	public String loginForm() {
@@ -46,15 +52,45 @@ public class MemberController {
 		return "member/loginForm";
 	}
 	
+	@GetMapping("/findId")
+	public String findIdEmail() {
+		
+		
+		return "member/searchId";
+	}
+	
+	
+	@PostMapping("/findId")
+	public String findIdEmail(@RequestParam String email ,Model model) {
+		Member member = new Member();
+		
+		try {
+			member = memberService.findEmail(email);
+		} catch (IllegalStateException e) {
+			model.addAttribute("findErrorMessage",e.getMessage());
+			
+			return "member/searchId";
+		}
+		
+		
+		emailService.sendIdEmail(member.getEmail(), member.getSupporterId());
+		model.addAttribute("findSuccessMessage","이메일을 전송했습니다.");
+		
+		
+		return "member/searchId";
+	}
 	
 	
 	
-	//@ResponseBody ResponseEntity
+	
+	
+	//리팩토링 하기
 	@PostMapping(value="/duplicate")
 	public @ResponseBody DuplicateDto validateDuplicateId(@Valid CheckIdDto id, BindingResult bindingResult ) {
 		/*
 		 * 유효성 검사
 		 */
+		
 		if(bindingResult.hasErrors()) {
 			DuplicateDto duplicateDto = 
 					new DuplicateDto(HttpStatus.OK,200,bindingResult.getFieldError("id").getDefaultMessage(),null);
@@ -73,13 +109,13 @@ public class MemberController {
 			
 		} catch (IllegalStateException e) {
 			
-			//리팩토링 하기
+			
 			DuplicateDto duplicateDto = 
 					new DuplicateDto(HttpStatus.OK,200,e.getMessage(),Duplicate.Duplicate);
 			
 			return duplicateDto;
 		}
-		//리팩토링 하기
+		
 		DuplicateDto duplicateDto = 
 				new DuplicateDto(HttpStatus.OK,200,"가입 가능한 아이디입니다.",Duplicate.NotDuplicate);
 		
@@ -92,11 +128,11 @@ public class MemberController {
 	
 	
 	
-	
+	//리팩토링 
 	@PostMapping(value="/signup")
 	public String signup(@Valid MemberFormDto memberFormDto, BindingResult bindingResult,Model model) {
 		
-		//리팩토링 
+		
 		if(bindingResult.hasErrors() || memberFormDto.isDuplicateCheck() ) {
 			return "member/signupForm";
 		}

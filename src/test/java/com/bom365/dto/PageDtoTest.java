@@ -2,6 +2,7 @@ package com.bom365.dto;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +16,6 @@ import com.bom365.entity.Board;
 import com.bom365.repository.BoardRepository;
 
 @SpringBootTest
-@Transactional
 class PageDtoTest {
 
 	@Autowired
@@ -23,7 +23,7 @@ class PageDtoTest {
 	/*
 	@BeforeEach
 	void setUp() {
-		for(int i=0; i<956; i++) {
+		for(int i=0; i<124; i++) {
 			Board board = new Board();
 			board.setTitle("title"+i);
 			board.setContent("content"+i);
@@ -34,45 +34,28 @@ class PageDtoTest {
 		}
 	}
 	*/
+	
+	
 	@Test
 	void test() {
-		PageDto pageDto = new PageDto();
 		
-		Long test = 1L;
-		Long test2 = 10L;
 		
-
 		
-		pageDto.setStartPage(test);
+		Long pageSize = 10L;
 		
-		//System.out.println(" 기본 ");
-		//System.out.println(pageDto.toString());
-		System.out.println(" ");
-		
-		//changeStartUp() TEST
-		pageDto.setCountPage(test2);
-		//pageDto.setSize(test2);
-		for(Long i = 0L;i< 50L ;i++) {
+		for(Long i = 1L; i < 124; i++) {
 			
-		
+			PageDto pageDto = new PageDto();
+			pageDto.setTotalPage(boardRepository.countFindAllBy());
+			pageDto.setLastPage(pageDto.getTotalPage()/pageDto.getPageSize()+1);
 			
+			pageDto.setPage(i);
+			pageDto.calcStartEndPage();
 			
-			
-			System.out.println(" changeStartUp() TEST ");
-			System.out.println(pageDto.toString());
-			
-			
-			
-			
-			System.out.println(" ");
+			System.out.println(i+" : "+ pageDto.toString());
 		}
 		
-		for(Long i = 0L;i< 50L ;i++) {
-			
-			System.out.println(" changeStartUp() TEST ");
-			System.out.println(pageDto.toString());
-			System.out.println(" ");
-		}
+		
 		
 		
 	}

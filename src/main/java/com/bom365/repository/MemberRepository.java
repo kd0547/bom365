@@ -9,4 +9,7 @@ import com.bom365.entity.Member;
 public interface MemberRepository extends JpaRepository<Member, Long>{
 	Member findBySupporterId(String supporter_id);
 	
+	
+	Member findByEmail(String email);
+	
 }
