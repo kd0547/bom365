@@ -9,8 +9,7 @@ import lombok.*;
 @Getter
 @ToString
 public class CommentDto {
-private Board board;
-	
+
 	private String writer;
 	
 	private String Content;

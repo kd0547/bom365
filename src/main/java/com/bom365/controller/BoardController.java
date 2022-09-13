@@ -3,10 +3,11 @@ package com.bom365.controller;
 import java.security.Principal;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
-import org.springframework.data.domain.Pageable;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,9 +22,12 @@ import lombok.RequiredArgsConstructor;
 import com.bom365.custom.dto.PageDto;
 import com.bom365.dto.BoardFormDto;
 import com.bom365.entity.Board;
+import com.bom365.entity.Comment;
 import com.bom365.entity.Member;
 import com.bom365.service.BoardService;
+import com.bom365.service.CommentService;
 import com.bom365.service.MemberService;
+
 
 
 
@@ -32,6 +36,7 @@ import com.bom365.service.MemberService;
 @RequestMapping("/board")
 public class BoardController {
 	
+	private final CommentService commentService;
 	private final MemberService memberService;
 	private final BoardService boardService;
 	
@@ -63,8 +68,20 @@ public class BoardController {
 
 	
 	@GetMapping("/content/{boardId}")
-	public String detailContent(@PathVariable("boardId") Long boardId, Model model) {
+	public String detailContent( @PathVariable("boardId") Long boardId,Principal principal , Model model) {
+		Board board = boardService.selectBoardOne(boardId);
+		//List<Comment> comments = commentService.findCommentBoardId(boardId);
 		
+		BoardFormDto boardFormDto = new BoardFormDto();
+		boardFormDto.setId(board.getId());
+		boardFormDto.setTitle(board.getTitle());
+		boardFormDto.setContent(board.getContent());
+		boardFormDto.setRegTime(board.getRegTime());
+		boardFormDto.setWriter(board.getWriter());
+		boardFormDto.setWriterId(board.getWriterId());
+		
+		model.addAttribute("userAuth", principal.getName());
+		model.addAttribute("boardFormDto", boardFormDto);
 		
 		
 		
@@ -109,6 +126,6 @@ public class BoardController {
 		
 		
 		
-		return "redirect:board/boardList";
+		return "board/List";
 	}
 }

@@ -3,6 +3,8 @@ package com.bom365.service;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -40,6 +42,15 @@ public class BoardService {
 		}
 
 		return boardDtoList;
+	}
+	public Board selectBoardOne(Long id) {
+	 	Optional<Board> board = boardRepository.findById(id);
+		
+	 	if(!board.isPresent()) {
+	 		throw new NoSuchElementException();
+	 	}
+	 	
+		return board.get();
 	}
 	
 	public Board saveBoard(Board board) {

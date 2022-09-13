@@ -11,6 +11,7 @@ public class MemberDto {
 	
 	private String supporterId;
 	private String supporterPassword;
+	private String email;
 	private String supporterName;
 	private String phoneNumber;
 	private String postCode;

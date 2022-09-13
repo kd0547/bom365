@@ -30,7 +30,7 @@ public class EmailService {
 			MimeMessageHelper mineMessageHelper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
 			// setFrom 사용 안하고 사용방법 찾기 
 			mineMessageHelper.setTo(to);
-			mineMessageHelper.setFrom("");
+			
 			mineMessageHelper.setSubject(subject);
 			mineMessageHelper.setText(text, html);
 			

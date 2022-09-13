@@ -141,6 +141,7 @@ public class MemberController {
 		MemberDto memberDto= new MemberDto();
 		memberDto.setSupporterId(memberFormDto.getSupporterId());
 		memberDto.setSupporterName(memberFormDto.getSupporterName());
+		memberDto.setEmail(memberFormDto.getEmail());
 		memberDto.setSupporterPassword(memberFormDto.getSupporterPassword());
 		memberDto.setPostCode(memberFormDto.getPostCode());
 		memberDto.setPhoneNumber(memberFormDto.getPhoneNumber());

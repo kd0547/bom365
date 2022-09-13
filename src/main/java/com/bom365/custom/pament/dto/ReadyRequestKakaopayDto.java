@@ -15,7 +15,7 @@ public class ReadyRequestKakaopayDto {
 		
 		//	가맹점 주문번호, 최대 100자	O
 		private String partner_order_id;
-		
+		 
 		//가맹점 회원 id, 최대 100자	O
 		private String partner_user_id;
 		

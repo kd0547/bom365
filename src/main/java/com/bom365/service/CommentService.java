@@ -1,8 +1,11 @@
 package com.bom365.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bom365.entity.Comment;
 import com.bom365.repository.CommentRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -13,6 +16,11 @@ import lombok.RequiredArgsConstructor;
 public class CommentService {
 	
 	private final CommentRepository commentRepository;
+	
+	
+	public List<Comment> findCommentBoardId(Long boardId) {
+		return commentRepository.findByBoardId(boardId);
+	}
 	
 	
 	public void saveComment() {

@@ -1,8 +1,18 @@
 package com.bom365.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.bom365.custom.pament.dto.ApproveRequestKakaoPayDto;
+import com.bom365.custom.pament.dto.ApproveResponseKakaoPayDto;
+import com.bom365.custom.pament.dto.ReadyRequestKakaopayDto;
+import com.bom365.custom.pament.dto.ReadyRequestSubscriptionDto;
+import com.bom365.custom.pament.dto.ReadyResponseKakaoPayDto;
+import com.bom365.dto.KakaoPayFormDto;
 
 @Controller
 @RequestMapping(value="/regular")
@@ -12,8 +22,42 @@ public class RegularSupportController {
 	public String reqularMain(){
 		
 		
-		return "error/404";
-		//return "support/regularSupport";
+		//return "error/404";
+		return "support/regularSupport";
 	}
-
+	
+	//리팩토링하기
+	@PostMapping(value="/kakaopay")
+	public void  readyKakaopay(KakaoPayFormDto kakaopayFormDto, Model model) {
+		ReadyRequestSubscriptionDto readyRequestSubscriptionDto = new ReadyRequestSubscriptionDto();
+		ApproveResponseKakaoPayDto approveResponseKakaoPayDto = null;
+		
+		
+		readyRequestSubscriptionDto.setCid("TCSUBSCRIP");
+		readyRequestSubscriptionDto.setItem_name("봄365 후원");
+		readyRequestSubscriptionDto.setPartner_order_id("500"+ "12345");
+		readyRequestSubscriptionDto.setPartner_user_id(kakaopayFormDto.getId());
+		readyRequestSubscriptionDto.setQuantity(1);
+		readyRequestSubscriptionDto.setTotal_amount(kakaopayFormDto.getAmount());
+		readyRequestSubscriptionDto.setTax_free_amount(0);
+		
+		
+		  
+		//readyResponseKakaoPayDto = kakaoPayService.payReady(readyRequestKakaopayDto);
+		
+		//ApproveRequestKakaoPayDto approveRequestKakaoPayDto = new ApproveRequestKakaoPayDto();
+		
+		
+		//approveRequestKakaoPayDto.setCid(readyRequestKakaopayDto.getCid());
+		//approveRequestKakaoPayDto.setTid(readyResponseKakaoPayDto.getTid());
+		//approveRequestKakaoPayDto.setPartner_order_id(readyRequestKakaopayDto.getPartner_order_id());
+		//approveRequestKakaoPayDto.setPartner_user_id(readyRequestKakaopayDto.getPartner_user_id());
+		
+		
+		
+		
+		//model.addAttribute("approveRequestKakaoPayDto", approveRequestKakaoPayDto);
+		//return readyResponseKakaoPayDto;
+	}
+	
 }

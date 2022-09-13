@@ -2,74 +2,95 @@ package com.bom365.service;
 
 
 
-
+import java.net.URI;
 
 import java.net.URISyntaxException;
 
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
+import org.springframework.beans.factory.annotation.Autowired;
+
 
 import org.springframework.http.MediaType;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import com.bom365.custom.pament.dto.ApproveRequestKakaoPayDto;
+import com.bom365.custom.pament.dto.ApproveResponseKakaoPayDto;
+import com.bom365.custom.pament.dto.CancelRequestKakaopayDto;
+import com.bom365.custom.pament.dto.CancelResponseKakaopayDto;
 import com.bom365.custom.pament.dto.ReadyRequestKakaopayDto;
 import com.bom365.custom.pament.dto.ReadyResponseKakaoPayDto;
+import com.bom365.custom.pament.service.KakaoPayment;
+import com.bom365.custom.pament.service.PaymentService;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+
+/*
+
+*/
 
 
 @Service
 public class KakaoPayService {
+	//https://intrepidgeeks.com/tutorial/bind-kakapay-api-in-spring-boot
+	@Autowired
+	KakaoPayment kakaoPayment;
 	
 	
-	
+	/*
+		리팩토링하기 
+	*/
 	//카카오페이 결제 요청
-	public ReadyResponseKakaoPayDto payReady(int totalAmount,String UserId) {
-		//리팩토링하기 
-		//https://intrepidgeeks.com/tutorial/bind-kakapay-api-in-spring-boot
+	public ReadyResponseKakaoPayDto payReady(ReadyRequestKakaopayDto readyRequestKakaopayDto) {
+		ObjectMapper objectMapper = new ObjectMapper();
+		MultiValueMap<String, String> params = kakaoPayment.convert(objectMapper, readyRequestKakaopayDto);
+		ReadyResponseKakaoPayDto readyResponseKakaoPayDto = null;
 		
-		String url= "https://kapi.kakao.com/v1/payment/ready";
-		RestTemplate restTemplate = new RestTemplate();
-		restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
-		
-		
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Authorization","AdminKey");
-		
-		
-		headers.add("Content-type",MediaType.APPLICATION_JSON_VALUE);
-		headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
-		
-		ReadyRequestKakaopayDto readyRequestKakaopayDto = new ReadyRequestKakaopayDto();
-		
-		readyRequestKakaopayDto.setCid("imp44896858");
-		readyRequestKakaopayDto.setItem_name("봄365 후원");
-		readyRequestKakaopayDto.setPartner_order_id("500"+ "12345");
-		readyRequestKakaopayDto.setPartner_user_id(UserId);
-		readyRequestKakaopayDto.setQuantity(1);
-		readyRequestKakaopayDto.setTotal_amount(totalAmount);
-		readyRequestKakaopayDto.setTax_free_amount(0);
-		readyRequestKakaopayDto.setApproval_url("http://localhost/order/pay/completed");
-		readyRequestKakaopayDto.setCancel_url("http://localhost/order/pay/cancel");
-		readyRequestKakaopayDto.setFail_url("http://localhost/order/pay/fail");
-		
-		
-		HttpEntity<ReadyRequestKakaopayDto> request = new HttpEntity<>(readyRequestKakaopayDto,headers);
-		
-		System.out.println("HEADER : "+request.getHeaders());
 		
 		try {
-			ReadyResponseKakaoPayDto readyResponseKakaoPayDto = restTemplate.postForObject(url, request, ReadyResponseKakaoPayDto.class);
-			
-		} catch (RestClientException e) {
+			readyResponseKakaoPayDto = kakaoPayment.send(new URI(kakaoPayment.PaymentReady()), params, ReadyResponseKakaoPayDto.class);
+		}  catch (RestClientException | URISyntaxException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		}
 		
-		
-		//System.out.println(readyResponseKakaoPayDto.toString());
-		
-		return null;
+		return readyResponseKakaoPayDto;
 	}
+	
+	//카카오페이 결제 허용
+	public ApproveResponseKakaoPayDto payApprove(ApproveRequestKakaoPayDto approveRequestKakaoPayDto ) {
+		ObjectMapper objectMapper = new ObjectMapper();
+		MultiValueMap<String, String> params = kakaoPayment.convert(objectMapper, approveRequestKakaoPayDto);
+		ApproveResponseKakaoPayDto readyResponseKakaoPayDto = null;
+		
+		try {
+			readyResponseKakaoPayDto = kakaoPayment.send(new URI(kakaoPayment.PaymentApprove()), params, ApproveResponseKakaoPayDto.class);
+		}  catch (RestClientException | URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return readyResponseKakaoPayDto;
+	}
+	
+	//카카오 페이 결제 취소
+	public CancelResponseKakaopayDto payCancel(CancelRequestKakaopayDto cancelRequestKakaopayDto) {
+		ObjectMapper objectMapper = new ObjectMapper();
+		MultiValueMap<String, String> params = kakaoPayment.convert(objectMapper, cancelRequestKakaopayDto);
+		CancelResponseKakaopayDto cancelResponseKakaopayDto = null;
+		
+		try {
+			cancelResponseKakaopayDto = kakaoPayment.send(new URI(kakaoPayment.PaymentCancel()), params, CancelResponseKakaopayDto.class);
+		}  catch (RestClientException | URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return cancelResponseKakaopayDto;
+	}
+	
 }

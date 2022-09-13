@@ -42,20 +42,18 @@
 
 					<div class="form-group boardOne">
 						<h5 class="h5-detail title" style="width: 100%;">제목</h5>
-						<c:if test="${boardOne.board.supporter_id!='admin'}">
-							<h5 class="h5-detail title info">${boardOne.board.supporter_id}
-								| ${boardOne.board.board_date}</h5>
-						</c:if>
 					</div>
 
-					<div class="title-box">
-						<h5 style="padding: 14px;">${boardOne.board.board_title}</h5>
+					<div class="title-box" >
+						<h5 style="padding: 14px;" th:text="${boardFormDto.title}">${boardOne.board.board_title}</h5>
 					</div>
 					<div class="form-group">
 						<h5>내용</h5>
-						<textarea name="board_content" id="autoHeight"
+						<textarea name="board_content" id="autoHeight" th:text="${boardFormDto.content}"
 							class="form-control gap one" disabled>${boardOne.board.board_content}</textarea>
 					</div>
+					
+					
 					<script type="text/javascript">
 						function adjustHeight() {
 							var textEle = $('#autoHeight');
@@ -65,67 +63,61 @@
 						};
 						adjustHeight();
 					</script>
+					
 					<!-- 본인 글에만 노출 -->
-					<c:if test="${boardOne.board.supporter_id==supporter_id}">
-						<div style="float: right;">
+					
+						<div style="float: right;" th:if="userAuth == boardFormDto.writerId">
 							<a
-								href="boardUpdatePage.do?board_number=${boardOne.board.board_number}"
+								th:href="@{/board/update(id=${boardFormDto.id})}"
 								class="btn btn-primary boardUD">수정하기</a> <a
-								href="boardDelete.do?board_number=${boardOne.board.board_number}"
-								class="btn btn-primary boardUD" onclick="del()">삭제하기</a>
+								th:href="@{/board/delete(id=${boardFormDto.id})}"
+								class="btn btn-primary boardUD" onclick="del()">삭제하기
+							</a>
 						</div>
-					</c:if>
 
 				</div>
 			</div>
 
-			<c:if test="${boardOne.board.supporter_id!='admin'}">
+			
 				<!-- 댓글 -->
 				<hr>
 				<div class="col-sm-4 text-left total writeForm"
 					style="display: inline-block;">
 					<h3 class="head">${boardOne.board.board_commentCnt}&nbsp;Reviews</h3>
 
-					<c:forEach var="v" items="${boardOne.comments}">
 						<div class="review">
 							<div class="desc">
 								<p class="p-comment" style="font-size: 18px;">${v.comment_content}</p>
 								<span class="text-right" style="color: #5959596b;">${v.supporter_id}&nbsp;|&nbsp;${v.comment_date}
-									<!-- 본인 댓글에만 노출 --> <c:if
-										test="${v.supporter_id==supporter_id}">
 										<a
 											href="commentDelete.do?comment_number=${v.comment_number}&board_number=${boardOne.board.board_number}"
-											class="commentDel">&nbsp;&nbsp;&nbsp;삭제</a>
-									</c:if>
+											class="commentDel">&nbsp;&nbsp;&nbsp;삭제
+										</a>
+									
 								</span>
 							</div>
 						</div>
-					</c:forEach>
-
-					<form action="commentInsert.do" method="post"
-						style="display: flex;">
-						<input type="hidden" name="board_number"
-							value="${boardOne.board.board_number}">
-
-						<!-- 로그인 시에만 댓글 작성 가능 -->
-						<c:choose>
-							<c:when test="${supporter_id==null}">
-								<textarea name="comment_content" cols="10" rows="3"
-									class="form-control gap comment comment"
-									placeholder="댓글을 작성하려면 로그인 해주세요" disabled></textarea>
-								<input type="submit" value="댓글등록"
-									class="btn btn-primary inputSubmit comment" disabled>
-							</c:when>
-							<c:otherwise>
-								<textarea name="comment_content" cols="10" rows="3"
-									class="form-control gap comment comment"
-									placeholder="댓글을 남겨보세요."></textarea>
-								<input type="submit" value="댓글등록"
+					
+					<div>
+						<form action="/" method="post">
+							<div sec:authorize="isAnonymous()" >
+								<textarea  name="comment_content" cols="10" rows="3" 
+									class="form-control gap comment comment " style="width:100%; margin:0px; padding:0px; border-radius: 0px  "
+									placeholder="댓글을 작성하려면 로그인 해주세요"></textarea>
+								<input type="submit" value="댓글등록" style="margin-right:0px;margin-top : 10px; border-radius: 0px"
 									class="btn btn-primary inputSubmit comment">
-							</c:otherwise>
-						</c:choose>
-
+							</div>
+							<div sec:authorize="isAuthenticated()"  >
+								<textarea name="comment_content" cols="10" rows="3"style="width:100%; margin:0px; padding:0px; border-radius: 0px  "
+									class="form-control gap comment comment" 
+									placeholder="댓글을 남겨보세요."></textarea>
+								<input type="submit" value="댓글등록" style=" margin-right:0px;margin-top : 10px; border-radius: 0px"
+									class="btn btn-primary inputSubmit comment">
+							</div>
+							<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 					</form>
+					</div>
+					
 				</div>
 			</c:if>
 		</div>

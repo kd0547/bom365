@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	xmlns:sec="http//www.thymeleaf.org/extras/spring-security">
+<html 	xmlns:th="http://www.thymeleaf.org" 
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		xmlns:sec="http//www.thymeleaf.org/extras/spring-security">
 
 <head>
 	<title>일시후원신청</title>
@@ -27,6 +28,8 @@
 		e.preventDefault();
 		location.href = "/member/login"
 	}
+	
+	
 </script>
 
 <body id="page">
@@ -52,6 +55,7 @@
 
 	<div class="volReqFirstDiv">
 		<div style="display: inline-block;">
+		<!-- <p th:text="${#authentication.name}"></p> -->
 			<table>
 				<tr>
 					<td style="display: flex;">
@@ -73,11 +77,11 @@
 				<tr>
 					<!--loginForm(event) -->
 					<td style="display:relative;top:30px" sec:authorize="isAnonymous()">
-						<input type="submit" onclick='kakaopay()' class="btn btn-primary del support"
-							value="&nbsp;신청하기&nbsp;">
+						<input type="submit" onclick='loginForm()' class="btn btn-primary del support"
+							value="&nbsp;로그인 하기&nbsp;">
 					</td>
 					<td style="display:relative;top:30px" sec:authorize="isAuthenticated()">
-						<input type="submit" onclick=";" class="btn btn-primary del support" value="&nbsp;신청하기&nbsp;">
+						<input type="submit" onclick="kakaopay()" class="btn btn-primary del support" value="&nbsp;후원하기&nbsp;">
 					</td>
 			</table>
 		</div>
@@ -105,66 +109,24 @@
 				url: url,
 				type: 'post',
 				data: {
-					amount: document.getElementById("kakaopay-amount").value
+					amount: document.getElementById("kakaopay-amount").value,
+					id: [[${#authentication.name}]]
+					
 				},
 				/* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
 				beforeSend: function (xhr) {
 					xhr.setRequestHeader(header, token)
 				},
-				success: function () {
-
-
+				success: function (response) {
+					window.open(response.next_redirect_pc_url,"카카오 결제",'scrollbars=yes,resizable=no width=500 height=600, left=50%,top=50%');
+					
+					//location.href = response.next_redirect_pc_url;
 				}
 
 			})
 
 		}
 
-
-
-		/*
-			//KAKAO API
-			var IMP = window.IMP; // 생략 가능
-			
-			IMP.init("imp44896858"); // 가맹점 식별코드
-			function requestPay() {
-				// IMP.request_pay(param, callback) 결제창 호출
-				IMP.request_pay({
-					pg : "html5_inicis",
-					pay_method : "card",
-					temporary_number : "5000_" + new Date().getTime(),
-					//관리자페이지(주문명)에 노출될 정보들(밑으론 key값 변경불가능)
-					name : "봄365 후원",
-					amount : document.getElementById("kakaopay-amount").value,
-					supporter_id : "${supporter_id}",
-					buyer_name : "${supporter_name}",
-				}, function(rsp) {
-					if (rsp.success) {
-						location.href = "supportDone.jsp";
-					} else {
-						alert("결제에 실패했습니다.");
-						location.href = "/temporary/payment";
-					}
-				});
-			}
-			//데이터 Controller로 전송
-			$('#kakaopay-amount').change(
-					function() {
-						$.ajax({
-							url : "supportTEMInsert.sp",
-							type : 'post',
-							data : {
-								temporary_amount : $('#kakaopay-amount option:selected').val()
-							},
-							success : function(data) {
-							},
-							error : function() {
-								console.log("supportTEMInsert ajax진입안됨");
-							}
-						});
-						console.log(amount_input);
-					});
-			*/
 	</script>
 
 
