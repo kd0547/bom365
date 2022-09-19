@@ -24,7 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 
-public class KakaoPayment extends PaymentURI implements PaymentService{
+public class KakaoPayment extends PaymentURI implements Payment{
 	
 	private RestTemplate restTemplate;
 	

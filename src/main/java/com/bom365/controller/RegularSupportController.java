@@ -5,13 +5,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.bom365.custom.pament.dto.ApproveRequestKakaoPayDto;
 import com.bom365.custom.pament.dto.ApproveResponseKakaoPayDto;
-import com.bom365.custom.pament.dto.ReadyRequestKakaopayDto;
 import com.bom365.custom.pament.dto.ReadyRequestSubscriptionDto;
-import com.bom365.custom.pament.dto.ReadyResponseKakaoPayDto;
 import com.bom365.dto.KakaoPayFormDto;
 
 @Controller
@@ -43,20 +39,7 @@ public class RegularSupportController {
 		
 		
 		  
-		//readyResponseKakaoPayDto = kakaoPayService.payReady(readyRequestKakaopayDto);
 		
-		//ApproveRequestKakaoPayDto approveRequestKakaoPayDto = new ApproveRequestKakaoPayDto();
-		
-		
-		//approveRequestKakaoPayDto.setCid(readyRequestKakaopayDto.getCid());
-		//approveRequestKakaoPayDto.setTid(readyResponseKakaoPayDto.getTid());
-		//approveRequestKakaoPayDto.setPartner_order_id(readyRequestKakaopayDto.getPartner_order_id());
-		//approveRequestKakaoPayDto.setPartner_user_id(readyRequestKakaopayDto.getPartner_user_id());
-		
-		
-		
-		
-		//model.addAttribute("approveRequestKakaoPayDto", approveRequestKakaoPayDto);
 		//return readyResponseKakaoPayDto;
 	}
 	
