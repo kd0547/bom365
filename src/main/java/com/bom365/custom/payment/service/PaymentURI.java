@@ -1,4 +1,4 @@
-package com.bom365.custom.pament.service;
+package com.bom365.custom.payment.service;
 
 public class PaymentURI {
 	private static final String host= "https://kapi.kakao.com";

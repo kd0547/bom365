@@ -1,45 +1,27 @@
-package com.bom365.custom.pament.dto;
+package com.bom365.custom.payment.KakopayDto;
 
 import java.time.LocalDateTime;
 
 import com.bom365.constant.Amount;
+import com.bom365.constant.CardInfo;
 
-public class CancelResponseKakaopayDto {
-	private String aid;		//요청 고유 번호
-	
-	private String tid;		//결제 고유 번호, 10자
-	
-	private String cid;		//가맹점 코드, 20자
-	
-	private String status;		//결제 상태
-	
-	private String partner_order_id;		//가맹점 주문번호, 최대 100자
-	
-	private String partner_user_id;		//가맹점 회원 id, 최대 100자
-	
+public class ApproveResponseSubscriptionDto {
+	private String aid;		//Request 고유 번호
+	private String tid;		//결제 고유 번호
+	private String cid;		//가맹점 코드
+	private String sid;		//정기(배치)결제 고유 번호. 20자
+	private String partner_order_id;		//가맹점 주문번호
+	private String partner_user_id;		//가맹점 회원 id
 	private String payment_method_type;		//결제 수단, CARD 또는 MONEY 중 하나
-	
 	private Amount amount;		//결제 금액 정보
-	
-	private ApprovedCancelAmount approved_cancel_amount;		//이번 요청으로 취소된 금액
-	
-	private CanceledAmount canceled_amount;		//누계 취소 금액
-	
-	private CancelAvailableAmount cancel_available_amount;		//남은 취소 가능 금액
-	
+	private CardInfo card_info;		//결제 상세 정보, 결제수단이 카드일 경우만 포함
 	private String item_name;		//상품 이름, 최대 100자
-	
 	private String item_code;		//상품 코드, 최대 100자
-	
-	private Integer quantity;		//상품 수량
-	
+	private Integer quantity;	 //상품 수량
 	private LocalDateTime created_at;		//결제 준비 요청 시각
-	
 	private LocalDateTime approved_at;		//결제 승인 시각
+	private String payload;		//결제 요청 시 전달했던 값
 	
-	private LocalDateTime canceled_at;		//결제 취소 시각
-	
-	private String payload;		//취소 요청 시 전달한 값
 	
 	public String getAid() {
 		return aid;
@@ -59,11 +41,11 @@ public class CancelResponseKakaopayDto {
 	public void setCid(String cid) {
 		this.cid = cid;
 	}
-	public String getStatus() {
-		return status;
+	public String getSid() {
+		return sid;
 	}
-	public void setStatus(String status) {
-		this.status = status;
+	public void setSid(String sid) {
+		this.sid = sid;
 	}
 	public String getPartner_order_id() {
 		return partner_order_id;
@@ -89,23 +71,11 @@ public class CancelResponseKakaopayDto {
 	public void setAmount(Amount amount) {
 		this.amount = amount;
 	}
-	public ApprovedCancelAmount getApproved_cancel_amount() {
-		return approved_cancel_amount;
+	public CardInfo getCard_info() {
+		return card_info;
 	}
-	public void setApproved_cancel_amount(ApprovedCancelAmount approved_cancel_amount) {
-		this.approved_cancel_amount = approved_cancel_amount;
-	}
-	public CanceledAmount getCanceled_amount() {
-		return canceled_amount;
-	}
-	public void setCanceled_amount(CanceledAmount canceled_amount) {
-		this.canceled_amount = canceled_amount;
-	}
-	public CancelAvailableAmount getCancel_available_amount() {
-		return cancel_available_amount;
-	}
-	public void setCancel_available_amount(CancelAvailableAmount cancel_available_amount) {
-		this.cancel_available_amount = cancel_available_amount;
+	public void setCard_info(CardInfo card_info) {
+		this.card_info = card_info;
 	}
 	public String getItem_name() {
 		return item_name;
@@ -137,18 +107,13 @@ public class CancelResponseKakaopayDto {
 	public void setApproved_at(LocalDateTime approved_at) {
 		this.approved_at = approved_at;
 	}
-	public LocalDateTime getCanceled_at() {
-		return canceled_at;
-	}
-	public void setCanceled_at(LocalDateTime canceled_at) {
-		this.canceled_at = canceled_at;
-	}
 	public String getPayload() {
 		return payload;
 	}
 	public void setPayload(String payload) {
 		this.payload = payload;
 	}
+	
 	
 	
 }

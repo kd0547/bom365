@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 import com.bom365.constant.Amount;
 import com.bom365.constant.CardInfo;
-import com.bom365.custom.pament.dto.ApproveResponseKakaoPayDto;
+import com.bom365.custom.payment.KakopayDto.ApproveResponseKakaoPayDto;
 
 import lombok.Getter;
 import lombok.ToString;

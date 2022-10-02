@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bom365.custom.dto.PageDto;
 import com.bom365.dto.BoardFormDto;
+import com.bom365.dto.PageDto;
 
 
 @SpringBootTest

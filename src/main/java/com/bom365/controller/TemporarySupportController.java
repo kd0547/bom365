@@ -1,12 +1,11 @@
 package com.bom365.controller;
 
-import java.net.URISyntaxException;
-import java.security.Principal;
+
 
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.validation.FieldError;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,16 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.client.RestClientException;
 
-import com.bom365.custom.pament.dto.ApproveRequestKakaoPayDto;
-import com.bom365.custom.pament.dto.ApproveResponseKakaoPayDto;
-import com.bom365.custom.pament.dto.CancelRequestKakaopayDto;
-import com.bom365.custom.pament.dto.ReadyRequestKakaopayDto;
-import com.bom365.custom.pament.dto.ReadyResponseKakaoPayDto;
+import com.bom365.custom.payment.KakopayDto.ApproveRequestKakaoPayDto;
+import com.bom365.custom.payment.KakopayDto.CancelRequestKakaopayDto;
+import com.bom365.custom.payment.KakopayDto.ReadyRequestKakaopayDto;
+import com.bom365.custom.payment.KakopayDto.ReadyResponseKakaoPayDto;
 import com.bom365.dto.KakaoPayFormDto;
-import com.bom365.entity.TemporarySupport;
-import com.bom365.service.KakaoPayService;
+
 import com.bom365.service.TemporarySupportService;
 
 import lombok.RequiredArgsConstructor;
@@ -35,7 +31,7 @@ import lombok.RequiredArgsConstructor;
 public class TemporarySupportController {
 	
 	private final TemporarySupportService temporarySupportService;
-	private final KakaoPayService kakaoPayService;
+	//private final KakaoPayService kakaoPayService;
 	
 	
 	@GetMapping(value="/payment")
@@ -72,7 +68,7 @@ public class TemporarySupportController {
 		//readyRequestKakaopayDto.setFail_url("http://www.bom365.org/temporary/kakaopayFail");
 		
 		  
-		readyResponseKakaoPayDto = kakaoPayService.payReady(readyRequestKakaopayDto);
+		//readyResponseKakaoPayDto = kakaoPayService.payReady(readyRequestKakaopayDto);
 		
 		ApproveRequestKakaoPayDto approveRequestKakaoPayDto = new ApproveRequestKakaoPayDto();
 		
@@ -98,20 +94,20 @@ public class TemporarySupportController {
 	public String approvalKakaopay(@RequestParam("pg_token")String pgToken,@ModelAttribute("approveRequestKakaoPayDto")ApproveRequestKakaoPayDto approveRequestKakaoPayDto,Model model) {
 		approveRequestKakaoPayDto.setPg_token(pgToken);
 
-		ApproveResponseKakaoPayDto readyResponseKakaoPayDto = kakaoPayService.payApprove(approveRequestKakaoPayDto);
+		//ApproveResponseKakaoPayDto readyResponseKakaoPayDto = kakaoPayService.payApprove(approveRequestKakaoPayDto);
 		
 		try {
-			temporarySupportService.save(TemporarySupport.createTemporarySupport(readyResponseKakaoPayDto));
+			//temporarySupportService.save(TemporarySupport.createTemporarySupport(readyResponseKakaoPayDto));
 			
 		} catch (IllegalArgumentException e) {
 			CancelRequestKakaopayDto cancelRequestKakaopayDto = new CancelRequestKakaopayDto();
-			cancelRequestKakaopayDto.setCid(readyResponseKakaoPayDto.getCid());
-			cancelRequestKakaopayDto.setTid(readyResponseKakaoPayDto.getTid());
-			cancelRequestKakaopayDto.setCancel_amount(readyResponseKakaoPayDto.getAmount().getTotal());
-			cancelRequestKakaopayDto.setCancel_tax_free_amount(readyResponseKakaoPayDto.getAmount().getTax_free());
+			//cancelRequestKakaopayDto.setCid(readyResponseKakaoPayDto.getCid());
+			//cancelRequestKakaopayDto.setTid(readyResponseKakaoPayDto.getTid());
+			//cancelRequestKakaopayDto.setCancel_amount(readyResponseKakaoPayDto.getAmount().getTotal());
+			//cancelRequestKakaopayDto.setCancel_tax_free_amount(readyResponseKakaoPayDto.getAmount().getTax_free());
 			
 			
-			kakaoPayService.payCancel(cancelRequestKakaopayDto);
+			//kakaoPayService.payCancel(cancelRequestKakaopayDto);
 			
 			e.getStackTrace();
 		}

@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.RequiredArgsConstructor;
 
-import com.bom365.custom.dto.PageDto;
 import com.bom365.dto.BoardFormDto;
+import com.bom365.dto.PageDto;
 import com.bom365.entity.Board;
 import com.bom365.entity.Comment;
 import com.bom365.entity.Member;

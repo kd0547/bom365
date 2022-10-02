@@ -1,12 +1,13 @@
-package com.bom365.custom.pament.dto;
+package com.bom365.custom.payment.KakopayDto;
 
-public class ApprovedCancelAmount {
-	private Integer total;		//이번 요청으로 취소된 전체 금액
-	private Integer tax_free;		//이번 요청으로 취소된 비과세 금액
-	private Integer vat;		//이번 요청으로 취소된 부가세 금액
-	private Integer point;		//이번 요청으로 취소된 포인트 금액
-	private Integer discount;		//이번 요청으로 취소된 할인 금액
+public class CanceledAmount {
+	private Integer total;		//취소된 전체 누적 금액
+	private Integer tax_free;		//취소된 비과세 누적 금액
+	private Integer vat;		//취소된 부가세 누적 금액
+	private Integer point;		//취소된 포인트 누적 금액
+	private Integer discount;		//취소된 할인 누적 금액
 	private Integer green_deposit;		//컵 보증금
+	
 	
 	public Integer getTotal() {
 		return total;

@@ -7,8 +7,7 @@ plugins {
 
 group = 'com.'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '8'
-
+sourceCompatibility = '11'
 
 
 configurations {
@@ -54,7 +53,10 @@ dependencies {
 	//출처: https://netframework.tistory.com/entry/Gradle-정리-single-project [Programming is Fun:티스토리]
 	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
 }
-
+/*
 tasks.named('test') {
 	useJUnitPlatform()
 }
+*/
+
+

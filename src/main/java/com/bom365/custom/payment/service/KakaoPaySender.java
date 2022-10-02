@@ -1,9 +1,12 @@
-package com.bom365.custom.pament.service;
+package com.bom365.custom.payment.service;
 
 import java.net.URI;
+
+
+
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
+
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -15,8 +18,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import com.bom365.custom.pament.dto.ReadyRequestKakaopayDto;
-import com.bom365.custom.pament.dto.ReadyResponseKakaoPayDto;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -24,15 +26,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 
-public class KakaoPayment extends PaymentURI implements Payment{
+public class KakaoPaySender implements PaymentSender{
 	
 	private RestTemplate restTemplate;
 	
-	public HttpHeaders header;
+	private HttpHeaders header;
 	
 	//리랙토링하기 
-	public KakaoPayment() {
-		header = new HttpHeaders();
+	public KakaoPaySender(HttpHeaders header) {
+		this.header = header;
 		restTemplate = new RestTemplate();
 		restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
 	}
@@ -68,6 +70,8 @@ public class KakaoPayment extends PaymentURI implements Payment{
 		}
 		
 	}
+	
+	
 	private ArrayList<String> removeParam(Map<String, String> map) {
 		ArrayList<String> removeList = new ArrayList<String>();
 		
@@ -88,6 +92,22 @@ public class KakaoPayment extends PaymentURI implements Payment{
 	}
 
 
+
+	public RestTemplate getRestTemplate() {
+		return restTemplate;
+	}
+
+
+
+	public void setRestTemplate(RestTemplate restTemplate) {
+		this.restTemplate = restTemplate;
+	}
+
+
+
+	
+
+	
 	
 	
 	

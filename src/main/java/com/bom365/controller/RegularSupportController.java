@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.bom365.custom.pament.dto.ApproveResponseKakaoPayDto;
-import com.bom365.custom.pament.dto.ReadyRequestSubscriptionDto;
+import com.bom365.custom.payment.KakopayDto.ApproveResponseKakaoPayDto;
+import com.bom365.custom.payment.KakopayDto.ReadyRequestSubscriptionDto;
 import com.bom365.dto.KakaoPayFormDto;
 
 @Controller

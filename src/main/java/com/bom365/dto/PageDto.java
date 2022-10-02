@@ -1,4 +1,4 @@
-package com.bom365.custom.dto;
+package com.bom365.dto;
 
 import lombok.*;
 

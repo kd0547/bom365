@@ -1,4 +1,4 @@
-package com.bom365.custom.pament.dto;
+package com.bom365.custom.payment.KakopayDto;
 
 public class ReadyRequestSubscriptionDto {
 	private String cid		;//가맹점 코드, 10자	O

@@ -10,8 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bom365.custom.dto.PageDto;
 import com.bom365.dto.BoardFormDto;
+import com.bom365.dto.PageDto;
 import com.bom365.entity.Board;
 import com.bom365.repository.BoardRepository;
 
@@ -22,8 +22,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BoardService {
 	private final BoardRepository boardRepository;
-	
-	
+
 	public List<BoardFormDto> getBoardList(PageDto pageDto) {
 		List<Board> boardList = boardRepository.findByIdBetween(pageDto.getStart(),pageDto.getEnd());
 		
