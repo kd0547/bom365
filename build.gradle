@@ -95,9 +95,7 @@ querydsl {
 sourceSets {
    main.java.srcDir querydslDir
 }
-compileQuerydsl{
-   options.annotationProcessorPath = configurations.querydsl
-}
+
 
 configurations {
    compileOnly {
@@ -105,6 +103,12 @@ configurations {
    }
    querydsl.extendsFrom compileClasspath
 }
+
+compileQuerydsl{
+   options.annotationProcessorPath = configurations.querydsl
+   if(file(querydslDir).exists()) delete(file(querydslDir))
+}
+
 //querydsl 추가 끝
 
 //lombok 사용시 추가
