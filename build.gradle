@@ -115,8 +115,9 @@ project.afterEvaluate {
                     ',lombok.launch.AnnotationProcessorHider$AnnotationProcessor'
     ]
 }
-
+/*
 
 tasks.named('test') {
 	useJUnitPlatform()
 }
+*/
