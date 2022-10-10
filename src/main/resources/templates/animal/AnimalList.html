@@ -33,10 +33,11 @@
 
 		<!-- select-animals -->
 		<div class="select-animals-container">
-			<form action="animalSearch.am" method="post">
+			<form action="/animal/list" method="GET" th:object="${animalSearchDto}" >
 				<div class="row mb-1 mx-2">
 					<div class="col-lg-10">
 						<div class="row">
+						
 							<div class="col-sm-12 col-lg mb-3 mb-lg-0">
 								<label class="d-block"> <span
 									class="h4 d-block text-dark font-weight-semi-bold mb-0">동물구분</span>
@@ -44,15 +45,16 @@
 								</label>
 								<div class="js-form-message">
 									<div class="js-focus-state form-group">
-										<select name="animal_species"
+										<select name="animal_species" th:field="*{animalSpecies}"
 											class="form-control custom-select">
 											<option value="">All</option>
-											<option value="dog">개</option>
-											<option value="cat">고양이</option>
+											<option value="개">개</option>
+											<option value="고양이">고양이</option>
 										</select>
 									</div>
 								</div>
 							</div>
+							
 							<div class="col-sm-12 col-lg mb-3 mb-lg-0">
 								<label class="d-block"> <span
 									class="h4 d-block text-dark font-weight-semi-bold mb-0">성별</span>
@@ -60,11 +62,11 @@
 								</label>
 								<div class="js-form-message">
 									<div class="js-focus-state form-group">
-										<select name="animal_gender"
+										<select name="animal_gender" th:field="*{animalGender}"
 											class="form-control custom-select">
-											<option value="">All</option>
-											<option value="female">암컷</option>
-											<option value="male">수컷</option>
+											<option value="ALL">All</option>
+											<option value="Female">암컷</option>
+											<option value="Male">수컷</option>
 										</select>
 									</div>
 								</div>
@@ -76,12 +78,12 @@
 								</label>
 								<div class="js-form-message">
 									<div class="js-focus-state form-group">
-										<select name="animal_weight"
+										<select name="animal_weight" th:field="*{animalWeight}"
 											class="form-control custom-select">
-											<option value="0099">All</option>
-											<option value="0008">소(8kg 미만)</option>
-											<option value="0818">중(8~18kg 미만)</option>
-											<option value="1899">대(18kg이상)</option>
+											<option value="">All</option>
+											<option value="0~8">소(8kg 미만)</option>
+											<option value="8~18">중(8~18kg 미만)</option>
+											<option value="18~99">대(18kg이상)</option>
 										</select>
 									</div>
 								</div>
@@ -93,12 +95,13 @@
 								</label>
 								<div class="js-form-message">
 									<div class="js-focus-state form-group">
-										<select name="animal_age" class="form-control custom-select">
-											<option value="0000099999">All</option>
-											<option value="00000000.6">Puppy(~ 6개월)</option>
-											<option value="000.700002">Junior(7개월 ~ 2살)</option>
-											<option value="0000300008">Adult(3살 ~ 8살)</option>
-											<option value="0000999999">Senior(9살 ~)</option>
+										<select name="animal_age" th:field="*{animalAge}"
+											class="form-control custom-select">
+											<option value="">All</option>
+											<option value="0~0.6">Puppy(~ 6개월)</option>
+											<option value="0.7~2">Junior(7개월 ~ 2살)</option>
+											<option value="3~8">Adult(3살 ~ 8살)</option>
+											<option value="9~99">Senior(9살 ~)</option>
 										</select>
 									</div>
 								</div>
@@ -106,7 +109,7 @@
 
 							<div class="col-12 g-pt-15">
 								<div class="input-group">
-									<input type="text" class="form-control" name="animal_name"
+									<input type="text" class="form-control" name="animal_name" th:field="*{animalName}"
 										placeholder="이름 (이름을 모를경우 비워두셔도 됩니다.)" value="">
 								</div>
 							</div>
@@ -129,41 +132,40 @@
 			</form>
 		</div>
 		<!-- animals list -->
-	<!-- 
-		<c:choose>
-			<c:when test="${animalList.size() == 0}">
-				<h1 style="text-align: center; margin-block: 3em;">검색 결과가 없습니다!</h1>
-			</c:when>
-			<c:otherwise>
+		
+		<h1 style="text-align: center; margin-block: 3em;">검색 결과가 없습니다!</h1>
+			
+			
 				
-				<div class="row animals-photos">
-					<c:forEach var="v" items="${animalList}">
-						<div
+				<div class="row animals-photos" >
+						<div th:each="animal : ${animals}"
 							class="col-md-3 col-lg-3 mb-4 text-center animals-photos-text">
 							<div class="product-entry border">
-								<a href="animalOne.am?animal_number=${v.animal_number}"
-									class="prod-img"> <img src="${v.animal_image}"
+								<a href="animalOne.am?animal_number=@{animal.id}"
+									class="prod-img"> <img th:src="${animal.animalImage}"
 									class="img-fluid animals"
-									alt="${v.animal_number}(${v.animal_name})"> <c:if
-										test="${v.isAdoption == 'true'}">
-										<img src="images/adoptionDone.png" class="img-fluid animals"
+									alt="${v.animal_number}(${v.animal_name})"> 
+									
+									<!-- 	<img src="images/adoptionDone.png" class="img-fluid animals"
 											alt="Free html5 bootstrap 4 template">
-									</c:if>
+									 -->
 								</a>
 
 								<div class="desc">
 									<h2>
-										<a href="animalOne.am?animal_number=${v.animal_number}">${v.animal_name}</a>
+										<a href="animalOne.am?animal_number=${v.animal_number}" th:text="${animal.animalName}"></a>
 									</h2>
-									<span class="animal_spacies">${v.animal_species}(${v.animal_type})</span><br>
-									<span class="animal_gender">${v.animal_gender}</span><br>
-									<span class="animal_age">${v.animal_age} <span
-										class="animal_weight">/ ${v.animal_weight}kg</span></span>
+									<span class="animal_spacies"th:text="${animal.animalSpecies}" ></span>
+									/<span th:text="${animal.animalType}"></span>(<span th:text="${animal.Neutering}"></span>)<br> 
+									<span class="animal_gender"	th:if="${animal.animalGender} == 'Female'"th:text="암컷"></span> 
+									<span class="animal_gender"	th:unless="${animal.animalGender} == 'Male'"th:text="수컷"></span>
+									/<span class="animal_age"	th:text="${animal.animalAge}"></span>살
+									/<span class="animal_weight"	th:text="${animal.animalWeight}"></span> kg
 								</div>
 							</div>
 						</div>
-					</c:forEach>
-					 -->
+					
+					 
 				</div>
 	
 				<!-- 페이징 처리 -->

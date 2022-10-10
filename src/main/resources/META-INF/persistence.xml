@@ -20,9 +20,9 @@
         <properties>
         <!-- 필수 속성 -->
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-            <property name="javax.persistence.jdbc.user" value="root"/>
-            <property name="javax.persistence.jdbc.password" value="Zkwlrtm1935"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://database-2.crb993cglofy.ap-northeast-2.rds.amazonaws.com/bom365" />
+            <property name="javax.persistence.jdbc.user" value="JPA"/><!-- root -->
+            <property name="javax.persistence.jdbc.password" value="1234"/><!-- Zkwlrtm1935 -->
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/jpa_db" /><!-- jdbc:mysql://database-2.crb993cglofy.ap-northeast-2.rds.amazonaws.com/bom365 -->
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
             
         <!-- DDL 자동 생성 -->

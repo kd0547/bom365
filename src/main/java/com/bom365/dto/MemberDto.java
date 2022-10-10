@@ -18,3 +18,4 @@ public class MemberDto {
 	private String detailedAddress;
 	private Role role;
 }
+

@@ -1,8 +1,20 @@
+//QueryDSL 
+buildscript {
+    ext {
+        queryDslVersion = "5.0.0"
+    }
+}
+
+
 plugins {
+	//querydsl 추가
+	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
+	
 	id 'org.springframework.boot' version '2.7.3'
 	id 'io.spring.dependency-management' version '1.0.13.RELEASE'
 	id 'java'
 	id 'war'
+	
 }
 
 group = 'com.'
@@ -14,6 +26,7 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
+	 
 }
 
 repositories {
@@ -35,13 +48,25 @@ dependencies {
 	// email
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	implementation 'org.springframework:spring-context-support:5.3.22'
+	
+	
+	//querydsl 추가
+    implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+   	implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
+   	implementation "com.querydsl:querydsl-core:${queryDslVersion}"
 
+	//annotationProcessor group: 'com.querydsl', name: 'querydsl-apt', version: queryDslVersion
+   // annotationProcessor group: 'com.querydsl', name: 'querydsl-apt', version: queryDslVersion, classifier: 'jpa'
+    //annotationProcessor("javax.persistence:javax.persistence-api")
+    //annotationProcessor("jakarta.annotation:jakarta.annotation-api")
 
+	//lombok
 	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	
 	
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'mysql:mysql-connector-java'
-	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 	
@@ -53,10 +78,45 @@ dependencies {
 	//출처: https://netframework.tistory.com/entry/Gradle-정리-single-project [Programming is Fun:티스토리]
 	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
 }
-/*
+//https://dingdingmin-back-end-developer.tistory.com/entry/Spring-Data-JPA-7-Querydsl-%EC%82%AC%EC%9A%A9-gradle-7x
+
+
+
+
+
+
+//querydsl 추가 시작
+def querydslDir = "$buildDir/generated/querydsl"
+
+querydsl {
+   jpa = true
+   querydslSourcesDir = querydslDir
+}
+sourceSets {
+   main.java.srcDir querydslDir
+}
+compileQuerydsl{
+   options.annotationProcessorPath = configurations.querydsl
+}
+
+configurations {
+   compileOnly {
+      extendsFrom annotationProcessor
+   }
+   querydsl.extendsFrom compileClasspath
+}
+//querydsl 추가 끝
+
+//lombok 사용시 추가
+project.afterEvaluate {
+    project.tasks.compileQuerydsl.options.compilerArgs = [
+            "-proc:only",
+            "-processor", project.querydsl.processors() +
+                    ',lombok.launch.AnnotationProcessorHider$AnnotationProcessor'
+    ]
+}
+
+
 tasks.named('test') {
 	useJUnitPlatform()
 }
-*/
-
-
