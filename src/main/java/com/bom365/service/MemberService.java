@@ -72,4 +72,17 @@ public class MemberService implements UserDetailsService{
 				.build();
 	}
 
+	public boolean checkEmailAndSupportId(String email, String supportId) {
+		Member member = memberRepository.findBySupporterId(supportId);
+		
+		System.out.println(member);
+		
+		if(member == null || !member.getEmail().equals(email)) {
+			
+			throw new IllegalStateException("이메일 또는 아이디가 일치하지 않습니다.");
+		}
+		
+		return true;
+	}
+
 }

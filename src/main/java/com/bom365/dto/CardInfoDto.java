@@ -1,11 +1,11 @@
-package com.bom365.constant;
+package com.bom365.dto;
 
 import lombok.*;
 
 @Getter
 @Setter
 @ToString
-public class CardInfo {
+public class CardInfoDto {
 	
 	//매입 카드사 한글명
 	private String purchase_corp;

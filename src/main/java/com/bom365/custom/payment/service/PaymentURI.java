@@ -1,5 +1,8 @@
 package com.bom365.custom.payment.service;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
 public class PaymentURI {
 	private static final String host= "https://kapi.kakao.com";
 	
@@ -44,8 +47,7 @@ public class PaymentURI {
 	}
 	
 	//정기결제 취소
-		public static String PaymentCancel() {
-			return host+cancel;
-		}
-	
+	public static String PaymentCancel() {
+		return host+cancel;
+	}
 }

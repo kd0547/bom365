@@ -11,9 +11,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.bom365.constant.Amount;
-import com.bom365.constant.CardInfo;
-import com.bom365.custom.payment.KakopayDto.ApproveResponseKakaoPayDto;
+import com.bom365.custom.payment.KakopayDto.ApproveResponseKakaoPay;
+import com.bom365.dto.AmountDto;
+import com.bom365.dto.CardInfoDto;
 
 import lombok.Getter;
 import lombok.ToString;
@@ -77,7 +77,7 @@ public class TemporarySupport extends BaseEntity{
 	//	결제 승인 요청에 대해 저장한 값, 요청 시 전달된 내용
 	private String payload; 
 	
-	public static TemporarySupport createTemporarySupport(ApproveResponseKakaoPayDto readyResponseKakaoPayDto) {
+	public static TemporarySupport createTemporarySupport(ApproveResponseKakaoPay readyResponseKakaoPayDto) {
 		TemporarySupport temporarySupport = new TemporarySupport();
 		
 		temporarySupport.setAid(readyResponseKakaoPayDto.getAid());

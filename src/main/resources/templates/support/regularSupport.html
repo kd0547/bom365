@@ -1,8 +1,16 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org"
-		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		xmlns:sec="http//www.thymeleaf.org/extras/spring-security">
 <head>
 <title>정기후원신청</title>
+
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+
+<th:block th:replace="fragments/config :: head"></th:block>
+<th:block th:replace="fragments/config :: configFragment"></th:block>
+
 
 <th:block th:replace="fragments/config :: head" ></th:block>
 <th:block th:replace="fragments/config :: configFragment" ></th:block>
@@ -17,6 +25,17 @@
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
+<script th:inline="javascript">
+	function loginForm(e) {
+		alert('로그인 후 이용 가능합니다')
+		e.preventDefault();
+		location.href = "/member/login"
+	}
+	
+	
+</script>
+
+
 </head>
 
 <body>
@@ -24,7 +43,8 @@
 	<!-- Page Header-->
 	<th:block th:replace="fragments/header :: headerFragment"></th:block>
 
-	<div class="breadcrumbs">
+
+<div class="breadcrumbs">
 		<div class="container">
 			<div class="row">
 				<div class="col">
@@ -38,6 +58,96 @@
 
 
 	<h1 id="menuTitle">정기후원신청</h1>
+
+<div class="volReqFirstDiv">
+		<div style="display: inline-block;">
+		<!-- <p th:text="${#authentication.name}"></p> -->
+			<table>
+				<tr>
+					<td style="display: flex;">
+						<h4 style="width:100px">금액&nbsp;&nbsp;</h4> <select name="temporary_amount"
+							class="form-control input tem" id="kakaopay-amount" data-msg="금액을 선택해 주세요"
+							data-error-class="u-has-error" data-success-class="u-has-success">
+							<option value="">🐶🐱🐶🐱</option>
+							<option value="10000">10,000</option>
+							<option value="30000">30,000</option>
+							<option value="50000">50,000</option>
+							<option value="100000">100,000</option>
+							<option value="150000">150,000</option>
+							<option value="200000">200,000</option>
+							<option value="250000">250,000</option>
+							<option value="300000">300,000</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<!--loginForm(event) -->
+					<td style="display:relative;top:30px" sec:authorize="isAnonymous()">
+						<input type="submit" onclick="loginForm()" class="btn btn-primary del support"
+							value="&nbsp;로그인 하기&nbsp;">
+					</td>
+					<td style="display:relative;top:30px" sec:authorize="isAuthenticated()">
+						<input type="submit" onclick="kakaopay()" class="btn btn-primary del support" value="&nbsp;후원하기&nbsp;">
+					</td>
+			</table>
+		</div>
+		<h6 style="margin-bottom: 5em; color: #59595978;">카카오페이 결제 페이지로 넘어갑니다.</h6>
+	</div>
+
+	<hr style="margin-top: 0;">
+	<th:block th:replace="fragments/supportTitle:: supporterTitle"></th:block>
+	<!-- Page Footer-->
+	<th:block th:replace="fragments/footer :: footerFragment"></th:block>
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="ion-ios-arrow-up"></i></a>
+	</div>
+
+
+	<script th:inline="javascript">
+
+		var kakaopay = function () {
+			//POST방식 데이터 전송에 필요한 CSRF 토큰 값 조회
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			var url = "/regular/kakaopay"
+
+			$.ajax({
+				url: url,
+				type: 'post',
+				data: {
+					amount: document.getElementById("kakaopay-amount").value,
+					id: [[${#authentication.name}]]
+					
+				},
+				/* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
+				beforeSend: function (xhr) {
+					xhr.setRequestHeader(header, token)
+				},
+				success: function (response) {
+					if(response != "") {
+						window.open(response.next_redirect_pc_url,"카카오 결제",'scrollbars=yes,resizable=no width=500 height=600, left=50%,top=50%');
+						//location.href = response.next_redirect_pc_url;
+					}
+					alert("후원 중입니다.");
+			
+					
+				}
+
+			})
+
+		}
+
+	</script>
+
+
+
+
+
+
+
+
+<!-- 
+	
 	<hr>
 
 	<div class="volReqFirstDiv">
@@ -135,7 +245,7 @@
 			frm.submit();
 		}
 	</script>
-
+ -->
 
 	<!-- Page Footer-->
 	<th:block th:replace="fragments/footer :: footerFragment"></th:block>

@@ -7,7 +7,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class ReadyResponseKakaoPayDto {
+public class ReadyResponseKakaoPay {
 	
 	//결제 고유 번호, 20자
 	private String tid;

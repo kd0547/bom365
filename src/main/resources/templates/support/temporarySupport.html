@@ -55,7 +55,6 @@
 
 	<div class="volReqFirstDiv">
 		<div style="display: inline-block;">
-		<!-- <p th:text="${#authentication.name}"></p> -->
 			<table>
 				<tr>
 					<td style="display: flex;">
@@ -109,9 +108,7 @@
 				url: url,
 				type: 'post',
 				data: {
-					amount: document.getElementById("kakaopay-amount").value,
-					id: [[${#authentication.name}]]
-					
+					amount: document.getElementById("kakaopay-amount").value
 				},
 				/* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
 				beforeSend: function (xhr) {

@@ -16,12 +16,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
 
-import com.bom365.custom.payment.KakopayDto.ApproveRequestKakaoPayDto;
-import com.bom365.custom.payment.KakopayDto.ApproveResponseKakaoPayDto;
-import com.bom365.custom.payment.KakopayDto.CancelRequestKakaopayDto;
+import com.bom365.custom.payment.KakopayDto.ApproveRequestKakaoPay;
+import com.bom365.custom.payment.KakopayDto.ApproveResponseKakaoPay;
+import com.bom365.custom.payment.KakopayDto.CancelRequestKakaopay;
 import com.bom365.custom.payment.KakopayDto.CancelResponseKakaopayDto;
-import com.bom365.custom.payment.KakopayDto.ReadyRequestKakaopayDto;
-import com.bom365.custom.payment.KakopayDto.ReadyResponseKakaoPayDto;
+import com.bom365.custom.payment.KakopayDto.ReadyRequestKakaopay;
+import com.bom365.custom.payment.KakopayDto.ReadyResponseKakaoPay;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
@@ -35,12 +35,8 @@ public class KakaoPayRequest implements paymentRequest{
 	//https://intrepidgeeks.com/tutorial/bind-kakapay-api-in-spring-boot
 	
 	
-	  
+	@Autowired
 	private PaymentSender paymentSender;
-	
-	public KakaoPayRequest(PaymentSender paymentSender) {
-		this.paymentSender = paymentSender;
-	}
 	
 	
 
@@ -55,28 +51,27 @@ public class KakaoPayRequest implements paymentRequest{
 		return (ReadyResponseKakaoPayDto) paymentSender.send(uri, params, ReadyResponseKakaoPayDto.class);
 	}
 	*/
-	public Object payReady(URI url,Object object) {
-		MultiValueMap<String, String> params = delectNullParam(object);
-		System.out.println("test");
-		ReadyResponseKakaoPayDto readyResponseKakaoPayDto;
+	public	Object payReady(URI url,Object formObject,Object toObject) throws RestClientException{
+		MultiValueMap<String, String> params = delectNullParam(formObject);
+	
+		System.out.println("params : " + params.toString());
 		
-		return  paymentSender.send(url, params, ReadyResponseKakaoPayDto.class);
+		return  paymentSender.send(url, params, toObject.getClass());
 	}
 	
 	/*
 	 * 카카오페이 결제 허용
 	 */
-	public ApproveResponseKakaoPayDto payApprove(URI uri,ApproveRequestKakaoPayDto approveRequestKakaoPayDto )throws RestClientException {
-		MultiValueMap<String, String> params = delectNullParam(approveRequestKakaoPayDto);
+	public Object payApprove(URI uri,Object formObject,Object toObject) throws RestClientException{
+		MultiValueMap<String, String> params = delectNullParam(formObject);
 		
-		
-		return (ApproveResponseKakaoPayDto) paymentSender.send(uri, params, ApproveResponseKakaoPayDto.class);
+		return paymentSender.send(uri, params, toObject.getClass());
 	}
 	
 	/*
 	 * 카카오 페이 결제 취소
 	 */
-	public CancelResponseKakaopayDto payCancel(URI uri,CancelRequestKakaopayDto cancelRequestKakaopayDto) throws RestClientException{
+	public CancelResponseKakaopayDto payCancel(URI uri,CancelRequestKakaopay cancelRequestKakaopayDto) throws RestClientException{
 		MultiValueMap<String, String> params = delectNullParam(cancelRequestKakaopayDto);
 
 		return (CancelResponseKakaopayDto) paymentSender.send(uri, params, CancelResponseKakaopayDto.class);
@@ -88,13 +83,7 @@ public class KakaoPayRequest implements paymentRequest{
 	*/
 	
 	private MultiValueMap<String, String> delectNullParam(Object object) {
-		
-		
-		ObjectMapper objectMapper = new ObjectMapper();
-		
-		
-		
-		return paymentSender.convert(objectMapper, object);
+		return paymentSender.convert(new ObjectMapper(), object);
 	}
 	
 }

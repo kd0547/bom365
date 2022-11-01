@@ -66,7 +66,7 @@ public class KakaoPaySender implements PaymentSender{
 			return params;
 			
 		} catch (IllegalArgumentException e) {
-			throw new IllegalArgumentException("변화 오류 발생");
+			throw new IllegalArgumentException("변환 오류 발생");
 		}
 		
 	}

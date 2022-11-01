@@ -80,21 +80,46 @@ public class MemberController {
 		return "member/searchId";
 	}
 	
+	@GetMapping("/findPassword")
+	public String findPassword() {
+		
+		return "member/searchPassword";
+	}
 	
-	
+	@PostMapping("/findPassword")
+	public String findPassword(@RequestParam String supportId, String email,Model model) {
+		try {
+			memberService.checkEmailAndSupportId(email, supportId);
+			
+			emailService.sendPasswordEmail(email);
+			
+			model.addAttribute("message", "이메일을 확인하여 비밀번호를 변경해주세요.");
+            model.addAttribute("location","/member/login");
+			
+		} catch (Exception e) {
+			
+			model.addAttribute("message",e.getMessage());
+		}
+		
+		
+		return "/member/searchPassword";
+	}
+	@GetMapping("/updatePassword")
+	public String updatePassword() {
+		
+		return "member/updatePassword";
+	}
 	
 	
 	//리팩토링 하기
-	@PostMapping(value="/duplicate")
+	@PostMapping("/duplicate")
 	public @ResponseBody DuplicateDto validateDuplicateId(@Valid CheckIdDto id, BindingResult bindingResult ) {
 		/*
 		 * 유효성 검사
 		 */
-		
 		if(bindingResult.hasErrors()) {
 			DuplicateDto duplicateDto = 
 					new DuplicateDto(HttpStatus.OK,200,bindingResult.getFieldError("id").getDefaultMessage(),null);
-			
 			
 			return duplicateDto;
 		}
@@ -109,9 +134,14 @@ public class MemberController {
 			
 		} catch (IllegalStateException e) {
 			
-			
 			DuplicateDto duplicateDto = 
-					new DuplicateDto(HttpStatus.OK,200,e.getMessage(),Duplicate.Duplicate);
+					new DuplicateDto.Builder()
+							.httpStatus(HttpStatus.OK)
+							.status(200)
+							.message(e.getMessage())
+							.duplicate(Duplicate.Duplicate)
+							.build();
+				
 			
 			return duplicateDto;
 		}

@@ -15,13 +15,13 @@ public class EmailService {
 	private final JavaMailSender javaMailSender;
 	
 	
-	public void sendEmail(String to, String subject, String text) {
+	private void sendEmail(String to, String subject, String text) {
 		this.sendEmail(to, subject, text, false);
 	}
 	
 	
 	
-	public void sendEmail(String to, String subject, String text,boolean html){
+	private void sendEmail(String to, String subject, String text,boolean html){
 		MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 		
 		
@@ -50,5 +50,20 @@ public class EmailService {
 		sb.append("입니다.</h1>");
 			
 		this.sendEmail(email, subject, sb.toString(),true);
+	}
+
+	
+	//인증토큰이 필요함 
+	public void sendPasswordEmail(String email) {
+		  String subject = "[bom365] 비밀번호를 변경해주세요";
+
+	      StringBuffer sb = new StringBuffer();
+	      sb.append("<a href='http://bom365/member/updatePassword'");
+	      sb.append("&email=");
+	      sb.append(email);
+	      sb.append("'>비밀번호 변경페이지</a>");
+
+	      this.sendEmail(email, subject, sb.toString(), true);
+		
 	}
  }

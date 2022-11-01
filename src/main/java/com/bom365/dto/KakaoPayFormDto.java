@@ -8,6 +8,7 @@ import lombok.*;
 @ToString
 public class KakaoPayFormDto {
 	private String id;
+	
 	private Integer amount;
 	
 }

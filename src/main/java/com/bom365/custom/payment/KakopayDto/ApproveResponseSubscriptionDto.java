@@ -2,8 +2,8 @@ package com.bom365.custom.payment.KakopayDto;
 
 import java.time.LocalDateTime;
 
-import com.bom365.constant.Amount;
-import com.bom365.constant.CardInfo;
+import com.bom365.dto.AmountDto;
+import com.bom365.dto.CardInfoDto;
 
 public class ApproveResponseSubscriptionDto {
 	private String aid;		//Request 고유 번호
@@ -13,8 +13,8 @@ public class ApproveResponseSubscriptionDto {
 	private String partner_order_id;		//가맹점 주문번호
 	private String partner_user_id;		//가맹점 회원 id
 	private String payment_method_type;		//결제 수단, CARD 또는 MONEY 중 하나
-	private Amount amount;		//결제 금액 정보
-	private CardInfo card_info;		//결제 상세 정보, 결제수단이 카드일 경우만 포함
+	private AmountDto amount;		//결제 금액 정보
+	private CardInfoDto card_info;		//결제 상세 정보, 결제수단이 카드일 경우만 포함
 	private String item_name;		//상품 이름, 최대 100자
 	private String item_code;		//상품 코드, 최대 100자
 	private Integer quantity;	 //상품 수량
@@ -65,16 +65,16 @@ public class ApproveResponseSubscriptionDto {
 	public void setPayment_method_type(String payment_method_type) {
 		this.payment_method_type = payment_method_type;
 	}
-	public Amount getAmount() {
+	public AmountDto getAmount() {
 		return amount;
 	}
-	public void setAmount(Amount amount) {
+	public void setAmount(AmountDto amount) {
 		this.amount = amount;
 	}
-	public CardInfo getCard_info() {
+	public CardInfoDto getCard_info() {
 		return card_info;
 	}
-	public void setCard_info(CardInfo card_info) {
+	public void setCard_info(CardInfoDto card_info) {
 		this.card_info = card_info;
 	}
 	public String getItem_name() {

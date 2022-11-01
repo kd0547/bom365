@@ -1,4 +1,4 @@
-package com.bom365.constant;
+package com.bom365.dto;
 
 import lombok.*;
 
@@ -6,7 +6,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class Amount {
+public class AmountDto {
 	// 전체 결제 금액
 	private Integer total; 
 	//	비과세 금액
@@ -19,4 +19,7 @@ public class Amount {
 	private Integer discount; 	
 	//	컵 보증금
 	private Integer green_deposit;	
+	
+	 
+	
 }
