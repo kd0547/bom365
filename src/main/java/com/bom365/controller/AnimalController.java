@@ -48,7 +48,7 @@ public class AnimalController {
 		
 
 		
-		return "/error/404";
+		return "error/404";
 	}
 	
 	
