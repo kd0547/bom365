@@ -31,7 +31,6 @@ public class AnimalController {
 			model.addAttribute("animalSearchDto", new AnimalSearchDto());
 			model.addAttribute("animals",AllAnimal);
 			
-			return "animal/animalList";
 		}
 		
 		if(!animalSearchDto.isAllEmpty()) {
@@ -42,13 +41,11 @@ public class AnimalController {
 			
 			model.addAttribute("animalSearchDto", new AnimalSearchDto());
 			model.addAttribute("animals",searchAnimals);
-			
-			return "animal/animalList";
 		}
 		
 
 		
-		return "error/404";
+		return "animal/animalList";
 	}
 	
 	
