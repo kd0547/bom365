@@ -3,8 +3,8 @@
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
 <title>입양하기</title>
-<th:block th:replace="fragments/config :: head" ></th:block>
-<th:block th:replace="fragments/config :: configFragment" ></th:block>
+<th:block th:replace="fragments/config :: head"></th:block>
+<th:block th:replace="fragments/config :: configFragment"></th:block>
 
 <!-- contect animate.css -->
 <link rel="stylesheet" th:href="@{~/css/animalList.css}">
@@ -117,7 +117,7 @@
 					</div>
 					<div class="col-lg-2 g-pt-30 g-pt-60--lg search">
 						<div class="g-pb-15 g-pb-sm-0 search-refresh">
-							<a href="animalList.am"
+							<a href=""
 								class="btn btn-sm btn-block g-brd-0 text-secondary g-font-size-14 g-px-0 mb-1 reset">
 								<i class="icon-refresh"></i> <span
 								class="g-text-underline search-refresh">검색 설정 초기화</span>
@@ -133,11 +133,11 @@
 		</div>
 		<!-- animals list -->
 		
-		<h1 style="text-align: center; margin-block: 3em;">검색 결과가 없습니다!</h1>
+		<h1 th:if="${animals.isEmpty()}" style="text-align: center; margin-block: 3em;">검색 결과가 없습니다!</h1>
 			
 			
 				
-				<div class="row animals-photos" >
+				<div class="row animals-photos" th:if="!${animals.isEmpty()}">
 						<div th:each="animal : ${animals}"
 							class="col-md-3 col-lg-3 mb-4 text-center animals-photos-text">
 							<div class="product-entry border">
@@ -153,7 +153,7 @@
 
 								<div class="desc">
 									<h2>
-										<a href="animalOne.am?animal_number=${v.animal_number}" th:text="${animal.animalName}"></a>
+										<a href="" th:text="${animal.animalName}"></a>
 									</h2>
 									<span class="animal_spacies"th:text="${animal.animalSpecies}" ></span>
 									/<span th:text="${animal.animalType}"></span>(<span th:text="${animal.Neutering}"></span>)<br> 
