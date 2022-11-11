@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+</head>
+	<div class="signup-form-container table borderDelete" th:fragment="adoption">
+		<div class="row">
+			<div class="col-md-4 reg">
+				<div class="twins-wrap tem">
+					<div style="text-align: center;width: 523px;">
+						<h2>진행 중인 입양</h2>
+					</div>
+					
+					<div style="text-align: center;width: 523px;">
+						<div>
+							<table class="board table" style="text-align: center; margin-bottom: 14px;">
+								<tbody>
+									<tr class="boardHead">
+										<td class="tdDefault">이름</td>
+										<td class="tdDefault">신청일</td>
+										<td class="tdDefault">상태</td>
+										<td class="tdDefault">신청</td>
+									</tr>
+								</tbody>
+								<tbody id="_result" class="boardTbottom">
+									<tr  class="boardHead">
+										<td style="padding-top: 5px;padding-bottom: 5px; ">미모</td>
+										<td style="padding-top: 5px;padding-bottom: 5px; text-align: center;">2022.01.01</td>
+										<td style="padding-top: 5px;padding-bottom: 5px; text-align: center;">Ready</td>
+										<td style="padding-top: 5px;padding-bottom: 5px; text-align: center;"><a href="/" class="btn btn-primary del add">신청 취소</a></td>
+										 
+										<td colspan="3">
+											<h4 style="color: #7c7454;">신청 내역이 없습니다!</h4>
+										</td>
+										 
+									</tr>
+									
+								</tbody>
+							</table>
+							<!-- btn btn-primary -->
+							<!-- <a href="supportREGRequest.jsp" class=" del support">후원하러 가기</a> -->
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+	</div>
+</html>

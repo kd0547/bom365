@@ -39,11 +39,11 @@
 
 		<!-- boardList -->
 		<div class="boardListFirstDiv">
-			<div class="container" >
+			<div class="container">
 				<div class="nav">
 					<div class="sortBar">
 						<span>정렬 :</span>
-						<a  href="#">
+						<a href="#">
 							<span>최신순</span>
 						</a>
 						<span>|</span>
@@ -103,12 +103,13 @@
 
 				<div class="Pagination" th:if="${boardFormDto != null}">
 					<div class="col-md-12 text-center">
-				
+
 						<div class="block-27">
 							<ul>
 								<li>
-									<a th:if="${pageDto.startPage != 1}" th:href="@{/board/list(page=${pageDto.prePage},size=${pageDto.pagePerText})}">
-									<i class="ion-ios-arrow-back"></i></a>
+									<a th:if="${pageDto.startPage != 1}"
+										th:href="@{/board/list(page=${pageDto.prePage},size=${pageDto.pagePerText})}">
+										<i class="ion-ios-arrow-back"></i></a>
 								</li>
 								<th:block th:with="start=${pageDto.startPage}, end=${pageDto.endPage}">
 									<li th:with="start=${pageDto.startPage}, end=${pageDto.endPage}"
@@ -118,8 +119,8 @@
 									</li>
 
 									<li>
-										<a	th:if="${pageDto.endPage != pageDto.lastPage}" 
-										th:href="@{/board/list(page=${pageDto.nextPage},size=${pageDto.pagePerText})}">
+										<a th:if="${pageDto.endPage != pageDto.lastPage}"
+											th:href="@{/board/list(page=${pageDto.nextPage},size=${pageDto.pagePerText})}">
 											<i class="ion-ios-arrow-forward"></i></a>
 									</li>
 

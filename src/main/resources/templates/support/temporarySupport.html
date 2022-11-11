@@ -1,7 +1,6 @@
 <!DOCTYPE HTML>
-<html 	xmlns:th="http://www.thymeleaf.org" 
-		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-		xmlns:sec="http//www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http//www.thymeleaf.org/extras/spring-security">
 
 <head>
 	<title>일시후원신청</title>
@@ -28,8 +27,8 @@
 		e.preventDefault();
 		location.href = "/member/login"
 	}
-	
-	
+
+
 </script>
 
 <body id="page">
@@ -80,7 +79,8 @@
 							value="&nbsp;로그인 하기&nbsp;">
 					</td>
 					<td style="display:relative;top:30px" sec:authorize="isAuthenticated()">
-						<input type="submit" onclick="kakaopay()" class="btn btn-primary del support" value="&nbsp;후원하기&nbsp;">
+						<input type="submit" onclick="kakaopay()" class="btn btn-primary del support"
+							value="&nbsp;후원하기&nbsp;">
 					</td>
 			</table>
 		</div>
@@ -115,8 +115,8 @@
 					xhr.setRequestHeader(header, token)
 				},
 				success: function (response) {
-					window.open(response.next_redirect_pc_url,"카카오 결제",'scrollbars=yes,resizable=no width=500 height=600, left=50%,top=50%');
-					
+					window.open(response.next_redirect_pc_url, "카카오 결제", 'scrollbars=yes,resizable=no width=500 height=600, left=50%,top=50%');
+
 					//location.href = response.next_redirect_pc_url;
 				}
 

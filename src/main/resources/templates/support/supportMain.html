@@ -1,15 +1,16 @@
 <!DOCTYPE HTML>
-<html 	xmlns:th="http://www.thymeleaf.org"
-		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
 <head>
-<title>후원하기</title>
-<!-- <mytag:icon /> -->
-<th:block th:replace="fragments/config :: head" ></th:block>
-<th:block th:replace="fragments/config :: configFragment" ></th:block>
+	<title>후원하기</title>
+	<!-- <mytag:icon /> -->
+	<th:block th:replace="fragments/config :: head"></th:block>
+	<th:block th:replace="fragments/config :: configFragment"></th:block>
 </head>
+
 <body>
 	<div id="page">
-	
+
 		<!-- Page Header-->
 		<th:block th:replace="fragments/header :: headerFragment"></th:block>
 		<div class="breadcrumbs">
@@ -52,10 +53,8 @@
 							</c:otherwise>
 						</c:choose>
 						 -->
-						 <a th:href="@{/regular/payment}"
-									
-									class="btn btn-primary del support">후원하기</a>
-									<!-- ${supporter_id == null? 'loginCheck()':'goREG()'} -->
+						<a th:href="@{/regular/payment}" class="btn btn-primary del support">후원하기</a>
+						<!-- ${supporter_id == null? 'loginCheck()':'goREG()'} -->
 					</div>
 				</div>
 
@@ -69,16 +68,15 @@
 							반려동물의 생일이나 입양일 등<br>소중한 날을 기념하여<br>동물들에게 사랑을 전해주세요.<br>한
 							번의 따뜻한 사랑이<br>큰 기적을 이루게 됩니다.
 						</h5>
-						<a th:href="@{/temporary/payment}"
-							class="btn btn-primary del support">후원하기</a>
-							<!-- ${supporter_id == null? 'loginCheck()':'goTEM()'} -->
+						<a th:href="@{/temporary/payment}" class="btn btn-primary del support">후원하기</a>
+						<!-- ${supporter_id == null? 'loginCheck()':'goTEM()'} -->
 					</div>
 				</div>
 			</div>
 		</div>
 
 		<hr>
-	 
+
 		<th:block th:replace="fragments/supportTitle:: supporterTitle"></th:block>
 
 		<!-- Page Footer-->
@@ -89,7 +87,7 @@
 	</div>
 
 	<th:block th:replace="fragments/config :: jscript"></th:block>
-		  
+
 </body>
 
 

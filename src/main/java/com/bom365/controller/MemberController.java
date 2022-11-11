@@ -1,7 +1,7 @@
 package com.bom365.controller;
 
 import java.security.Principal;
-
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bom365.constant.Duplicate;
+import com.bom365.dto.AdoptStateDto;
+import com.bom365.dto.AnimalSearchDto;
 import com.bom365.dto.CheckIdDto;
 import com.bom365.dto.DuplicateDto;
 import com.bom365.dto.MemberDto;
@@ -26,27 +28,44 @@ import com.bom365.dto.MemberFormDto;
 import com.bom365.dto.UpdateMemberFormDto;
 import com.bom365.entity.Member;
 import com.bom365.repository.MemberRepository;
+import com.bom365.service.AdoptionService;
 import com.bom365.service.EmailService;
 import com.bom365.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequiredArgsConstructor
 @RequestMapping("/member")
 public class MemberController {
 	
-	private final MemberService memberService;
-	private final MemberRepository memberRepository;
-	private final EmailService emailService;
+	@Autowired
+	private MemberService memberService;
+	
+	@Autowired
+	private MemberRepository memberRepository;
+	
+	@Autowired
+	private EmailService emailService;
+	
+	//@Autowired
+	//private AdoptionService adoptionService;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
 	
 	
+	//MemberController에서 처리할지 AdoptController에처 처리할지 결정해야함 좀 더 연관성 높은 곳에서 처리하는 것이 좋을 듯 합니다. 
+	@PostMapping("/adoptStatus")
+	public @ResponseBody List<AdoptStateDto> adoptStatus(Principal principal) {
 	
-	@GetMapping(value="/login")
+		List<AdoptStateDto> adoptStateDtos = memberService.findAdoptState(principal.getName());
+		
+		return adoptStateDtos;
+	}
+	
+	
+	@GetMapping("/login")
 	public String loginForm() {
 		
 		return "member/loginForm";
@@ -209,7 +228,7 @@ public class MemberController {
 		
 		model.addAttribute("updateMemberFormDto", updateMemberFormDto);
 		
-		return "/member/mypageForm";
+		return "member/mypageForm";
 	}
 	
 	@PostMapping( value="/update")
@@ -233,7 +252,7 @@ public class MemberController {
 		}
 		
 		if(bindingResult.hasErrors()) {
-			return "/member/mypageForm";
+			return "member/mypageForm";
 		}
 		
 		try {
@@ -253,7 +272,7 @@ public class MemberController {
 			
 			model.addAttribute("errorMessage", e.getMessage());
 			
-			return "/member/mypageForm";
+			return "member/mypageForm";
 		}
 		
 	
@@ -266,7 +285,7 @@ public class MemberController {
 	public String loginError(Model model) {
 		
 		model.addAttribute("loginErrorMsg","아이디 또는 비밀번호를 확인해주세요");
-		return "/member/loginForm";
+		return "member/loginForm";
 	}
 	
 	

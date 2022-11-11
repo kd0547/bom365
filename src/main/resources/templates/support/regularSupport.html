@@ -1,36 +1,35 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org"
-		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-		xmlns:sec="http//www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http//www.thymeleaf.org/extras/spring-security">
+
 <head>
-<title>정기후원신청</title>
+	<title>정기후원신청</title>
 
-<meta name="_csrf" th:content="${_csrf.token}" />
-<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+	<meta name="_csrf" th:content="${_csrf.token}" />
+	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
 
-<th:block th:replace="fragments/config :: head"></th:block>
-<th:block th:replace="fragments/config :: configFragment"></th:block>
+	<th:block th:replace="fragments/config :: head"></th:block>
+	<th:block th:replace="fragments/config :: configFragment"></th:block>
 
 
 
-<!-- contact css  -->
-<link rel="stylesheet" th:href="@{~/css/style.css}">
-<link rel="stylesheet" th:href="@{~/css/signup_mypage.css}">
-<link rel="stylesheet" th:href="@{~/css/supportRequest.css}">
+	<!-- contact css  -->
+	<link rel="stylesheet" th:href="@{~/css/style.css}">
+	<link rel="stylesheet" th:href="@{~/css/signup_mypage.css}">
+	<link rel="stylesheet" th:href="@{~/css/supportRequest.css}">
 
-<!-- Material Icons -->
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<!-- Material Icons -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
-<script th:inline="javascript">
-	function loginForm(e) {
-		alert('로그인 후 이용 가능합니다')
-		e.preventDefault();
-		location.href = "/member/login"
-	}
-	
-	
-</script>
+	<script th:inline="javascript">
+		function loginForm(e) {
+			alert('로그인 후 이용 가능합니다')
+			e.preventDefault();
+			location.href = "/member/login"
+		}
+
+
+	</script>
 
 
 </head>
@@ -41,7 +40,7 @@
 	<th:block th:replace="fragments/header :: headerFragment"></th:block>
 
 
-<div class="breadcrumbs">
+	<div class="breadcrumbs">
 		<div class="container">
 			<div class="row">
 				<div class="col">
@@ -56,9 +55,9 @@
 
 	<h1 id="menuTitle">정기후원신청</h1>
 
-<div class="volReqFirstDiv">
+	<div class="volReqFirstDiv">
 		<div style="display: inline-block;">
-		<!-- <p th:text="${#authentication.name}"></p> -->
+			<!-- <p th:text="${#authentication.name}"></p> -->
 			<table>
 				<tr>
 					<td style="display: flex;">
@@ -84,7 +83,8 @@
 							value="&nbsp;로그인 하기&nbsp;">
 					</td>
 					<td style="display:relative;top:30px" sec:authorize="isAuthenticated()">
-						<input type="submit" onclick="kakaopay()" class="btn btn-primary del support" value="&nbsp;후원하기&nbsp;">
+						<input type="submit" onclick="kakaopay()" class="btn btn-primary del support"
+							value="&nbsp;후원하기&nbsp;">
 					</td>
 			</table>
 		</div>
@@ -113,21 +113,21 @@
 				type: 'post',
 				data: {
 					amount: document.getElementById("kakaopay-amount").value,
-					id: [[${#authentication.name}]]
-					
+					id: [[${ #authentication.name }]]
+
 				},
 				/* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
 				beforeSend: function (xhr) {
 					xhr.setRequestHeader(header, token)
 				},
 				success: function (response) {
-					if(response != "") {
-						window.open(response.next_redirect_pc_url,"카카오 결제",'scrollbars=yes,resizable=no width=500 height=600, left=50%,top=50%');
+					if (response != "") {
+						window.open(response.next_redirect_pc_url, "카카오 결제", 'scrollbars=yes,resizable=no width=500 height=600, left=50%,top=50%');
 						//location.href = response.next_redirect_pc_url;
 					}
 					alert("후원 중입니다.");
-			
-					
+
+
 				}
 
 			})
@@ -143,7 +143,7 @@
 
 
 
-<!-- 
+	<!-- 
 	
 	<hr>
 
@@ -250,9 +250,10 @@
 	<div class="gototop js-top">
 		<a href="#" class="js-gotop"><i class="ion-ios-arrow-up"></i></a>
 	</div>
-	
+
 
 	<script th:src="@{/js/loginCheck.js}"></script>
 	<th:block th:replace="fragments/config :: jscript"></th:block>
 </body>
+
 </html>

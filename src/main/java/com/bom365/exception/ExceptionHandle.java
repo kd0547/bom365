@@ -20,11 +20,11 @@ public class ExceptionHandle implements ErrorController {
 		if(status.equals(HttpStatus.NOT_FOUND.value())) {
 			return "error/404";
 		}
-		/*
+		
 		if(ExceptionStatus != null) {
 			return "error/500";
 		}
-		*/
+		
 		
 		return "";
 	}

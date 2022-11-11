@@ -9,34 +9,34 @@
 	<th:block th:replace="fragments/config :: configFragment"></th:block>
 	<link rel="stylesheet" th:href="@{~/css/signup_mypage.css}">
 	<script th:inline="javascript">
-    		/*<![CDATA[*/
-    		var message = [[${findErrorMessage}]];
-    		if(message != null) {
-    			alert(message);
-    		}
-    		/*]]>*/
-    		
-    		var findSuccessMessage = [[${findSuccessMessage}]];
-    		if(findSuccessMessage != null) {
-    			alert(findSuccessMessage);
-				location.href="/";
-    		} 
-    		
-    		
-		</script>
+		/*<![CDATA[*/
+		var message = [[${ findErrorMessage }]];
+		if (message != null) {
+			alert(message);
+		}
+		/*]]>*/
+
+		var findSuccessMessage = [[${ findSuccessMessage }]];
+		if (findSuccessMessage != null) {
+			alert(findSuccessMessage);
+			location.href = "/";
+		}
+
+
+	</script>
 
 </head>
 
 <body>
-	
-	
+
+
 
 
 
 	<div id="page">
 		<!-- Page Header-->
 		<th:block th:replace="fragments/header :: headerFragment"></th:block>
-		
+
 		<div class="breadcrumbs">
 			<div class="container">
 				<div class="row">
@@ -48,47 +48,47 @@
 				</div>
 			</div>
 		</div>
-		
-		
+
+
 		<h1 id="menuTitle">아이디 찾기</h1>
 
 		<!-- 임시 설정  -->
-		<div id="content" >
+		<div id="content">
 			<div class="signup-form-container" style="height: 295px; padding-top: 40px;">
-			<div style="padding-left: 40px">
-				<form role="form" id="findEmail" method="post" action="/member/findId"
-					class="woocommerce-form woocommerce-form-register register ">
-					
-					<div class="box-size-hold">
-						<div class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide"
-							style="padding-left: 6px;">
-							<label class="reg_signup">이메일&nbsp;</label>
-							<input id="id"  type="text" style="width: 250px;"
-								class="woocommerce-Input woocommerce-Input--text input-text " name="email" />
+				<div style="padding-left: 40px">
+					<form role="form" id="findEmail" method="post" action="/member/findId"
+						class="woocommerce-form woocommerce-form-register register ">
 
-						</div>
-						<!-- <p th:if="${#fields.hasErrors('supporterId')}" th:errors="*{supporterId}"
+						<div class="box-size-hold">
+							<div class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide"
+								style="padding-left: 6px;">
+								<label class="reg_signup">이메일&nbsp;</label>
+								<input id="id" type="text" style="width: 250px;"
+									class="woocommerce-Input woocommerce-Input--text input-text " name="email" />
+
+							</div>
+							<!-- <p th:if="${#fields.hasErrors('supporterId')}" th:errors="*{supporterId}"
 							class="Error ErrorText">
 							Incorrect data</p>
 						<p id="idCheckResult" class="Error ErrorText"></p> -->
-						
-					</div>
 
-					<div class="woocommerce-form-row form-row mb-0 register">
-						<button id="sendbutton" type="submit" class="btn btn-primary btn-register"
-							name="register">아이디 찾기</button>
-					</div>
+						</div>
 
-					<!-- _csrf  -->
-					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+						<div class="woocommerce-form-row form-row mb-0 register">
+							<button id="sendbutton" type="submit" class="btn btn-primary btn-register"
+								name="register">아이디 찾기</button>
+						</div>
+
+						<!-- _csrf  -->
+						<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 
 
-				</form>
+					</form>
 				</div>
 			</div>
 		</div>
-			<!-- Page Footer-->
-			<th:block th:replace="fragments/footer :: footerFragment"></th:block>
+		<!-- Page Footer-->
+		<th:block th:replace="fragments/footer :: footerFragment"></th:block>
 	</div>
 </body>
 

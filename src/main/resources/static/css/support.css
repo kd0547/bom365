@@ -24,7 +24,21 @@
     background: #cbbd89;
     border-radius: 9px;
 }
+/*
+btn.btn-primary {
+    margin: 79px 0px;
+    display: inline-block;
+    width: 200px;
+    background: #cbbd89;
+    border-radius: 9px;
+}*/
 
+/*이름 변경 2022.11.09 추가*/
+.btn.btn-primary.add {
+	padding-top: 3px;
+	padding-bottom: 3px
+}
+   
 
 
 	

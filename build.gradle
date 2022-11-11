@@ -54,6 +54,9 @@ dependencies {
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
    	implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
    	implementation "com.querydsl:querydsl-core:${queryDslVersion}"
+   	
+   	//jsoup
+   	implementation 'org.jsoup:jsoup:1.14.2'
 
 	//annotationProcessor group: 'com.querydsl', name: 'querydsl-apt', version: queryDslVersion
    // annotationProcessor group: 'com.querydsl', name: 'querydsl-apt', version: queryDslVersion, classifier: 'jpa'

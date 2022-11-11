@@ -1,13 +1,14 @@
 <!DOCTYPE HTML>
-<html 	xmlns:th="http://www.thymeleaf.org"
-		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head>
-<title>로그인</title>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<th:block th:replace="fragments/config :: head" ></th:block>
-<th:block th:replace="fragments/config :: configFragment" ></th:block>
+<head>
+	<title>로그인</title>
+
+	<th:block th:replace="fragments/config :: head"></th:block>
+	<th:block th:replace="fragments/config :: configFragment"></th:block>
 
 </head>
+
 <body>
 
 	<div id="page">
@@ -26,7 +27,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<h1 id="menuTitle">로그인</h1>
 		<div class="col-md-12 total-wrap" id="login">
 			<div class="col-sm-4 text-center total">
@@ -42,10 +43,11 @@
 						</tr>
 					</table>
 					<table>
-					<!-- 임시로 만든 item  -->
+						<!-- 임시로 만든 item  -->
 						<tr>
-							<td><a th:href="@{/member/findId}"style=" font-size:13px;margin-right:10px;margin-left: 160px;">아이디 찾기</a></td>
-							<td><a th:href="@{/member/findPassword}"style=" font-size:13px">비밀번호 찾기</a></td>
+							<td><a th:href="@{/member/findId}"
+									style=" font-size:13px;margin-right:10px;margin-left: 160px;">아이디 찾기</a></td>
+							<td><a th:href="@{/member/findPassword}" style=" font-size:13px">비밀번호 찾기</a></td>
 						</tr>
 					</table>
 					<table id="tableStyle" style="margin-top: 20px;">
@@ -59,11 +61,11 @@
 			</div>
 		</div>
 		<script th:inline="javascript">
-    		/*<![CDATA[*/
-    		var message = [[${loginErrorMsg}]];
-    		if(message != null) {
-    			alert(message);
-    		}
+			/*<![CDATA[*/
+			var message = [[${ loginErrorMsg }]];
+			if (message != null) {
+				alert(message);
+			}
     		/*]]>*/
 		</script>
 
@@ -77,7 +79,8 @@
 	</div>
 
 	<th:block th:replace="fragments/config :: jscript"></th:block>
-	
+
 
 </body>
+
 </html>

@@ -1,51 +1,53 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
 <head>
-<meta charset="UTF-8">
-<title>500에러</title>
-<th:block th:replace="fragments/config :: head" ></th:block>
-<th:block th:replace="fragments/config :: configFragment" ></th:block>
+	<meta charset="UTF-8">
+	<title>500에러</title>
+	<th:block th:replace="fragments/config :: head"></th:block>
+	<th:block th:replace="fragments/config :: configFragment"></th:block>
 </head>
+
 <body>
-<!-- Page Header-->
-		<th:block th:replace="fragments/header :: headerFragment"></th:block>
-		
-		<div id="page">
-		
+	<!-- Page Header-->
+	<th:block th:replace="fragments/header :: headerFragment"></th:block>
+
+	<div id="page">
+
 		<div class="breadcrumbs">
 			<div class="container">
 				<div class="row">
 					<div class="col">
 						<p class="bread">
-							<span><a th:href="@{/}">Home</a></span> 
+							<span><a th:href="@{/}">Home</a></span>
 						</p>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div style="height: 440px; position: relative; " > 
+		<div style="height: 440px; position: relative; ">
 			<h1 id="menuTitle">500 에러</h1>
-			<div style="position: relative; text-align: center;"> 
-			
+			<div style="position: relative; text-align: center;">
+
 				<h1 id="menuTitle" style="padding-top: 100px">요청할 수 없는 데이터입니다.</h1>
 				<p>
 					<a th:href="@{/}" class="btn btn-primary" id="complete">메인으로 돌아가기</a>
 				</p>
 			</div>
-			
-			
-		</div>
-		
-		
-		
-		
+
+
 		</div>
 
 
 
-<!-- Page Footer-->
-		<th:block th:replace="fragments/footer :: footerFragment"></th:block>
+
+	</div>
+
+
+
+	<!-- Page Footer-->
+	<th:block th:replace="fragments/footer :: footerFragment"></th:block>
 
 </body>
+
 </html>

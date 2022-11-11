@@ -1,22 +1,23 @@
 <!DOCTYPE HTML>
-<html 	xmlns:th="http://www.thymeleaf.org"
-		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head>
-<title>입양하기</title>
-<th:block th:replace="fragments/config :: head"></th:block>
-<th:block th:replace="fragments/config :: configFragment"></th:block>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<!-- contect animate.css -->
-<link rel="stylesheet" th:href="@{~/css/animalList.css}">
+<head>
+	<title>입양하기</title>
+	<th:block th:replace="fragments/config :: head"></th:block>
+	<th:block th:replace="fragments/config :: configFragment"></th:block>
+
+	<!-- contect animate.css -->
+	<link rel="stylesheet" th:href="@{~/css/animalList.css}">
 
 </head>
+
 <body>
 
 	<div id="page">
 
 		<!-- Page Header-->
 		<th:block th:replace="fragments/header :: headerFragment"></th:block>
-		
+
 		<div class="breadcrumbs">
 			<div class="container">
 				<div class="row">
@@ -33,14 +34,14 @@
 
 		<!-- select-animals -->
 		<div class="select-animals-container">
-			<form action="/animal/list" method="GET" th:object="${animalSearchDto}" >
+			<form action="/animal/list" method="GET" th:object="${animalSearchDto}">
 				<div class="row mb-1 mx-2">
 					<div class="col-lg-10">
 						<div class="row">
-						
+
 							<div class="col-sm-12 col-lg mb-3 mb-lg-0">
 								<label class="d-block"> <span
-									class="h4 d-block text-dark font-weight-semi-bold mb-0">동물구분</span>
+										class="h4 d-block text-dark font-weight-semi-bold mb-0">동물구분</span>
 									<small class="d-block text-secondary">개/고양이</small>
 								</label>
 								<div class="js-form-message">
@@ -54,10 +55,10 @@
 									</div>
 								</div>
 							</div>
-							
+
 							<div class="col-sm-12 col-lg mb-3 mb-lg-0">
 								<label class="d-block"> <span
-									class="h4 d-block text-dark font-weight-semi-bold mb-0">성별</span>
+										class="h4 d-block text-dark font-weight-semi-bold mb-0">성별</span>
 									<small class="d-block text-secondary">암컷/수컷</small>
 								</label>
 								<div class="js-form-message">
@@ -73,7 +74,7 @@
 							</div>
 							<div class="col-sm-12 col-lg mb-3 mb-lg-0">
 								<label class="d-block"> <span
-									class="h4 d-block text-dark font-weight-semi-bold mb-0">크기</span>
+										class="h4 d-block text-dark font-weight-semi-bold mb-0">크기</span>
 									<small class="d-block text-secondary">대/중/소 </small>
 								</label>
 								<div class="js-form-message">
@@ -90,7 +91,7 @@
 							</div>
 							<div class="col-sm-12 col-lg mb-3 mb-lg-0">
 								<label class="d-block"> <span
-									class="h4 d-block text-dark font-weight-semi-bold mb-0">연령</span>
+										class="h4 d-block text-dark font-weight-semi-bold mb-0">연령</span>
 									<small class="d-block text-secondary">puppy/junior/adult/senior</small>
 								</label>
 								<div class="js-form-message">
@@ -119,8 +120,8 @@
 						<div class="g-pb-15 g-pb-sm-0 search-refresh">
 							<a href=""
 								class="btn btn-sm btn-block g-brd-0 text-secondary g-font-size-14 g-px-0 mb-1 reset">
-								<i class="icon-refresh"></i> <span
-								class="g-text-underline search-refresh">검색 설정 초기화</span>
+								<i class="icon-refresh"></i> <span class="g-text-underline search-refresh">검색 설정
+									초기화</span>
 							</a>
 						</div>
 						<div class="g-pt-15--lg">
@@ -132,44 +133,42 @@
 			</form>
 		</div>
 		<!-- animals list -->
-		
+
 		<h1 th:if="${animals.isEmpty()}" style="text-align: center; margin-block: 3em;">검색 결과가 없습니다!</h1>
-			
-			
-				
-				<div class="row animals-photos" th:if="!${animals.isEmpty()}">
-						<div th:each="animal : ${animals}"
-							class="col-md-3 col-lg-3 mb-4 text-center animals-photos-text">
-							<div class="product-entry border">
-								<a href="animalOne.am?animal_number=@{animal.id}"
-									class="prod-img"> <img th:src="${animal.animalImage}"
-									class="img-fluid animals"
-									alt="${v.animal_number}(${v.animal_name})"> 
-									
-									<!-- 	<img src="images/adoptionDone.png" class="img-fluid animals"
+
+
+
+		<div class="row animals-photos" th:if="!${animals.isEmpty()}">
+			<div th:each="animal : ${animals}" class="col-md-3 col-lg-3 mb-4 text-center animals-photos-text">
+				<div class="product-entry border">
+					<a th:href="@{animal/{animalId}(animalId=${animal.id})}" class="prod-img"> <img
+							th:src="${animal.animalImage}" class="img-fluid animals" alt="">
+
+						<!-- 	<img src="images/adoptionDone.png" class="img-fluid animals"
 											alt="Free html5 bootstrap 4 template">
 									 -->
-								</a>
+					</a>
 
-								<div class="desc">
-									<h2>
-										<a href="" th:text="${animal.animalName}"></a>
-									</h2>
-									<span class="animal_spacies"th:text="${animal.animalSpecies}" ></span>
-									/<span th:text="${animal.animalType}"></span>(<span th:text="${animal.Neutering}"></span>)<br> 
-									<span class="animal_gender"	th:if="${animal.animalGender} == 'Female'"th:text="암컷"></span> 
-									<span class="animal_gender"	th:unless="${animal.animalGender} == 'Male'"th:text="수컷"></span>
-									/<span class="animal_age"	th:text="${animal.animalAge}"></span>살
-									/<span class="animal_weight"	th:text="${animal.animalWeight}"></span> kg
-								</div>
-							</div>
-						</div>
-					
-					 
+					<div class="desc">
+						<h2>
+							<a href="" th:text="${animal.animalName}"></a>
+						</h2>
+						<span class="animal_spacies" th:text="${animal.animalSpecies}"></span>
+						/<span th:text="${animal.animalType}"></span>(<span
+							th:text="중성화+' '+${animal.Neutering}"></span>)<br>
+						<span class="animal_gender" th:if="${animal.animalGender} == 'Female'" th:text="암컷"></span>
+						<span class="animal_gender" th:unless="${animal.animalGender} == 'Male'" th:text="수컷"></span>
+						/<span class="animal_age" th:text="${animal.animalAge}"></span>살
+						/<span class="animal_weight" th:text="${animal.animalWeight}+kg"></span>
+					</div>
 				</div>
-	
-				<!-- 페이징 처리 -->
-				<!-- 
+			</div>
+
+
+		</div>
+
+		<!-- 페이징 처리 -->
+		<!-- 
 				<div style="margin: 3rem 0 7em 0;">
 					<div class="col-md-12 text-center">
 						<div class="block-27">
@@ -239,4 +238,5 @@
 	<th:block th:replace="fragments/config :: jscript"></th:block>
 
 </body>
+
 </html>

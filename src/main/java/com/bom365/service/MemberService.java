@@ -3,6 +3,9 @@ package com.bom365.service;
 
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.security.core.userdetails.User;
 
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +14,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bom365.dto.AdoptStateDto;
+import com.bom365.entity.AdoptionApplication;
 import com.bom365.entity.Member;
 import com.bom365.repository.MemberRepository;
 
@@ -36,6 +41,24 @@ public class MemberService implements UserDetailsService{
 			throw new IllegalStateException("이미 가입된 아이디입니다.");
 		} 
 		
+	}
+	
+	public List<AdoptStateDto> findAdoptState(String supporterId) {
+		Member findMember = memberRepository.findBySupporterId(supporterId);
+		
+		List<AdoptionApplication> adoptionApplications = findMember.getAdopt();
+		List<AdoptStateDto> adoptStateDtos = new ArrayList<AdoptStateDto>();
+		
+		for(AdoptionApplication ad : adoptionApplications) {
+			AdoptStateDto adoptStateDto = new AdoptStateDto();
+			adoptStateDto.setAdoptId(ad.getId());
+			adoptStateDto.setAnimalName(ad.getAnimal().getAnimalName());
+			adoptStateDto.setAdoptState(ad.getAnimal().getAdoptState());
+			adoptStateDto.setDateTime(ad.getRegTime());
+			
+			adoptStateDtos.add(adoptStateDto);
+		}
+		return adoptStateDtos;
 	}
 	
 	

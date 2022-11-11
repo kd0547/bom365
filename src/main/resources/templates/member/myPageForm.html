@@ -1,44 +1,59 @@
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
 <head>
-<title>마이페이지</title>
-<meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>마이페이지</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<th:block th:replace="fragments/config :: head" ></th:block>
-<th:block th:replace="fragments/config :: configFragment" ></th:block>
+	<th:block th:replace="fragments/config :: head"></th:block>
+	<th:block th:replace="fragments/config :: configFragment"></th:block>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link
-	href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Jua&display=swap"
-	rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Jua&display=swap"
+		rel="stylesheet">
 
+	<meta name="_csrf" th:content="${_csrf.token}" />
+	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
 
-<!-- contect boardList.css -->
-<link rel="stylesheet" th:href="@{~/css/boardList.css}">
+	<!-- contect boardList.css -->
+	<link rel="stylesheet" th:href="@{~/css/boardList.css}">
 
-<!-- contect signup.css -->
-<link rel="stylesheet" th:href="@{~/css/signup_mypage.css}">
+	<!-- contect signup.css -->
+	<link rel="stylesheet" th:href="@{~/css/signup_mypage.css}">
 
-<!-- contact deleteAccount.css -->
-<link rel="stylesheet" th:href="@{~/css/deleteAccount.css}">
-<link rel="stylesheet" th:href="@{~/css/supportRequest.css}">
-<link rel="stylesheet" th:href="@{~/css/support.css}">
-<th:block layout:fragment="css">
+	<!-- contact deleteAccount.css -->
+	<link rel="stylesheet" th:href="@{~/css/deleteAccount.css}">
+	<link rel="stylesheet" th:href="@{~/css/supportRequest.css}">
+	<link rel="stylesheet" th:href="@{~/css/support.css}">
+	<th:block layout:fragment="css">
 		<style>
 			/* 회원가입 태그 정렬  
    				 추가 - 2022-08-26 
 			*/
 
 			.Error {
-
 				color: red;
 			}
-			
+
+			.borderDelete {
+				border-style: none;
+			}
+
+			.tdDefault {
+				padding-top: 5px;
+				padding-bottom: 5px;
+			}
+			.tdCenter {
+				text-align: center;
+				padding-left: 100px !important;
+				/*display : flex; width : 523px; padding: 12px 0px 12px 0px !important; */
+				
+			}
+
+			.tdStyle {}
 		</style>
 	</th:block>
-	
+
 </head>
 
 <body>
@@ -57,21 +72,26 @@
 					</div>
 					<div class="col">
 						<ul class="nav nav-pills mb-3">
-
-							<li class="nav-item"><a class="nav-link active show"
-								id="pills-description-tab" data-toggle="pill"
-								href="#pills-description" role="tab"
-								aria-controls="pills-description" aria-expanded="true"
-								aria-selected="true">정보수정</a></li>
-							<li class="nav-item"><a class="nav-link"
-								id="pills-manufacturer-tab" data-toggle="pill"
-								href="#pills-manufacturer" role="tab"
-								aria-controls="pills-manufacturer" aria-expanded="true"
-								aria-selected="false">내역조회</a></li>
-							<li class="nav-item"><a class="nav-link"
-								id="pills-review-tab" data-toggle="pill" href="#pills-review"
-								role="tab" aria-controls="pills-review" aria-expanded="true"
-								aria-selected="false">회원탈퇴</a></li>
+							<li class="nav-item">
+								<a class="nav-link active show" id="pills-description-tab" data-toggle="pill"
+									href="#pills-description" role="tab" aria-controls="pills-description"
+									aria-expanded="true" aria-selected="true">정보수정</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" id="pills-adoptState-tab" data-toggle="pill"
+									href="#pills-adoptState" role="tab" aria-controls="pills-adoptState"
+									aria-expanded="true" aria-selected="true" onclick="send()">입양현황</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" id="pills-manufacturer-tab" data-toggle="pill"
+									href="#pills-manufacturer" role="tab" aria-controls="pills-manufacturer"
+									aria-expanded="true" aria-selected="false">내역조회</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" id="pills-review-tab" data-toggle="pill" href="#pills-review"
+									role="tab" aria-controls="pills-review" aria-expanded="true"
+									aria-selected="false">회원탈퇴</a>
+							</li>
 						</ul>
 					</div>
 				</div>
@@ -81,30 +101,30 @@
 		<h1 id="menuTitle">My Page</h1>
 
 
-		<div class="twin container">
+		<div id="test" class="twin container">
 			<div class="col-sm-12">
 				<div class="row">
 					<div class="col-md-12 pills">
 						<div class="bd-example bd-example-tabs">
 							<div class="tab-content" id="pills-tabContent">
 
-								<div class="tab-pane border fade active show"
-									id="pills-description" role="tabpanel"
+								<div class="tab-pane border fade active show" id="pills-description" role="tabpanel"
 									aria-labelledby="pills-description-tab">
 									<th:block th:replace="fragments/updateMember :: updateMember"></th:block>
 								</div>
+								<div class="tab-pane fade" id="pills-adoptState" role="tabpanel"
+									aria-labelledby="pills-adoptState-tab">
+									<th:block th:replace="fragments/adoptState :: adoption"></th:block>
+								</div>
 
-								<div class="tab-pane border fade" id="pills-manufacturer"
-									role="tabpanel" aria-labelledby="pills-manufacturer-tab"
-									style="padding: 32px 0 4em 0;">
+								<div class="tab-pane border fade" id="pills-manufacturer" role="tabpanel"
+									aria-labelledby="pills-manufacturer-tab" style="padding: 32px 0 4em 0;">
 									<th:block th:replace="fragments/activityHistoryMember :: history"></th:block>
 								</div>
 
-								<div class="tab-pane border fade" id="pills-review"
-									role="tabpanel" aria-labelledby="pills-review-tab">
-									
+								<div class="tab-pane border fade" id="pills-review" role="tabpanel"
+									aria-labelledby="pills-review-tab">
 									<th:block th:replace="fragments/withdrawalMember :: withdrawal"></th:block>
-
 								</div>
 							</div>
 						</div>
@@ -112,7 +132,109 @@
 				</div>
 			</div>
 		</div>
+		<script type="text/javascript">
+			function send() {
+				//POST방식 데이터 전송에 필요한 CSRF 토큰 값 조회
+				var token = $("meta[name='_csrf']").attr("content");
+				var header = $("meta[name='_csrf_header']").attr("content");
 
+				var url = "/member/adoptStatus"
+				$.ajax({
+					url: url,
+					type: "POST",
+					/* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
+					beforeSend: function (xhr) {
+						xhr.setRequestHeader(header, token)
+					},
+					success: function (result, status, xhr) {
+						var tbody = document.getElementById('_result');
+						//tbody.replaceChildren
+						deletChildNodes(tbody);
+						console.log(result);
+						console.log(result == []);
+
+						if(result.length == 0) {
+							console.log
+							var tbody = document.getElementById('_result');
+							var tr = document.createElement('tr');
+							var td1 = document.createElement('td');
+							var h4 = document.createElement('h4')
+
+							h4.style.color = '#7c7454';
+							h4.innerText = '신청 내역이 없습니다!';
+							
+							tbody.appendChild(tr);
+							tr.appendChild(td1);
+							td1.appendChild(h4);
+							//td1.className += ' tdDefault';
+							td1.className += ' tdCenter';
+							tr.className ='boardHead';
+							td1.colSpan = 3;
+
+						}
+
+						if (result.length != 0) {
+							result.forEach(element => {
+								createNode(element)
+							});
+						}
+
+
+					},
+					error: function () {
+						console.log(arguments);
+					}
+
+				});
+
+			}
+			//시간 남으면 리팩토링하기
+			function createNode(data) {
+				var tbody = document.getElementById('_result');
+				var tr = document.createElement('tr');
+				var td1 = document.createElement('td');
+				var td2 = document.createElement('td');
+				var td3 = document.createElement('td');
+				var td4 = document.createElement('td');
+				var a = document.createElement('a');
+				a.href = "/adopt/cancel?adoptId=" + data.adoptId;
+
+				tbody.appendChild(tr);
+				tr.appendChild(td1);
+				tr.appendChild(td2);
+				tr.appendChild(td3);
+				tr.appendChild(td4);
+				td4.appendChild(a);
+
+				td1.className += 'tdDefault';
+				td2.className += 'tdDefault';
+				td3.className += 'tdDefault';
+				td4.className += 'tdDefault';
+
+				a.className += 'btn btn-primary del add';
+				a.innerText = "신청 취소";
+				td1.innerText = data.animalName;
+				td2.innerText = data.dateTime;
+
+				if (data.adoptState == "process") {
+					//td3.innerText = data.adoptState;
+					td3.innerText = "심사중";
+				}
+				if (data.adoptState == "complete") {
+					td3.innerText = "입양완료";
+				}
+
+
+
+			}
+
+			function deletChildNodes(parentsNode) {
+				while (parentsNode.firstChild) {
+					parentsNode.removeChild(parentsNode.firstChild);
+				}
+			}
+
+		</script>
 		<!-- Page Footer-->
 		<th:block th:replace="fragments/footer :: footerFragment"></th:block>
 
@@ -123,7 +245,8 @@
 	</div>
 
 	<script src="/js/loginCheck.js"></script>
-	
+
 	<th:block th:replace="fragments/config :: jscript"></th:block>
 </body>
+
 </html>

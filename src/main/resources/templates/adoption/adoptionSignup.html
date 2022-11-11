@@ -1,0 +1,174 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http//www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<title>신청서작성</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<th:block th:replace="fragments/config :: head"></th:block>
+	<th:block th:replace="fragments/config :: configFragment"></th:block>
+
+</head>
+
+<body>
+
+	<div id="page">
+
+		<!-- Page Header-->
+		<th:block th:replace="fragments/header :: headerFragment"></th:block>
+
+		<div class="breadcrumbs">
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						<p class="bread">
+							<span><a href="animalList.am">입양하기</a></span> / <span>입양신청</span>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="menuTitle">
+			<h1>입양 신청서</h1>
+			<h6>평생 책임질 준비 되셨나요? 구조된 동물들에게 입양은 마지막 기회이자 유일한 희망입니다.</h6>
+		</div>
+		<hr>
+
+		<div style="text-align: center; margin-top: 2em; margin-bottom: 7em;">
+			<div class="col-sm-4 text-left total writeForm" style="display: inline-block;">
+				<form action="/adopt/signup" method="post" name="applicationForm" th:object="${adoptQuestionDto}">
+					<input type="hidden" name="animalId" th:field="*{animalId}">
+					<div class="form-group">
+						<h5>입양을 희망하는 동물의 이름</h5>
+						<input type="text" class="form-control gap" name="animalName"
+							th:field="*{animalName}">
+						<h5>제목</h5>
+						<input type="text" class="form-control gap" placeholder="제목을 입력해 주세요." name="subject"
+							th:field="*{subject}">
+
+						<div class="form-group">
+							<h5>신청 내용</h5>
+							<div>
+								<h6> → 01. 입양을 결정하시기 까지 얼마나 오랜 시간을 고민하셨나요?</h6>
+								<input type="text" class="form-control gap" name="question1"
+									th:field="*{question1}">
+							</div>
+
+							<div>
+								<h6> → 02. 입양을 원하시는 가장 큰 이유는 무엇인가요?</h6>
+								<input type="text" class="form-control gap" name="question2"
+									th:field="*{question2}">
+							</div>
+
+							<div>
+								<h6> → 03. 가족 구성원은 몇 명인가요? 구성원을 소개해주세요.</h6>
+								<input type="text" class="form-control gap" name="question3"
+									th:field="*{question3}">
+							</div>
+
+							<div>
+								<h6> → 04. 입양결정에 가족 모두 동의하십니까? (동의 / 비동의)</h6>
+								<input type="text" class="form-control gap" name="question4"
+									th:field="*{question4}">
+							</div>
+
+							<div>
+								<h6> → 05. 키우고 계신 반려동물이 있나요? 있다면 소개해주세요.</h6>
+								<input type="text" class="form-control gap" name="question5"
+									th:field="*{question5}">
+							</div>
+
+							<div>
+								<h6> → 06. 키우던 반려동물을 개인 사정으로 포기한 경험이 있으신가요? 이유는 무엇인가요?</h6>
+								<input type="text" class="form-control gap" name="question6"
+									th:field="*{question6}">
+							</div>
+
+							<div>
+								<h6> → 07. 주거의 형태는? (단독주택 / 공동주택 / 아파트)</h6>
+								<input type="text" class="form-control gap" name="question7"
+									th:field="*{question7}">
+							</div>
+
+							<div>
+								<h6> → 08. 정원이 있다면 담이나 울타리가 되어있나요? 되어있다면 높이는 얼마나 되나요?</h6>
+								<input type="text" class="form-control gap" name="question8"
+									th:field="*{question8}">
+							</div>
+
+							<div>
+								<h6> → 09. 임대한 주택의 경우 집주인의 동의를 얻으셨나요?</h6>
+								<input type="text" class="form-control gap" name="question9"
+									th:field="*{question9}">
+							</div>
+
+							<div>
+								<h6> → 10. 소음이나 위생 등으로 인한 이웃과의 마찰로 입양동물의 양육이 불가능해질 경우 어떻게 하실건가요?</h6>
+								<input type="text" class="form-control gap" name="question10"
+									th:field="*{question10}">
+							</div>
+
+							<div>
+								<h6> → 11. 이사 또는 해외로 이주 시 반려동물의 거취문제에 대해 어떻게 생각하십니까?</h6>
+								<input type="text" class="form-control gap" name="question11"
+									th:field="*{question11}">
+							</div>
+
+							<div>
+								<h6> → 12. 앞으로 결혼, 임신, 출산 등 가족의 변화가 있는 경우 반려동물의 거취문제에 대해 어떻게 생각하십니까?</h6>
+								<input type="text" class="form-control gap" name="question12"
+									th:field="*{question12}">
+							</div>
+
+							<div>
+								<h6> → 13. 입양 후 모니터링을 위한 전화연락이나 방문, 인스타그램 가입 및 게시물 공유에 동의하십니까? (동의 / 비동의)</h6>
+								<input type="text" class="form-control gap" name="question13"
+									th:field="*{question13}">
+							</div>
+
+							<div>
+								<h6> → 14. 동물 관련 활동경험이 있으신가요? 또는 평소 알고 있던 동물단체들이 있다면 아는대로 적어주세요.</h6>
+								<input type="text" class="form-control gap" name="question14"
+									th:field="*{question14}">
+							</div>
+
+							<div>
+								<h6> → 15. 길고양이에게 밥을 주신 적이 있으신가요? 유기동물 구조 경험이 있으신가요?</h6>
+								<input type="text" class="form-control gap" name="question15"
+									th:field="*{question15}">
+							</div>
+
+							<div>
+								<h6> → 16. 입양희망 동물에 대해 어떻게 알게 되셨나요? (예시: 네이버 블로그, 기사, 페이스북, 트위터, 인스타그램 등등)</h6>
+								<input type="text" class="form-control gap" name="question16"
+									th:field="*{question16}">
+							</div>
+						</div>
+						
+						<!-- _csrf  -->
+						<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+						
+					</div>
+					<input type="submit" value="입양 신청하기" class="btn btn-primary inputSubmit"
+						onclick='application_sendit()'>
+				</form>
+			</div>
+		</div>
+
+
+		<!-- Page Footer-->
+		<th:block th:replace="fragments/footer :: footerFragment"></th:block>
+
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="ion-ios-arrow-up"></i></a>
+	</div>
+
+	<script th:src="@{~/js/loginCheck.js}"></script>
+	<th:block th:replace="fragments/config :: jscript"></th:block>
+</body>
+
+</html>
