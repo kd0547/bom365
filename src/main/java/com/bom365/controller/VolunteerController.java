@@ -15,7 +15,7 @@ public class VolunteerController {
 	public String volunteerMain() {
 		
 		
-		return "error/404";
-		//return "volunteer/volunteerDate";
+		
+		return "volunteer/volunteerDate";
 	}
 }
