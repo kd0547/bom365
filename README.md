@@ -1,6 +1,6 @@
 ### 🔗 URL
 
-[](http://www.bom365.org/)
+[bom365](http://www.bom365.org/)
 
 ### 📋 이전 프로젝트와 차이점
 
