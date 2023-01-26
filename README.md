@@ -1,6 +1,16 @@
+
+### 개발 환경
+- 언어 : Java(JDK11), Javascript, thymeleaf, HTML/CSS
+- 서버 : Tomcat, AWS EC2, RDS, ubuntu
+- 프레임워크 : Spring Boot
+- DB : Mysql
+- API, 라이브러리 : JPA, Querydsl, Spring security, Spring scheduler
+
+
 ### 프로젝트 인원 및 기여도
 
 - 프론트엔드 / 백엔드 : 1명
+- 나의 역할 및 기여도 : JSP -> thymeleaf로 변환 / 백엔드의 전반
 
 ### 제작 이유 
 
