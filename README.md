@@ -1,4 +1,64 @@
 
+### 구현코드(일부)
+
+## 스프링 스케줄러
+```JAVA
+@Component
+public class RegularSupportScheduler {
+	
+	@Autowired RegularSupportService regularSupportService;
+	
+	@Autowired RegularSupportHistoryService historyService;
+	
+	@Autowired KakaoPayRequest kakaoPayRequest;
+	
+	@Async
+	@Scheduled(cron = "0 30 0 * * *")
+	@Transactional
+	public void subscription() throws InterruptedException {
+		
+		LocalDateTime startTime = LocalDateTime.now().withHour(0).withMinute(0).withSecond(0);
+		LocalDateTime endTime = LocalDateTime.now().withHour(23).withMinute(59).withSecond(59);
+		
+		List<RegularSupport> regularSupports = regularSupportService.findByNextAtBetween(startTime, endTime);
+		
+		for(RegularSupport regularSupport : regularSupports) {
+			ReadyRequestSubscription readyRequestSubscription 
+				= new ReadyRequestSubscription
+						.Builder()
+						.cid(regularSupport.getCid())
+						.sid(regularSupport.getSid())
+						.partnerOrderId(regularSupport.getPartner_order_id())
+						.partnerUserId(regularSupport.getSupporterId())
+						.quantity(regularSupport.getQuantity())
+						.totalAmount(regularSupport.getAmount_id().getTotal())
+						.taxFreeAmount(regularSupport.getAmount_id().getTax_free())
+						.build();
+			
+			
+			
+			try {
+				ReadyResponseSubscription readyResponseSubscription = (ReadyResponseSubscription) kakaoPayRequest.payReady(new URI("https://kapi.kakao.com/v1/payment/subscription"), readyRequestSubscription, new ReadyResponseSubscription());
+				
+				historyService.save(readyResponseSubscription);
+				
+			
+			} catch (RestClientException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (URISyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+}
+```
+- 정기결제는 `Kakao API`를 이용했습니다
+- `@Scheduled(cron = "0 30 0 * * *")`을 추가해 00시 30분에 결제 정보를 받아와 순차적으로 결제를 진행합니다.
+- 
+
+
 ### 개발 환경
 - 언어 : Java(JDK11), Javascript, thymeleaf, HTML/CSS
 - 서버 : Tomcat, AWS EC2, RDS, ubuntu
