@@ -1,5 +1,62 @@
+### 개발 환경
+- 언어 : Java(JDK11), Javascript, thymeleaf, HTML/CSS
+- 서버 : Tomcat, AWS EC2, RDS, ubuntu
+- 프레임워크 : Spring Boot
+- DB : Mysql
+- API, 라이브러리 : JPA, Querydsl, Spring security, Spring scheduler
+- ERD : https://dbdiagram.io/d/6476dcf7722eb774941daa29
+## Spring security
+
+### CSRF 설정
+```JAVA
+http.headers().and()
+	.csrf()
+	.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+	.and();
+```
+
+### 세션 설정 
+```JAVA
+http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
+```
 
 ## 구현코드(일부)
+
+### ID 중복 체크 
+> 비동기 방식으로 아이디 중복 검사를 구현했습니다. POST 전송을 위해 csrf 토큰 값을 가져와 요청 헤더에 넣어 전송합니다. 
+```javascript
+<script th:inline="javascript">
+	function sendDuplicateCode() {
+		//POST방식 데이터 전송에 필요한 CSRF 토큰 값 조회
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+
+		var url = "/member/duplicate"
+		$.ajax({
+			url: url,
+			type: "POST",
+			data: {
+				id: $("#id").val()
+			},
+			/* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
+			beforeSend: function (xhr) {
+				xhr.setRequestHeader(header, token)
+			},
+			success: function (result, status, xhr) {
+				if (result.status == 200) {
+					idCheckResult(result.message, result.duplicate);
+				}
+			},
+			error: function () {console.log(arguments);}
+		});
+	}
+	function idCheckResult(data, result) {
+		document.getElementById('idCheckResult').innerText = data;
+		document.querySelector('input[name=duplicate]').value = result;
+	}
+</script>
+```
+
 
 ### 데이터 수
 
@@ -61,12 +118,7 @@ public class RegularSupportScheduler {
 - 
 
 
-### 개발 환경
-- 언어 : Java(JDK11), Javascript, thymeleaf, HTML/CSS
-- 서버 : Tomcat, AWS EC2, RDS, ubuntu
-- 프레임워크 : Spring Boot
-- DB : Mysql
-- API, 라이브러리 : JPA, Querydsl, Spring security, Spring scheduler
+
 
 
 ### 프로젝트 인원 및 기여도
