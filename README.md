@@ -58,7 +58,6 @@ http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
 ```
 
 
-### 데이터 수
 
 ### 스프링 스케줄러
 ```JAVA
@@ -117,8 +116,49 @@ public class RegularSupportScheduler {
 - `@Scheduled(cron = "0 30 0 * * *")`을 추가해 00시 30분에 결제 정보를 받아와 순차적으로 결제를 진행합니다.
 - 
 
+### 이메일 인증
 
+![제목 없는 다이어그램 (1)](https://github.com/kd0547/bom365/assets/86393702/e09e8fad-157f-4cc2-b80e-d0b1f5f5a40e)
 
+```JAVA
+@PostMapping("/signup")
+public String signup(@Valid MemberFormDto memberFormDto, BindingResult bindingResult,Model model) {
+		
+	String email = memberFormDto.getEmail();
+	Member member = memberRepository.findByEmail(email);
+		
+	if(bindingResult.hasErrors() || memberFormDto.isDuplicateCheck() || member != null) {
+		return "member/signupForm";
+	}
+	
+	TempMember tempMember = tempMemberService.save(memberFormDto);
+	AuthToken authToken = authService.createToken(tempMember);
+		
+	emailService.sendAuthEmail(email, authToken);
+		
+	model.addAttribute("successCode","이메일 인증을 완료해주세요");
+		
+	return "/";
+}
+```
+- 회원 email에 인증코드를 전송합니다. 인증코드는 `Email`에 가입 시간을 추가해 해시 결과가 동일하지 않도록 했습니다.
+
+```JAVA
+@GetMapping("authEmail")
+public String authEmail(@RequestParam("code")String code,@RequestParam("email") String email) {
+
+	if (isNotValidateToken(email,code)) {
+		throw new IllegalArgumentException("토큰이 만료되었습니다.");
+	}
+	TempMember findTempMember = tempMemberService.findEmail(email);
+	memberService.saveMember(findTempMember);
+	authService.invalidateToken(email);
+	
+	return "member/signupDone";
+}
+```
+- 토큰을 검사하고 `TempMember` 에 있는 회원 정보를 `Member`에 저장합니다. 
+- 사용한 토큰은 `authService.invalidateToken()`으로 만료처리 합니다. 
 
 
 ### 프로젝트 인원 및 기여도
