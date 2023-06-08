@@ -82,25 +82,23 @@ public class RegularSupportScheduler {
 		
 		for(RegularSupport regularSupport : regularSupports) {
 			ReadyRequestSubscription readyRequestSubscription 
-				= new ReadyRequestSubscription
-						.Builder()
-						.cid(regularSupport.getCid())
-						.sid(regularSupport.getSid())
-						.partnerOrderId(regularSupport.getPartner_order_id())
-						.partnerUserId(regularSupport.getSupporterId())
-						.quantity(regularSupport.getQuantity())
-						.totalAmount(regularSupport.getAmount_id().getTotal())
-						.taxFreeAmount(regularSupport.getAmount_id().getTax_free())
-						.build();
-			
-			
-			
+				= new ReadyRequestSubscription.Builder()
+					.cid(regularSupport.getCid())
+					.sid(regularSupport.getSid())
+					.partnerOrderId(regularSupport.getPartner_order_id())
+					.partnerUserId(regularSupport.getSupporterId())
+					.quantity(regularSupport.getQuantity())
+					.totalAmount(regularSupport.getAmount_id().getTotal())
+					.taxFreeAmount(regularSupport.getAmount_id().getTax_free())
+					.build();
 			try {
-				ReadyResponseSubscription readyResponseSubscription = (ReadyResponseSubscription) kakaoPayRequest.payReady(new URI("https://kapi.kakao.com/v1/payment/subscription"), readyRequestSubscription, new ReadyResponseSubscription());
+				ReadyResponseSubscription readyResponseSubscription = 
+					(ReadyResponseSubscription) kakaoPayRequest
+					.payReady(new URI("https://kapi.kakao.com/v1/payment/subscription"), 
+					readyRequestSubscription, 
+					new ReadyResponseSubscription());
 				
 				historyService.save(readyResponseSubscription);
-				
-			
 			} catch (RestClientException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
