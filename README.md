@@ -20,9 +20,12 @@ http.headers().and()
 http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
 ```
 
-## 구현코드(일부)
+## 구현코드
+> 기능의 추가 또는 개선한 코드를 정리했습니다. 
 
-### ID 중복 체크 
+
+
+### ID 중복 체크 변경
 > 비동기 방식으로 아이디 중복 검사를 구현했습니다. POST 전송을 위해 csrf 토큰 값을 가져와 요청 헤더에 넣어 전송합니다. 
 ```javascript
 <script th:inline="javascript">
@@ -57,17 +60,16 @@ http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
 </script>
 ```
 
+### 일시 후원 기능 개선
 
-
-### 스프링 스케줄러
+### 정기 후원 기능 추가
+> 스프링 스케줄러를 활용하여 DB에 있는 결제 정보를 가져와 순차적으로 결제를 진행하는 코드를 구현했습니다. 이 기능은 매일 00시 30분에 실행되도록 설정되어 있습니다.
 ```JAVA
 @Component
 public class RegularSupportScheduler {
 	
 	@Autowired RegularSupportService regularSupportService;
-	
 	@Autowired RegularSupportHistoryService historyService;
-	
 	@Autowired KakaoPayRequest kakaoPayRequest;
 	
 	@Async
@@ -110,11 +112,9 @@ public class RegularSupportScheduler {
 	}
 }
 ```
-- 정기결제는 `Kakao API`를 이용했습니다
-- `@Scheduled(cron = "0 30 0 * * *")`을 추가해 00시 30분에 결제 정보를 받아와 순차적으로 결제를 진행합니다.
-- 
 
 ### 이메일 인증
+> 이메일 인증을 구현해 실제 가입자의 이메일인지 확인하는 절차를 추가했습니다. 임시 회원 테이블에 데이터를 저장하고 인증이 완료되면 실제 회원 테이블에 저장하는 방식으로 구현했습니다.
 
 ![제목 없는 다이어그램 (1)](https://github.com/kd0547/bom365/assets/86393702/e09e8fad-157f-4cc2-b80e-d0b1f5f5a40e)
 
@@ -158,8 +158,8 @@ public String authEmail(@RequestParam("code")String code,@RequestParam("email") 
 - 토큰을 검사하고 `TempMember` 에 있는 회원 정보를 `Member`에 저장합니다. 
 - 사용한 토큰은 `authService.invalidateToken()`으로 만료처리 합니다. 
 
-### Querydsl
-
+### AnimalSearch
+> 유기 동물 검색 쿼리의 다중 Where 절의 복잡함을 QueryDSL을 사용하여 편의성을 높였습니다.
 ```JAVA
 @Override
 public List<Animal> searchWhereAnimal(AnimalSearchDto animalSearchDto) {
@@ -177,7 +177,7 @@ public List<Animal> searchWhereAnimal(AnimalSearchDto animalSearchDto) {
 ### 프로젝트 인원 및 기여도
 
 - 프론트엔드 / 백엔드 : 1명
-- 나의 역할 및 기여도 : JSP -> thymeleaf로 변환 / 백엔드의 전반
+- 나의 역할 및 기여도 : JSP -> thymeleaf로 변환 / 백엔드 전체
 
 ### 제작 이유 
 
@@ -192,15 +192,12 @@ Spring의 주요 요소인 IoC/DI, 컴포넌트와 컴포넌트 기술들을 이
 - 기존 은행명과 계좌번호만 DB에 저장하는 기능을 Kakao API와 Spring scheduler로 정기 결제 자동화를 구현
  
 
-### 개발 과정 중 생긴 문제와 해결 내용
-- 일시 후원 기능에서 외부 API인 아이엠포트에서 Kakao API와 결제 진행 후 봄365 서버에 결과만 저장하는 방식에 해킹에 의한 변조를 막고자 
-봄365 서버에서 Kakao API를 직접 활용해 결제하는 방식으로 수정했습니다. 
+### 개발 중 기능을 수정 또는 변경한 이유
+- 정기 후원 기능과 일시 후원 기능을 KAKAO API를 사용한 이유는 기존 방식의 불안정함과 보안의 취약점이 있다고 판단하여 선택했습니다.
 - 
 
 ### 아쉬운 점과 개선되어야할 점
-- Kakao API 뿐만 아닌 Naver 등의 결제 기능도 활용하기 위해 외부결제 API를 추상화하려고 했지만 디자인 패턴의 활용 경험 부족으로 
- 구현하지 못한 것입니다. 이를 보완하기 위해 디자인 패턴 등을 학습할 것입니다. 
-- 팀 프로젝트 당시 Ajax를 활용해 
+- 정기 후원 기능을 구현하면서 한 가지 아쉬웠던 점은, 최초 결제한 시각에 바로 결제가 진행되도록 구현하고 싶었지만, 스케줄러의 동작 방식 때문에 실시간으로 처리가 어렵다는 점입니다. 새로운 방법을 찾아내거나 기존 방식을 개선하여 보다 원하는 동작을 구현할 수 있도록 노력하고 있습니다.
 - 유기 동물 검색 쿼리의 다중 Where의 복잡함을 QueryDsl을 사용해 편의성을 높였지만 QueryDsl을 더 이상 활용하지 않았습니다.
 문자열 대신 자바 코드로 작성해 컴파일 단계에서 오류를 잡을 수 있는 장점이 있었지만, QueryDsl을 사용하기 위해서 Q.class에 의존한다는 점과 
 유기 동물 검색 기능에 추가 조건을 변경하는 빈도가 적다는 점에서 JPQL을 사용하는 것이 개발 시간을 줄일 수 있지 않았을까 생각하고 있습니다. 
