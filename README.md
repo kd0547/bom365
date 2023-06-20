@@ -158,6 +158,21 @@ public String authEmail(@RequestParam("code")String code,@RequestParam("email") 
 - 토큰을 검사하고 `TempMember` 에 있는 회원 정보를 `Member`에 저장합니다. 
 - 사용한 토큰은 `authService.invalidateToken()`으로 만료처리 합니다. 
 
+### Querydsl
+
+```JAVA
+@Override
+public List<Animal> searchWhereAnimal(AnimalSearchDto animalSearchDto) {
+	return jpaQueryFactory.select(animal)
+		.from(animal)
+		where( animalNameEq(animalSearchDto.getAnimalName()),
+		      animalSpeciesEq(animalSearchDto.getAnimalSpecies()),
+		      animalGenderEq(animalSearchDto.getAnimalGender()),
+		      animalWeightBetween(animalSearchDto.getAnimalWeight()),
+		      animalAgeBetween(animalSearchDto.getAnimalAge()))
+		.fetch();
+}
+```
 
 ### 프로젝트 인원 및 기여도
 
